@@ -1,0 +1,961 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>软开比赛集结 - 软开人工智能平台-中俄大模型项目研究中心</title>
+    <link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.bootcdn.net/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <style>
+        :root {
+            --primary-color: #2a5ca8;
+            --secondary-color: #6c757d;
+            --bg-color: #0a0a12;
+            --text-color: #e0e0e0;
+            --card-bg: #1a1a2a;
+            --header-bg: linear-gradient(135deg, #0a192f 0%, #0f0c29 100%);
+            --hero-overlay: rgba(0, 0, 0, 0.8);
+            --border-glow: 0 0 15px rgba(0, 240, 255, 0.7);
+            --text-glow: 0 0 12px rgba(0, 240, 255, 0.9);
+            --sci-fi-accent: #00f0ff;
+            --grid-color: rgba(0, 240, 255, 0.1);
+            --hologram-color: rgba(0, 240, 255, 0.25);
+        }
+
+        /* 浅色模式变量 */
+        [data-theme="light"] {
+            --bg-color: #f8f9fa;
+            --text-color: #212529;
+            --card-bg: #ffffff;
+            --header-bg: linear-gradient(135deg, #2a5ca8 0%, #1a3a6a 100%);
+            --hero-overlay: rgba(0, 0, 0, 0.5);
+            --border-glow: none;
+            --text-glow: none;
+            --sci-fi-accent: #00f0ff;
+            --grid-color: rgba(0, 240, 255, 0.05);
+            --hologram-color: rgba(0, 240, 255, 0.15);
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            transition: all 0.5s ease;
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* 科幻网格背景 */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background:
+                    linear-gradient(90deg, var(--grid-color) 1px, transparent 1px),
+                    linear-gradient(var(--grid-color) 1px, transparent 1px);
+            background-size: 30px 30px;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        /* 二进制数字雨效果容器 */
+        #matrixRain {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.25;
+            pointer-events: none;
+        }
+
+        /* 悬浮粒子效果 */
+        #particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* 悬浮科技图标 */
+        .tech-icon {
+            position: absolute;
+            font-size: 1.5rem;
+            color: var(--sci-fi-accent);
+            opacity: 0.6;
+            z-index: -1;
+            animation: float 6s infinite ease-in-out;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
+        }
+
+        /* 导航栏样式 */
+        .navbar {
+            background: var(--header-bg) !important;
+            border-bottom: 1px solid var(--sci-fi-accent);
+            box-shadow: 0 0 30px rgba(0, 240, 255, 0.3);
+            padding: 0.5rem 1rem;
+        }
+
+        .navbar-brand {
+            font-family: 'Orbitron', sans-serif;
+            letter-spacing: 1px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .navbar-brand img {
+            filter: drop-shadow(0 0 5px var(--sci-fi-accent));
+        }
+
+        .nav-link {
+            position: relative;
+            padding: 0.5rem 1.2rem !important;
+            margin: 0 0.3rem !important;
+            font-family: 'Orbitron', sans-serif;
+            letter-spacing: 1px;
+            color: white !important;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+        }
+
+        .nav-link::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 2px;
+            background: var(--sci-fi-accent);
+            transition: width 0.3s ease;
+            box-shadow: 0 0 10px var(--sci-fi-accent);
+        }
+
+        .nav-link:hover::after {
+            width: 80%;
+        }
+
+        .nav-link.active {
+            color: var(--sci-fi-accent) !important;
+        }
+
+        /* 主标题样式 */
+        .main-title {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--sci-fi-accent);
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+            font-size: 2.5rem;
+            letter-spacing: 2px;
+            text-shadow: var(--text-glow);
+        }
+
+        .main-title::after {
+            content: "";
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: var(--sci-fi-accent);
+            box-shadow: 0 0 15px var(--sci-fi-accent);
+        }
+
+        /* 比赛卡片样式 */
+        .competition-card {
+            background: var(--card-bg);
+            border: 1px solid rgba(0, 240, 255, 0.3);
+            border-radius: 15px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            margin-bottom: 2rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .competition-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 240, 255, 0.3);
+            border-color: var(--sci-fi-accent);
+        }
+
+        .competition-card-img {
+            height: 200px;
+            object-fit: cover;
+            border-bottom: 1px solid rgba(0, 240, 255, 0.3);
+        }
+
+        .competition-card-body {
+            padding: 1.5rem;
+            position: relative;
+        }
+
+        .competition-card-title {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--sci-fi-accent);
+            margin-bottom: 1rem;
+            position: relative;
+        }
+
+        .competition-card-title::after {
+            content: "";
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 50px;
+            height: 2px;
+            background: var(--sci-fi-accent);
+            box-shadow: 0 0 10px var(--sci-fi-accent);
+        }
+
+        .competition-card-text {
+            margin-bottom: 1.5rem;
+        }
+
+        .competition-card-date {
+            display: inline-block;
+            background: rgba(0, 240, 255, 0.2);
+            color: var(--sci-fi-accent);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            margin-bottom: 1rem;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .competition-card-btn {
+            background-color: transparent;
+            border: 1px solid var(--sci-fi-accent);
+            color: var(--sci-fi-accent);
+            font-family: 'Orbitron', sans-serif;
+            letter-spacing: 1px;
+            padding: 0.5rem 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .competition-card-btn:hover {
+            background-color: rgba(0, 240, 255, 0.1);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 240, 255, 0.3);
+        }
+
+        /* 时间线样式 */
+        .timeline {
+            position: relative;
+            padding-left: 3rem;
+            margin: 3rem 0;
+        }
+
+        .timeline::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 1.5rem;
+            width: 2px;
+            height: 100%;
+            background: var(--sci-fi-accent);
+            box-shadow: 0 0 10px var(--sci-fi-accent);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 2rem;
+            padding-left: 2rem;
+        }
+
+        .timeline-item::before {
+            content: "";
+            position: absolute;
+            top: 5px;
+            left: -1.5rem;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--sci-fi-accent);
+            box-shadow: 0 0 10px var(--sci-fi-accent);
+        }
+
+        .timeline-date {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--sci-fi-accent);
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-content {
+            background: rgba(20, 30, 50, 0.5);
+            border: 1px solid rgba(0, 240, 255, 0.3);
+            border-radius: 8px;
+            padding: 1rem;
+            position: relative;
+        }
+
+        .timeline-content::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                    135deg,
+                    transparent,
+                    rgba(0, 240, 255, 0.05),
+                    transparent
+            );
+            pointer-events: none;
+        }
+
+        /* 页脚样式 */
+        footer {
+            background: rgba(10, 20, 40, 0.7) !important;
+            border-top: 1px solid var(--sci-fi-accent);
+            position: relative;
+            margin-top: 5rem;
+            padding: 2rem 0 !important;
+            backdrop-filter: blur(5px);
+        }
+
+        footer::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--sci-fi-accent), transparent);
+        }
+
+        footer p {
+            font-family: 'Orbitron', sans-serif;
+            letter-spacing: 1px;
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        /* 模式切换按钮 */
+        .theme-toggle {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 1000;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: var(--card-bg);
+            border: 1px solid var(--sci-fi-accent);
+            box-shadow: 0 0 20px rgba(0, 240, 255, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .theme-toggle:hover {
+            transform: scale(1.1) rotate(30deg);
+            box-shadow: 0 0 30px var(--sci-fi-accent);
+        }
+
+        .theme-toggle i {
+            font-size: 1.5rem;
+            color: var(--sci-fi-accent);
+        }
+
+        /* 响应式调整 */
+        @media (max-width: 768px) {
+            .main-title {
+                font-size: 2rem;
+            }
+
+            .competition-card-img {
+                height: 150px;
+            }
+        }
+    </style>
+</head>
+<body>
+<!-- 二进制数字雨效果 -->
+<canvas id="matrixRain"></canvas>
+
+<!-- 悬浮粒子效果 -->
+<canvas id="particles"></canvas>
+
+<!-- 悬浮科技图标 -->
+<div class="tech-icon" style="top: 20%; left: 10%;"><i class="fas fa-trophy"></i></div>
+<div class="tech-icon" style="top: 70%; left: 85%;"><i class="fas fa-code"></i></div>
+<div class="tech-icon" style="top: 40%; left: 90%;"><i class="fas fa-robot"></i></div>
+<div class="tech-icon" style="top: 80%; left: 15%;"><i class="fas fa-laptop-code"></i></div>
+
+<!-- 导航栏 -->
+<nav class="navbar navbar-expand-lg navbar-dark py-3">
+    <div class="container">
+        <a class="navbar-brand" href="index.html">
+            <img src="logo.png" alt="Logo" width="30" height="30" class="me-2">
+            软开人工智能平台-中俄大模型项目研究中心
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item"><a class="nav-link" href="index.html" id="nav-index">软开社团</a></li>
+                <li class="nav-item"><a class="nav-link" href="competition.html" id="nav-competition">软开比赛集结</a></li>
+                <li class="nav-item"><a class="nav-link" href="works.html" id="nav-works">各项比赛作品展示</a></li>
+                <li class="nav-item"><a class="nav-link" href="contact.html" id="nav-contact">联系我们</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- 主内容区 -->
+<main class="container my-5">
+    <h2 class="main-title animate__animated animate__fadeInDown">软开比赛集结</h2>
+
+    <div class="row g-4">
+        <!-- 当前进行中的比赛 -->
+        <div class="col-md-6 animate__animated animate__fadeInUp">
+            <div class="competition-card">
+                <img src="./images/ai-campus-competition.jpg" class="competition-card-img">
+                <div class="competition-card-body">
+                    <span class="competition-card-date">2025.03.31 - 2025.04.06</span>
+                    <h5 class="competition-card-title">AI绘校园-黑河学院的多元展现</h5>
+                    <p class="competition-card-text">围绕黑河学院展开，内容应积极向上，富有意境和感染力，能够展现黑河学院的校园风光、文化底蕴、师生风貌、学术氛围等方面的一个或多个维度，具有一定的文学性和艺术性。</p>
+                    <div class="d-flex justify-content-between">
+                        <a href="works.html#ai-campus" class="btn competition-card-btn">
+                            <i class="fas fa-eye me-2"></i>查看作品
+                        </a>
+                        <a href="./软开比赛/25_3_31/awards.html" class="btn competition-card-btn">
+                            <i class="fas fa-upload me-2"></i>奖项设置
+                        </a>
+                        <a href="./软开比赛/25_3_31/rk.html" class="btn competition-card-btn">
+                            <i class="fas fa-upload me-2"></i>立即参赛
+                        </a>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 315前端开发大赛 -->
+        <div class="col-md-6 animate__animated animate__fadeInUp" style="animation-delay: 0.2s;">
+            <div class="competition-card">
+                <img src="./images/frontend-competition.jpg" class="competition-card-img">
+                <div class="competition-card-body">
+                    <span class="competition-card-date">2025.03.25 - 2025.03.30</span>
+                    <h5 class="competition-card-title">315前端开发大赛</h5>
+                    <p class="competition-card-text">使用现代前端框架开发校园管理系统，实现响应式布局和模块化功能。需包含学生信息管理、课程查询等基础功能模块。</p>
+                    <div class="d-flex justify-content-between">
+                        <a href="works.html#frontend-315" class="btn competition-card-btn">
+                            <i class="fas fa-eye me-2"></i>查看作品
+                        </a>
+                        <a href="软开比赛/1/submit.html" class="btn competition-card-btn">
+                            <i class="fas fa-upload me-2"></i>立即参赛
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 往期比赛1 -->
+        <div class="col-md-6 animate__animated animate__fadeInUp" style="animation-delay: 0.6s;">
+            <div class="competition-card">
+                <img src="./images/往期比赛1.jpg" class="competition-card-img">
+                <div class="competition-card-body">
+                    <span class="competition-card-date">2024.11.8 - 2024.11.9</span>
+                    <h5 class="competition-card-title">第一届人工智能大赛</h5>
+                    <p class="competition-card-text">随着科技的飞速发展，人工智能（AI）已经成为推动社会进步和产业升级的关键技术之一。它不仅在科学研究、工业制造、医疗健康、金融服务等领域展现出巨大的潜力，也在日常生活中扮演着越来越重要的角色。为了紧跟时代的步伐，提升社团成员的技术能力和创新思维，我们软件项目开发社团决定举办一次以人工智能为主题的培训活动。</p>
+                    <a href="#" class="btn competition-card-btn">
+                        <i class="fas fa-images me-2"></i>查看往期作品
+                    </a>
+                    <a href="./documents/第一届人工智能大赛.docx" class="btn competition-card-btn mt-2" download>
+                        <i class="fas fa-file-download me-2"></i>下载策划案
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- 往期比赛1 -->
+        <div class="col-md-6 animate__animated animate__fadeInUp" style="animation-delay: 0.6s;">
+            <div class="competition-card">
+                <img src="./images/往期比赛1.jpg" class="competition-card-img">
+                <div class="competition-card-body">
+                    <span class="competition-card-date">2024.11.3 - 2024.11.5</span>
+                    <h5 class="competition-card-title">“空中视界—无人机3D建模技术主题活动”</h5>
+                    <p class="competition-card-text">在2019年4月1日，人社部正式公布无人机驾驶员为新职业，根据人社部发布的《新职业就业景气现状分析报告》显示:无人机驾驶员人才缺口100万，无人机航拍植保人才缺口350万，无人机人才缺口已达450万。随着市场需求的增长，无人机驾驶员已处在供不应求的状态! 随着无人机技术的发展和3D建模技术的成熟，无人机3D建模作为一种新兴技术，被广泛应用于城市规划、地理测绘、建筑建模等领域。为了推广无人机3D建模技术，提升同学对这一技术的认识和兴趣，我们计划举办一场无人机3D建模主题活动。</p>
+                    <a href="#" class="btn competition-card-btn">
+                        <i class="fas fa-images me-2"></i>查看往期作品
+                    </a>
+                    <a href="./documents/软件项目开发社团“空中视界 无人机3D建模技术主题活动.docx" class="btn competition-card-btn mt-2" download>
+                        <i class="fas fa-file-download me-2"></i>下载策划案
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- 往期比赛1 -->
+        <div class="col-md-6 animate__animated animate__fadeInUp" style="animation-delay: 0.6s;">
+            <div class="competition-card">
+                <img src="./images/往期比赛1.jpg" class="competition-card-img">
+                <div class="competition-card-body">
+                    <span class="competition-card-date">2024.9.27 - 2024.10.8</span>
+                    <h5 class="competition-card-title">前端开发争霸赛</h5>
+                    <p class="competition-card-text">随着数字时代的蓬勃发展，前端技术已成为互联网创新与应用的基石。在这个信息爆炸的时代，优秀的前端设计不仅能够提升用户体验，还能为企业和组织带来巨大的商业价值和社会影响力。为了庆祝我国建国75周年，我们特别策划了一场名为“前端制作争霸赛”的技术盛会，旨在汇聚全校前端开发者的智慧与创意，共同推动我国前端技术的发展与创新。
+                        在建国75周年这个具有历史意义的时刻，我们希望通过这场争霸赛，展现我国在科技领域的成就，同时激发广大青年的爱国热情和创新精神。通过比赛，我们期待能够挖掘和培养更多优秀的前端开发人才，为国家的数字化转型贡献力量。</p>
+                    <a href="#" class="btn competition-card-btn">
+                        <i class="fas fa-images me-2"></i>查看往期作品
+                    </a>
+                    <a href="./documents/前端制作争霸赛.docx" class="btn competition-card-btn mt-2" download>
+                        <i class="fas fa-file-download me-2"></i>下载策划案
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- 往期比赛1 -->
+        <div class="col-md-6 animate__animated animate__fadeInUp" style="animation-delay: 0.6s;">
+            <div class="competition-card">
+                <img src="./images/往期比赛1.jpg" class="competition-card-img">
+                <div class="competition-card-body">
+                    <span class="competition-card-date">2024.9.27 - 2024.9.27</span>
+                    <h5 class="competition-card-title">软件项目开发社团迎新宣讲</h5>
+                    <p class="competition-card-text">随着新学期的开始，我们迎来了一批充满活力和创造力的新成员。为了让他们更好地融入软件项目开发社团，感受社团的温暖和专业氛围，我们特此举办迎新活动。</p>
+                    <a href="#" class="btn competition-card-btn">
+                        <i class="fas fa-images me-2"></i>查看往期作品
+                    </a>
+                    <a href="./documents/计算机与信息工程学院软件项目开发社团迎新宣讲主题活动策划书.docx" class="btn competition-card-btn mt-2" download>
+                        <i class="fas fa-file-download me-2"></i>下载策划案
+                    </a>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- 往期比赛1 -->
+        <div class="col-md-6 animate__animated animate__fadeInUp" style="animation-delay: 0.6s;">
+            <div class="competition-card">
+                <img src="./images/往期比赛1.jpg" class="competition-card-img">
+                <div class="competition-card-body">
+                    <span class="competition-card-date">2024.9.25 - 2024.9.28</span>
+                    <h5 class="competition-card-title">计算机程序设计比赛</h5>
+                    <p class="competition-card-text">随着计算机技术的快速进展，计算机程序语言的多样化。C语言的使用越来越广泛，同时C语言作为一种最根本的计算机语言有助于提高在校大学生的创新力量，培育大学生将理论与实践相结合的力量，并鼓舞广阔学生踊跃参加课内外科技活动，争做全面型的高素养人才。</p>
+                    <a href="#" class="btn competition-card-btn">
+                        <i class="fas fa-images me-2"></i>查看往期作品
+                    </a>
+                    <a href="./documents/计算机与信息工程学院软件项目开发社团计算机程序设计比赛.docx" class="btn competition-card-btn mt-2" download>
+                        <i class="fas fa-file-download me-2"></i>下载策划案
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- 往期比赛1 -->
+        <div class="col-md-6 animate__animated animate__fadeInUp" style="animation-delay: 0.6s;">
+            <div class="competition-card">
+                <img src="./images/往期比赛1.jpg" class="competition-card-img">
+                <div class="competition-card-body">
+                    <span class="competition-card-date">2024.9.25 - 2024.9.25</span>
+                    <h5 class="competition-card-title">软件项目开发社团迎新活动</h5>
+                    <p class="competition-card-text">随着新学期的开始，我们迎来了一批充满活力和创造力的新成员。为了让他们更好地融入软件项目开发社团，感受社团的温暖和专业氛围，我们特此举办迎新活动。</p>
+                    <a href="#" class="btn competition-card-btn">
+                        <i class="fas fa-images me-2"></i>查看往期作品
+                    </a>
+                    <a href="./documents/计算机与信息工程学院软件项目开发社团迎新宣讲主题活动策划书.docx" class="btn competition-card-btn mt-2" download>
+                        <i class="fas fa-file-download me-2"></i>下载策划案
+                    </a>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- 往期比赛1 -->
+        <div class="col-md-6 animate__animated animate__fadeInUp" style="animation-delay: 0.6s;">
+            <div class="competition-card">
+                <img src="./images/往期比赛1.jpg" class="competition-card-img">
+                <div class="competition-card-body">
+                    <span class="competition-card-date">2024.6.26 - 2024.6.28</span>
+                    <h5 class="competition-card-title">Java编程语言设计大赛</h5>
+                    <p class="competition-card-text">JAVA高级程序开发是软件技术专业的一门重要的专业基础必修课，是一门实践性很强的课程，在软件技术课程体系中起着重要作用。要求学生在掌握课堂讲授内容的同时，抽出专门的时间进行课程实训，目的是通过本次实训使学生系统地掌握软件开发的基本流程，并学会使用Java语言开发软件项目的方法。</p>
+                    <a href="#" class="btn competition-card-btn">
+                        <i class="fas fa-images me-2"></i>查看往期作品
+                    </a>
+                    <a href="./documents/计算机与信息工程学院软件项目开发社团Java编程语言设计大赛.docx" class="btn competition-card-btn mt-2" download>
+                        <i class="fas fa-file-download me-2"></i>下载策划案
+                    </a>
+                </div>
+            </div>
+        </div>
+
+
+
+        <!-- 往期比赛1 -->
+        <div class="col-md-6 animate__animated animate__fadeInUp" style="animation-delay: 0.6s;">
+            <div class="competition-card">
+                <img src="./images/往期比赛1.jpg" class="competition-card-img">
+                <div class="competition-card-body">
+                    <span class="competition-card-date">2024.6.21 - 2024.6.23</span>
+                    <h5 class="competition-card-title">Java编程语言培训</h5>
+                    <p class="competition-card-text">JAVA高级程序开发是软件技术专业的一门重要的专业基础必修课，是一门实践性很强的课程，在软件技术课程体系中起着重要作用。要求学生在掌握课堂讲授内容的同时，抽出专门的时间进行课程实训，目的是通过本次实训使学生系统地掌握软件开发的基本流程，并学会使用Java语言开发软件项目的方法。</p>
+                    <a href="#" class="btn competition-card-btn">
+                        <i class="fas fa-images me-2"></i>查看往期作品
+                    </a>
+                    <a href="./documents/计算机与信息工程学院软件项目开发社团Java编程语言培训主题活动策划书.docx" class="btn competition-card-btn mt-2" download>
+                        <i class="fas fa-file-download me-2"></i>下载策划案
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- 往期比赛1 -->
+        <div class="col-md-6 animate__animated animate__fadeInUp" style="animation-delay: 0.6s;">
+            <div class="competition-card">
+                <img src="./images/往期比赛1.jpg" class="competition-card-img">
+                <div class="competition-card-body">
+                    <span class="competition-card-date">2024.6.9 - 2024.6.10</span>
+                    <h5 class="competition-card-title">技术分享会</h5>
+                    <p class="competition-card-text"></p>
+                    <a href="#" class="btn competition-card-btn">
+                        <i class="fas fa-images me-2"></i>查看往期作品
+                    </a>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- 往期比赛1 -->
+        <div class="col-md-6 animate__animated animate__fadeInUp" style="animation-delay: 0.6s;">
+            <div class="competition-card">
+                <img src="./images/往期比赛1.jpg" class="competition-card-img">
+                <div class="competition-card-body">
+                    <span class="competition-card-date">2024.5.26 - 2024.5.28</span>
+                    <h5 class="competition-card-title">“智造未来”-----AI大模型程序设计大赛</h5>
+                    <p class="competition-card-text">随着人工智能，大数据，云计算等技术的不断发展和应用，人机交互页面的功能逐渐丰富，交互方式也日益多样化，这些技术的发展为人机交互页面设计提供了更多的可能性和创新空间，也促使设计者不断学习和掌握新技术，以提高设计水平。</p>
+                    <a href="#" class="btn competition-card-btn">
+                        <i class="fas fa-images me-2"></i>查看往期作品
+                    </a>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- 往期比赛1 -->
+        <div class="col-md-6 animate__animated animate__fadeInUp" style="animation-delay: 0.6s;">
+            <div class="competition-card">
+                <img src="./images/往期比赛1.jpg" class="competition-card-img">
+                <div class="competition-card-body">
+                    <span class="competition-card-date">2024.6.11 - 2024.6.17</span>
+                    <h5 class="competition-card-title">人机交互页面设计（ui设计）</h5>
+                    <p class="competition-card-text">随着人工智能，大数据，云计算等技术的不断发展和应用，人机交互页面的功能逐渐丰富，交互方式也日益多样化，这些技术的发展为人机交互页面设计提供了更多的可能性和创新空间，也促使设计者不断学习和掌握新技术，以提高设计水平。</p>
+                    <a href="#" class="btn competition-card-btn">
+                        <i class="fas fa-images me-2"></i>查看往期作品
+                    </a>
+                    <a href="./documents/计算机与信息工程学院软件项目开发社团人机交互页面设计主题活动策划书1.docx" class="btn competition-card-btn mt-2" download>
+                        <i class="fas fa-file-download me-2"></i>下载策划案
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- 往期比赛数据 -->
+        <script>
+            const pastCompetitions = [
+                {
+                    id: "12521447",
+                    date: "2025.03.22",
+                    title: "代码护航消费，技术赋能维权",
+                    description: "院系级 | 学术科技与创新创业 | 已结束 | 参与人数: 42",
+                    document: "12521447.docx"
+                },
+                {
+                    id: "11447050",
+                    date: "2024.11.06",
+                    title: "第一届人工智能大赛",
+                    description: "院系级 | 学术科技与创新创业 | 已结束 | 参与人数: 51",
+                    document: "11447050.docx"
+                },
+                {
+                    id: "11379427",
+                    date: "2024.10.31",
+                    title: "空中视界—无人机3D建模技术主题活动",
+                    description: "院系级 | 学术科技与创新创业 | 已结束 | 参与人数: 46",
+                    document: "11379427.docx"
+                },
+                {
+                    id: "11013521",
+                    date: "2024.09.26",
+                    title: "前端开发争霸赛",
+                    description: "校级 | 学术科技与创新创业 | 已结束 | 参与人数: 107",
+                    document: "11013521.docx"
+                },
+                {
+                    id: "11013447",
+                    date: "2024.09.26",
+                    title: "软件项目开发社团迎新宣讲",
+                    description: "院系级 | 公益劳动与志愿服务 | 已结束 | 参与人数: 107",
+                    document: "11013447.docx"
+                },
+                {
+                    id: "10993627",
+                    date: "2024.09.24",
+                    title: "计算机程序设计比赛",
+                    description: "院系级 | 学术科技与创新创业 | 已结束 | 参与人数: 40",
+                    document: "10993627.docx"
+                },
+                {
+                    id: "10940223",
+                    date: "2024.09.24",
+                    title: "软件项目开发社团迎新活动",
+                    description: "院系级 | 公益劳动与志愿服务 | 已结束 | 参与人数: 28",
+                    document: "10940223.docx"
+                },
+                {
+                    id: "10847253",
+                    date: "2024.06.25",
+                    title: "Java编程语言设计大赛",
+                    description: "院系级 | 学术科技与创新创业 | 已结束 | 参与人数: 21",
+                    document: "10847253.docx"
+                },
+                {
+                    id: "10816909",
+                    date: "2024.06.20",
+                    title: "Java编程语言培训",
+                    description: "院系级 | 学术科技与创新创业 | 已结束 | 参与人数: 101",
+                    document: "10816909.docx"
+                },
+                {
+                    id: "10704950",
+                    date: "2024.06.08",
+                    title: "技术分享会",
+                    description: "院系级 | 学术科技与创新创业 | 已结束 | 参与人数: 80",
+                    document: "10704950.docx"
+                }
+            ];
+
+            function generatePastCompetitionCards() {
+                const container = document.getElementById('past-competitions');
+                pastCompetitions.forEach(item => {
+                    const cardHTML = `
+                    <div class="col-md-6 animate__animated animate__fadeInUp">
+                        <div class="competition-card">
+                            <div class="competition-card-body">
+                                <span class="competition-card-date">${item.date}</span>
+                                <h5 class="competition-card-title">${item.title}</h5>
+                                <p class="competition-card-text">${item.description}</p>
+                                <a href="./documents/${item.document}" class="btn competition-card-btn mt-2" download>
+                                    <i class="fas fa-file-download me-2"></i>下载策划案
+                                </a>
+                            </div>
+                        </div>
+                    </div>`;
+                    container.insertAdjacentHTML('beforeend', cardHTML);
+                });
+            }
+
+            document.addEventListener('DOMContentLoaded', function() {
+                generatePastCompetitionCards();
+            });
+        </script>
+
+        <!-- 比赛时间线 -->
+        <div class="hologram-panel p-4 mt-5 animate__animated animate__fadeIn">
+            <h3 class="text-center sci-fi-text mb-4">年度比赛计划</h3>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-date">2025年3月</div>
+                    <div class="timeline-content">
+                        <h5>315前端开发大赛</h5>
+                        <p>前端技术实践，开发校园管理系统</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-date">2025年3-4月</div>
+                    <div class="timeline-content">
+                        <h5>软开人工智能平台-中俄大模型项目研究中心</h5>
+                        <p>AI技术与校园文化融合创作</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-date">2025年5月</div>
+                    <div class="timeline-content">
+                        <h5>全栈开发挑战赛</h5>
+                        <p>前后端结合开发校园应用</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-date">2025年9月</div>
+                    <div class="timeline-content">
+                        <h5>新生编程大赛</h5>
+                        <p>面向新生的编程基础竞赛</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-date">2025年11月</div>
+                    <div class="timeline-content">
+                        <h5>AI创新应用大赛</h5>
+                        <p>人工智能技术在实际场景中的应用</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+</main>
+
+<!-- 页脚 -->
+<footer class="text-white py-5">
+    <div class="container text-center">
+        <p class="mb-1">黑河学院软件项目开发社团</p>
+        <p class="mb-0">指导老师：杨文君、李伦彬、李伦彬 | 成立时间：2021年</p>
+        <p class="mt-3">© 2025 黑河学院计算机与信息工程学院</p>
+    </div>
+</footer>
+
+<!-- 模式切换按钮 -->
+<div class="theme-toggle animate__animated animate__fadeInRight" id="themeToggle">
+    <i class="fas fa-sun"></i>
+</div>
+
+<script src="https://cdn.bootcdn.net/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+<script>
+    // 模式切换功能
+    const themeToggle = document.getElementById('themeToggle');
+
+    // 设置初始主题为暗色模式
+    document.documentElement.setAttribute('data-theme', 'dark');
+    localStorage.setItem('theme', 'dark');
+    updateToggleIcon();
+
+    themeToggle.addEventListener('click', function() {
+        let theme = document.documentElement.getAttribute('data-theme');
+        if (theme === 'light') {
+            document.documentElement.setAttribute('data-theme', 'dark');
+            localStorage.setItem('theme', 'dark');
+        } else {
+            document.documentElement.setAttribute('data-theme', 'light');
+            localStorage.setItem('theme', 'light');
+        }
+        updateToggleIcon();
+    });
+
+    function updateToggleIcon() {
+        const theme = document.documentElement.getAttribute('data-theme');
+        const icon = themeToggle.querySelector('i');
+        if (theme === 'light') {
+            icon.classList.remove('fa-sun');
+            icon.classList.add('fa-moon');
+        } else {
+            icon.classList.remove('fa-moon');
+            icon.classList.add('fa-sun');
+        }
+    }
+
+    // 二进制数字雨效果
+    document.addEventListener('DOMContentLoaded', function() {
+        const canvas = document.getElementById('matrixRain');
+        const ctx = canvas.getContext('2d');
+
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        // 只使用0和1
+        const binary = '01';
+
+        const fontSize = 18;
+        const columns = canvas.width / fontSize;
+
+        const rainDrops = [];
+
+        for (let x = 0; x < columns; x++) {
+            rainDrops[x] = Math.random() * -100;
+        }
+
+        const draw = () => {
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.06)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            ctx.font = `bold ${fontSize}px monospace`;
+
+            for (let i = 0; i < rainDrops.length; i++) {
+                const text = Math.random() > 0.5 ? '0' : '1';
+                const opacity = Math.random() * 0.7 + 0.3;
+                ctx.fillStyle = `rgba(0, 240, 255, ${opacity})`;
+                ctx.fillText(text, i * fontSize, rainDrops[i] * fontSize);
+
+                if (rainDrops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                    rainDrops[i] = 0;
+                }
+                rainDrops[i]++;
+            }
+        };
+
+        setInterval(draw, 50);
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+
+        // 悬浮粒子效果
+        const particlesCanvas = document.getElementById('particles');
+        const particlesCtx = particlesCanvas.getContext('2d');
+
+        particlesCanvas.width = window.innerWidth;
+        particlesCanvas.height = window.innerHeight;
+
+        const particles = [];
+        const particleCount = window.innerWidth / 5;
+
+        for (let i = 0; i < particleCount; i++) {
+            particles.push({
+                x: Math.random() * particlesCanvas.width,
+                y: Math.random() * particlesCanvas.height,
+                size: Math.random() * 3 + 1,
+                speedX: Math.random() * 1 - 0.5,
+                speedY: Math.random() * 1 - 0.5,
+                color: `rgba(0, 240, 255, ${Math.random() * 0.5 + 0.1})`
+            });
+        }
+
+        function drawParticles() {
+            particlesCtx.clearRect(0, 0, particlesCanvas.width, particlesCanvas.height);
+
+            for (let i = 0; i < particles.length; i++) {
+                const p = particles[i];
+
+                particlesCtx.beginPath();
+                particlesCtx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                particlesCtx.fillStyle = p.color;
+                particlesCtx.fill();
+
+                p.x += p.speedX;
+                p.y += p.speedY;
+
+                if (p.x < 0 || p.x > particlesCanvas.width) p.speedX *= -1;
+                if (p.y < 0 || p.y > particlesCanvas.height) p.speedY *= -1;
+            }
+
+            requestAnimationFrame(drawParticles);
+        }
+
+        drawParticles();
+
+        window.addEventListener('resize', () => {
+            particlesCanvas.width = window.innerWidth;
+            particlesCanvas.height = window.innerHeight;
+        });
+    });
+</script>
+</body>
+</html>

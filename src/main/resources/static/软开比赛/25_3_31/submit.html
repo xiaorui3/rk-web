@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>作品提交 - 软开人工智能平台-中俄大模型项目研究中心：黑河学院的多元展现大赛</title>
+    <link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.bootcdn.net/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #2a5ca8;
+            --secondary-color: #6c757d;
+            --bg-color: #0a0a12;
+            --text-color: #e0e0e0;
+            --card-bg: #1a1a2a;
+            --sci-fi-accent: #00f0ff;
+            --border-glow: 0 0 15px rgba(0, 240, 255, 0.7);
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+        }
+
+        .navbar {
+            background: linear-gradient(135deg, #0a192f 0%, #0f0c29 100%) !important;
+            border-bottom: 1px solid var(--sci-fi-accent);
+            box-shadow: 0 0 30px rgba(0, 240, 255, 0.3);
+        }
+
+        .navbar-brand {
+            font-family: 'Orbitron', sans-serif;
+            letter-spacing: 1px;
+        }
+
+        .submit-container {
+            max-width: 800px;
+            margin: 2rem auto;
+        }
+
+        .submit-card {
+            background: var(--card-bg);
+            border: 1px solid var(--sci-fi-accent);
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: var(--border-glow);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .submit-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--sci-fi-accent), transparent);
+            animation: scanline 3s linear infinite;
+        }
+
+        @keyframes scanline {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(600px); }
+        }
+
+        .form-label {
+            font-weight: 600;
+            color: var(--sci-fi-accent);
+            margin-bottom: 0.5rem;
+        }
+
+        .form-control, .form-select {
+            background-color: rgba(10, 20, 40, 0.7);
+            border: 1px solid rgba(0, 240, 255, 0.3);
+            color: var(--text-color);
+        }
+
+        .form-control:focus, .form-select:focus {
+            background-color: rgba(10, 20, 40, 0.9);
+            border-color: var(--sci-fi-accent);
+            box-shadow: 0 0 10px rgba(0, 240, 255, 0.5);
+            color: var(--text-color);
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            border: none;
+            padding: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background-color: #1a3a6a;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 240, 255, 0.4);
+        }
+
+        .btn-primary:disabled {
+            background-color: #1a3a6a;
+            opacity: 0.8;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .file-upload-wrapper {
+            position: relative;
+            margin-bottom: 1.5rem;
+        }
+
+        .file-upload-label {
+            display: block;
+            padding: 1rem;
+            border: 2px dashed rgba(0, 240, 255, 0.5);
+            border-radius: 8px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .file-upload-label:hover {
+            border-color: var(--sci-fi-accent);
+            background-color: rgba(0, 240, 255, 0.05);
+        }
+
+        .file-upload-input {
+            position: absolute;
+            left: 0;
+            top: 0;
+            opacity: 0;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+        }
+
+        .file-info {
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+            color: rgba(0, 240, 255, 0.7);
+        }
+
+        .progress {
+            height: 20px;
+            background-color: rgba(10, 20, 40, 0.7);
+            margin-top: 1rem;
+            border-radius: 10px;
+            overflow: hidden;
+            display: none;
+            box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.3);
+        }
+
+        .progress-bar {
+            background: linear-gradient(90deg, #2a5ca8, #00f0ff);
+            transition: width 0.5s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: bold;
+            color: white;
+            text-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .progress-bar::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(
+                    90deg,
+                    rgba(255, 255, 255, 0) 0%,
+                    rgba(255, 255, 255, 0.3) 50%,
+                    rgba(255, 255, 255, 0) 100%
+            );
+            animation: shimmer 2s infinite;
+        }
+
+        @keyframes shimmer {
+            0% {
+                transform: translateX(-100%);
+            }
+            100% {
+                transform: translateX(100%);
+            }
+        }
+
+        .status-message {
+            margin-top: 1rem;
+            padding: 0.75rem;
+            border-radius: 8px;
+            display: none;
+        }
+
+        .success {
+            background-color: rgba(0, 200, 83, 0.2);
+            border: 1px solid rgba(0, 200, 83, 0.5);
+            color: #00c853;
+        }
+
+        .error {
+            background-color: rgba(255, 23, 68, 0.2);
+            border: 1px solid rgba(255, 23, 68, 0.5);
+            color: #ff1744;
+        }
+
+        h2 {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--sci-fi-accent);
+            text-align: center;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        h2::after {
+            content: "";
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: var(--sci-fi-accent);
+            box-shadow: 0 0 15px var(--sci-fi-accent);
+        }
+
+        @media (max-width: 768px) {
+            .submit-card {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<!-- 导航栏 -->
+<nav class="navbar navbar-expand-lg navbar-dark py-3">
+    <div class="container">
+        <a class="navbar-brand" href="#">
+            <img src="logo.png" alt="校徽" width="40" class="me-2">
+            <span class="sci-fi-text">AI绘校园</span>
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item"><a class="nav-link" href="rk.html#about">当前比赛首页</a></li>
+                <li class="nav-item"><a class="nav-link" href="../../works.html">作品展示</a></li>
+                <li class="nav-item"><a class="nav-link" href="process.html">参赛流程</a></li>
+                <li class="nav-item"><a class="nav-link" href="awards.html">奖项设置</a></li>
+                <li class="nav-item"><a class="nav-link" href="submit.html">作品提交</a></li>
+                <li class="nav-item"><a class="nav-link" href="../../contact.html">联系我们</a></li>
+                <li class="nav-item"><a class="nav-link" href="../../index.html">软开社团首页</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- 主内容区 -->
+<div class="container submit-container">
+    <h2 class="animate__animated animate__fadeInDown">作品提交系统</h2>
+
+    <div class="submit-card">
+        <form id="submissionForm" enctype="multipart/form-data">
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">姓名</label>
+                    <input type="text" class="form-control" name="student_name" required>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">学号</label>
+                    <input type="text" class="form-control" name="student_id" required>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">赛事类型</label>
+                <select class="form-select" name="work_type" required>
+                    <option value="">请选择赛事类型</option>
+                    <option value="小说生成">小说生成</option>
+                    <option value="文学创作">文学创作</option>
+                    <option value="诗歌生成">诗歌生成</option>
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">作品描述</label>
+                <textarea class="form-control" name="description" rows="3" required></textarea>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">生成文字内容</label>
+                <textarea class="form-control" name="ai_text" rows="4" required></textarea>
+            </div>
+
+            <div class="file-upload-wrapper mb-3">
+                <label class="form-label">作品文件 (.doc, .docx, .pdf)</label>
+                <div class="file-upload-label" id="workFileLabel">
+                    <i class="fas fa-file-upload me-2"></i>点击或拖拽文件到此处
+                    <div class="file-info" id="workFileInfo">未选择文件</div>
+                </div>
+                <input type="file" class="file-upload-input" name="file" id="workFile" accept=".doc,.docx,.pdf" required>
+            </div>
+
+            <div class="file-upload-wrapper mb-4">
+                <label class="form-label">AI生成凭证 (.jpg, .jpeg, .png)</label>
+                <div class="file-upload-label" id="proofFileLabel">
+                    <i class="fas fa-image me-2"></i>点击或拖拽图片到此处
+                    <div class="file-info" id="proofFileInfo">未选择文件</div>
+                </div>
+                <input type="file" class="file-upload-input" name="ai_proof" id="proofFile" accept=".jpg,.jpeg,.png" required>
+            </div>
+
+            <div class="progress">
+                <div class="progress-bar" role="progressbar" style="width: 0%">0%</div>
+            </div>
+
+            <div class="status-message" id="statusMessage"></div>
+
+            <button type="submit" class="btn btn-primary w-100">
+                <i class="fas fa-upload me-2"></i>提交作品
+            </button>
+        </form>
+    </div>
+</div>
+
+<script src="https://cdn.bootcdn.net/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // 文件选择处理
+        const workFileInput = document.getElementById('workFile');
+        const proofFileInput = document.getElementById('proofFile');
+        const workFileInfo = document.getElementById('workFileInfo');
+        const proofFileInfo = document.getElementById('proofFileInfo');
+
+        workFileInput.addEventListener('change', function() {
+            if (this.files.length > 0) {
+                workFileInfo.textContent = `已选择: ${this.files[0].name} (${formatFileSize(this.files[0].size)})`;
+            }
+        });
+
+        proofFileInput.addEventListener('change', function() {
+            if (this.files.length > 0) {
+                proofFileInfo.textContent = `已选择: ${this.files[0].name} (${formatFileSize(this.files[0].size)})`;
+            }
+        });
+
+        // 拖放功能
+        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+            ['workFileLabel', 'proofFileLabel'].forEach(id => {
+                const element = document.getElementById(id);
+                element.addEventListener(eventName, preventDefaults, false);
+            });
+        });
+
+        function preventDefaults(e) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+
+        ['dragenter', 'dragover'].forEach(eventName => {
+            ['workFileLabel', 'proofFileLabel'].forEach(id => {
+                const element = document.getElementById(id);
+                element.addEventListener(eventName, highlight, false);
+            });
+        });
+
+        ['dragleave', 'drop'].forEach(eventName => {
+            ['workFileLabel', 'proofFileLabel'].forEach(id => {
+                const element = document.getElementById(id);
+                element.addEventListener(eventName, unhighlight, false);
+            });
+        });
+
+        function highlight(e) {
+            this.style.borderColor = 'var(--sci-fi-accent)';
+            this.style.backgroundColor = 'rgba(0, 240, 255, 0.1)';
+        }
+
+        function unhighlight(e) {
+            this.style.borderColor = 'rgba(0, 240, 255, 0.5)';
+            this.style.backgroundColor = 'transparent';
+        }
+
+        // 处理文件拖放
+        document.getElementById('workFileLabel').addEventListener('drop', handleDrop.bind(null, workFileInput, workFileInfo), false);
+        document.getElementById('proofFileLabel').addEventListener('drop', handleDrop.bind(null, proofFileInput, proofFileInfo), false);
+
+        function handleDrop(input, infoDisplay, e) {
+            const dt = e.dataTransfer;
+            const files = dt.files;
+
+            if (files.length > 0) {
+                input.files = files;
+                infoDisplay.textContent = `已选择: ${files[0].name} (${formatFileSize(files[0].size)})`;
+            }
+        }
+
+        // 格式化文件大小
+        function formatFileSize(bytes) {
+            if (bytes === 0) return '0 Bytes';
+            const k = 1024;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        }
+
+        // 表单提交处理
+        const form = document.getElementById('submissionForm');
+        const progressBar = document.querySelector('.progress-bar');
+        const progressContainer = document.querySelector('.progress');
+        const statusMessage = document.getElementById('statusMessage');
+
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            // 验证表单
+            if (!validateForm()) {
+                return;
+            }
+
+            // 重置状态
+            progressBar.style.width = '0%';
+            progressBar.textContent = '0%';
+            progressContainer.style.display = 'block';
+            statusMessage.style.display = 'none';
+
+            // 禁用提交按钮防止重复提交
+            const submitBtn = form.querySelector('button[type="submit"]');
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>上传中... 稍安勿躁~ 喝点茶水🎈🍵';
+
+            // 创建FormData对象
+            const formData = new FormData(form);
+
+            // 创建XMLHttpRequest对象
+            const xhr = new XMLHttpRequest();
+
+            // 上传进度事件
+            xhr.upload.addEventListener('progress', function(e) {
+                if (e.lengthComputable) {
+                    const percentComplete = Math.round((e.loaded / e.total) * 100);
+                    progressBar.style.width = percentComplete + '%';
+                    progressBar.textContent = percentComplete + '%';
+                    progressBar.setAttribute('aria-valuenow', percentComplete);
+
+                    // 添加动画效果
+                    if (percentComplete < 100) {
+                        progressBar.style.transition = 'width 0.3s ease';
+                    }
+                }
+            }, false);
+
+            // 上传完成事件
+            xhr.addEventListener('load', function() {
+                progressContainer.style.display = 'none';
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = '<i class="fas fa-upload me-2"></i>提交作品';
+
+                try {
+                    const response = JSON.parse(xhr.responseText);
+
+                    if (xhr.status === 200) {
+                        showStatus('success', '作品提交成功！');
+                        form.reset();
+                        workFileInfo.textContent = '未选择文件';
+                        proofFileInfo.textContent = '未选择文件';
+                    } else {
+                        showStatus('error', response.message || '提交失败，请重试');
+                    }
+                } catch (e) {
+                    showStatus('error', '处理响应时出错: ' + xhr.responseText);
+                }
+            }, false);
+
+            // 上传错误事件
+            xhr.addEventListener('error', function() {
+                progressContainer.style.display = 'none';
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = '<i class="fas fa-upload me-2"></i>提交作品';
+                showStatus('error', '上传过程中发生错误，请检查网络连接后重试');
+            }, false);
+
+            // 上传中止事件
+            xhr.addEventListener('abort', function() {
+                progressContainer.style.display = 'none';
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = '<i class="fas fa-upload me-2"></i>提交作品';
+                showStatus('error', '上传已取消');
+            }, false);
+
+            // 发送请求
+            xhr.open('POST', '/api/file/upload', true);
+            xhr.send(formData);
+        });
+
+        // 表单验证
+        function validateForm() {
+            const requiredFields = form.querySelectorAll('[required]');
+            let isValid = true;
+
+            requiredFields.forEach(field => {
+                if (!field.value.trim()) {
+                    field.classList.add('is-invalid');
+                    isValid = false;
+                } else {
+                    field.classList.remove('is-invalid');
+                }
+            });
+
+            // 验证文件类型
+            if (workFileInput.files.length > 0) {
+                const fileName = workFileInput.files[0].name.toLowerCase();
+                if (!fileName.endsWith('.doc') && !fileName.endsWith('.docx') && !fileName.endsWith('.pdf')) {
+                    showStatus('error', '作品文件必须是.doc, .docx或.pdf格式');
+                    isValid = false;
+                }
+            }
+
+            if (proofFileInput.files.length > 0) {
+                const fileName = proofFileInput.files[0].name.toLowerCase();
+                if (!fileName.endsWith('.jpg') && !fileName.endsWith('.jpeg') && !fileName.endsWith('.png')) {
+                    showStatus('error', '凭证文件必须是.jpg, .jpeg或.png格式');
+                    isValid = false;
+                }
+            }
+
+            return isValid;
+        }
+
+        // 显示状态消息
+        function showStatus(type, message) {
+            statusMessage.textContent = message;
+            statusMessage.className = 'status-message ' + type;
+            statusMessage.style.display = 'block';
+        }
+    });
+</script>
+</body>
+</html>
