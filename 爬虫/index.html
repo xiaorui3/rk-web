@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>URL识别与提取工具</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#3B82F6',
+                        secondary: '#10B981',
+                        dark: '#1E293B',
+                        light: '#F8FAFC'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .content-auto {
+                content-visibility: auto;
+            }
+            .url-item {
+                @apply bg-gray-50 p-3 rounded-md mb-2 hover:bg-gray-100 transition-colors break-all;
+            }
+            .card {
+                @apply bg-white rounded-xl shadow-lg p-6 mb-6 transform hover:shadow-xl transition-all duration-300;
+            }
+            .btn {
+                @apply px-4 py-2 rounded-lg font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2;
+            }
+            .btn-primary {
+                @apply bg-primary text-white hover:bg-primary/90 focus:ring-primary/50;
+            }
+            .btn-secondary {
+                @apply bg-secondary text-white hover:bg-secondary/90 focus:ring-secondary/50;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen font-sans text-dark">
+<div class="container mx-auto px-4 py-8 max-w-5xl">
+    <header class="text-center mb-10">
+        <h1 class="text-[clamp(1.8rem,4vw,2.8rem)] font-bold text-gray-800 mb-3">
+            <i class="fa fa-link text-primary mr-2"></i>URL识别与提取工具
+        </h1>
+        <p class="text-gray-600 text-lg">自动识别当前页面URL，统计并提取页面中所有链接</p>
+    </header>
+
+    <!-- 当前URL展示区域 -->
+    <section class="card">
+        <h2 class="text-xl font-semibold mb-4 flex items-center">
+            <i class="fa fa-globe text-primary mr-2"></i>当前页面URL
+        </h2>
+        <div class="flex flex-col md:flex-row gap-3">
+            <div id="currentUrl" class="flex-1 bg-gray-50 p-4 rounded-lg font-mono text-sm overflow-x-auto break-all"></div>
+            <button id="copyCurrentUrl" class="btn btn-primary whitespace-nowrap">
+                <i class="fa fa-copy mr-1"></i>复制当前URL
+            </button>
+        </div>
+    </section>
+
+    <!-- 链接统计区域 -->
+    <section class="card">
+        <h2 class="text-xl font-semibold mb-4 flex items-center">
+            <i class="fa fa-bar-chart text-primary mr-2"></i>页面链接统计
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div class="bg-blue-50 p-4 rounded-lg border border-blue-100">
+                <p class="text-sm text-gray-600 mb-1">总链接数量</p>
+                <p id="totalLinks" class="text-2xl font-bold text-primary">0</p>
+            </div>
+            <div class="bg-green-50 p-4 rounded-lg border border-green-100">
+                <p class="text-sm text-gray-600 mb-1">内部链接</p>
+                <p id="internalLinks" class="text-2xl font-bold text-secondary">0</p>
+            </div>
+            <div class="bg-purple-50 p-4 rounded-lg border border-purple-100">
+                <p class="text-sm text-gray-600 mb-1">外部链接</p>
+                <p id="externalLinks" class="text-2xl font-bold text-purple-600">0</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 提取的URL列表 -->
+    <section class="card">
+        <div class="flex justify-between items-center mb-4">
+            <h2 class="text-xl font-semibold flex items-center">
+                <i class="fa fa-list-alt text-primary mr-2"></i>页面中提取的URL列表
+            </h2>
+            <button id="copyAllUrls" class="btn btn-secondary">
+                <i class="fa fa-copy mr-1"></i>复制所有URL
+            </button>
+        </div>
+
+        <div class="mb-4 flex justify-between items-center">
+            <div class="text-sm text-gray-600">
+                共找到 <span id="urlCountDisplay">0</span> 个链接
+            </div>
+            <div class="flex gap-2">
+                <button id="filterAll" class="btn btn-primary text-sm px-3 py-1">全部</button>
+                <button id="filterInternal" class="btn bg-white border border-gray-300 text-gray-700 text-sm px-3 py-1">内部链接</button>
+                <button id="filterExternal" class="btn bg-white border border-gray-300 text-gray-700 text-sm px-3 py-1">外部链接</button>
+            </div>
+        </div>
+
+        <div id="urlsContainer" class="max-h-[500px] overflow-y-auto pr-2">
+            <div class="text-center text-gray-500 py-8" id="loadingIndicator">
+                <i class="fa fa-spinner fa-spin mr-2"></i>正在扫描页面链接...
+            </div>
+            <div id="noUrlsFound" class="text-center text-gray-500 py-8 hidden">
+                <i class="fa fa-exclamation-circle mr-2"></i>未在页面中找到任何链接
+            </div>
+            <div id="urlsList" class="space-y-2"></div>
+        </div>
+    </section>
+
+    <footer class="mt-10 text-center text-gray-500 text-sm">
+        <p>URL识别与提取工具 &copy; 2023</p>
+    </footer>
+</div>
+
+<!-- 通知提示框 -->
+<div id="notification" class="fixed bottom-5 right-5 bg-gray-800 text-white px-4 py-3 rounded-lg shadow-lg transform translate-y-20 opacity-0 transition-all duration-300 flex items-center">
+    <i id="notificationIcon" class="mr-2"></i>
+    <span id="notificationText"></span>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // 获取DOM元素
+        const currentUrlElement = document.getElementById('currentUrl');
+        const copyCurrentUrlBtn = document.getElementById('copyCurrentUrl');
+        const totalLinksElement = document.getElementById('totalLinks');
+        const internalLinksElement = document.getElementById('internalLinks');
+        const externalLinksElement = document.getElementById('externalLinks');
+        const urlsListElement = document.getElementById('urlsList');
+        const urlCountDisplay = document.getElementById('urlCountDisplay');
+        const loadingIndicator = document.getElementById('loadingIndicator');
+        const noUrlsFound = document.getElementById('noUrlsFound');
+        const copyAllUrlsBtn = document.getElementById('copyAllUrls');
+        const filterAllBtn = document.getElementById('filterAll');
+        const filterInternalBtn = document.getElementById('filterInternal');
+        const filterExternalBtn = document.getElementById('filterExternal');
+        const notification = document.getElementById('notification');
+        const notificationIcon = document.getElementById('notificationIcon');
+        const notificationText = document.getElementById('notificationText');
+
+        // 存储所有链接数据
+        let allUrls = [];
+        let currentFilter = 'all';
+
+        // 显示当前页面URL
+        const currentUrl = window.location.href;
+        currentUrlElement.textContent = currentUrl;
+
+        // 解析当前域名，用于区分内部和外部链接
+        const currentDomain = new URL(currentUrl).hostname;
+
+        // 提取页面中所有链接
+        function extractUrls() {
+            // 获取所有a标签
+            const links = document.getElementsByTagName('a');
+            const urls = [];
+
+            for (let i = 0; i < links.length; i++) {
+                const href = links[i].href;
+                // 过滤空链接和javascript链接
+                if (href && !href.startsWith('javascript:') && href !== '#') {
+                    // 确定是内部还是外部链接
+                    let isInternal = false;
+                    try {
+                        const url = new URL(href);
+                        isInternal = url.hostname === currentDomain;
+                    } catch (e) {
+                        // 相对路径视为内部链接
+                        isInternal = true;
+                    }
+
+                    urls.push({
+                        url: href,
+                        text: links[i].textContent.trim() || '无链接文本',
+                        isInternal: isInternal
+                    });
+                }
+            }
+
+            // 去重处理
+            const uniqueUrls = [...new Map(urls.map(item => [item.url, item])).values()];
+
+            return uniqueUrls;
+        }
+
+        // 显示链接列表
+        function displayUrls(urls, filter = 'all') {
+            urlsListElement.innerHTML = '';
+            loadingIndicator.classList.add('hidden');
+
+            let filteredUrls = urls;
+            if (filter === 'internal') {
+                filteredUrls = urls.filter(url => url.isInternal);
+            } else if (filter === 'external') {
+                filteredUrls = urls.filter(url => !url.isInternal);
+            }
+
+            if (filteredUrls.length === 0) {
+                noUrlsFound.classList.remove('hidden');
+                return;
+            }
+
+            noUrlsFound.classList.add('hidden');
+
+            filteredUrls.forEach((item, index) => {
+                const urlItem = document.createElement('div');
+                urlItem.className = `url-item flex flex-col`;
+
+                urlItem.innerHTML = `
+                        <div class="flex justify-between items-start mb-1">
+                            <span class="text-sm font-medium ${item.isInternal ? 'text-secondary' : 'text-purple-600'}">
+                                ${item.isInternal ?
+                    '<i class="fa fa-home mr-1"></i>内部链接' :
+                    '<i class="fa fa-external-link mr-1"></i>外部链接'}
+                            </span>
+                            <button class="copy-url-btn text-gray-500 hover:text-primary text-sm" data-url="${item.url}">
+                                <i class="fa fa-copy"></i> 复制
+                            </button>
+                        </div>
+                        <div class="text-gray-800 font-mono text-sm mb-1 break-all">${item.url}</div>
+                        ${item.text ? `<div class="text-gray-600 text-xs italic">链接文本: ${item.text}</div>` : ''}
+                    `;
+
+                urlsListElement.appendChild(urlItem);
+            });
+
+            // 添加复制单个URL的事件监听
+            document.querySelectorAll('.copy-url-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const url = this.getAttribute('data-url');
+                    copyToClipboard(url);
+                    showNotification('链接已复制到剪贴板', 'check-circle', 'text-green-500');
+                });
+            });
+        }
+
+        // 复制到剪贴板函数
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).catch(err => {
+                console.error('无法复制文本: ', err);
+                // 备用方法
+                const textarea = document.createElement('textarea');
+                textarea.value = text;
+                document.body.appendChild(textarea);
+                textarea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textarea);
+            });
+        }
+
+        // 显示通知
+        function showNotification(message, icon, iconClass = '') {
+            notificationText.textContent = message;
+            notificationIcon.className = `fa fa-${icon} ${iconClass}`;
+            notification.classList.remove('translate-y-20', 'opacity-0');
+            notification.classList.add('translate-y-0', 'opacity-100');
+
+            setTimeout(() => {
+                notification.classList.remove('translate-y-0', 'opacity-100');
+                notification.classList.add('translate-y-20', 'opacity-0');
+            }, 3000);
+        }
+
+        // 初始化页面
+        function init() {
+            // 提取并显示所有URL
+            allUrls = extractUrls();
+
+            // 更新统计数据
+            const internalCount = allUrls.filter(url => url.isInternal).length;
+            const externalCount = allUrls.length - internalCount;
+
+            totalLinksElement.textContent = allUrls.length;
+            internalLinksElement.textContent = internalCount;
+            externalLinksElement.textContent = externalCount;
+            urlCountDisplay.textContent = allUrls.length;
+
+            // 显示链接列表
+            displayUrls(allUrls);
+        }
+
+        // 事件监听 - 复制当前URL
+        copyCurrentUrlBtn.addEventListener('click', function() {
+            copyToClipboard(currentUrl);
+            showNotification('当前URL已复制到剪贴板', 'check-circle', 'text-green-500');
+        });
+
+        // 事件监听 - 复制所有URL
+        copyAllUrlsBtn.addEventListener('click', function() {
+            let urlsToCopy = allUrls;
+
+            if (currentFilter === 'internal') {
+                urlsToCopy = allUrls.filter(url => url.isInternal);
+            } else if (currentFilter === 'external') {
+                urlsToCopy = allUrls.filter(url => !url.isInternal);
+            }
+
+            const urlsText = urlsToCopy.map(item => item.url).join('\n');
+            copyToClipboard(urlsText);
+            showNotification(`已复制 ${urlsToCopy.length} 个链接到剪贴板`, 'check-circle', 'text-green-500');
+        });
+
+        // 过滤按钮事件
+        function setActiveFilter(button) {
+            [filterAllBtn, filterInternalBtn, filterExternalBtn].forEach(btn => {
+                btn.className = 'btn bg-white border border-gray-300 text-gray-700 text-sm px-3 py-1';
+            });
+            button.className = 'btn btn-primary text-sm px-3 py-1';
+        }
+
+        filterAllBtn.addEventListener('click', function() {
+            setActiveFilter(this);
+            currentFilter = 'all';
+            displayUrls(allUrls, 'all');
+            urlCountDisplay.textContent = allUrls.length;
+        });
+
+        filterInternalBtn.addEventListener('click', function() {
+            setActiveFilter(this);
+            currentFilter = 'internal';
+            const internalUrls = allUrls.filter(url => url.isInternal);
+            displayUrls(allUrls, 'internal');
+            urlCountDisplay.textContent = internalUrls.length;
+        });
+
+        filterExternalBtn.addEventListener('click', function() {
+            setActiveFilter(this);
+            currentFilter = 'external';
+            const externalUrls = allUrls.filter(url => !url.isInternal);
+            displayUrls(allUrls, 'external');
+            urlCountDisplay.textContent = externalUrls.length;
+        });
+
+        // 显示通知函数
+        function showNotification(message, icon, iconClass) {
+            notificationText.textContent = message;
+            notificationIcon.className = `fa fa-${icon} ${iconClass}`;
+            notification.classList.remove('translate-y-20', 'opacity-0');
+            notification.classList.add('translate-y-0', 'opacity-100');
+
+            setTimeout(() => {
+                notification.classList.remove('translate-y-0', 'opacity-100');
+                notification.classList.add('translate-y-20', 'opacity-0');
+            }, 3000);
+        }
+
+        // 初始化页面
+        init();
+    });
+</script>
+</body>
+</html>
