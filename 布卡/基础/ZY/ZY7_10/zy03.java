@@ -1,6 +1,6 @@
 package 布卡.基础.ZY.ZY7_10;
 
-public class ZY3 {
+public class zy03 {
     public static void main(String[] args) {
         int x = 5;
         boolean b1 = true;
