@@ -5,12 +5,23 @@ public class test3 {
 
         int sum=0;
         for (;sum<370;sum++){
-            if (sum-10==sum+20  &&  sum/2==sum*2){
-                if (sum-10==sum/2){
-                    System.out.println(sum+10);
-                    System.out.println(sum-20);
-                    System.out.println(sum*2);
-                    System.out.println(sum/2);
+
+            int j=sum-10;
+            int y=sum+20;
+            int b=sum/2;
+            int d=sum*2;
+
+            if (j+y+b+d==370){
+                System.out.println(j);
+                System.out.println(y);
+                System.out.println(b);
+                System.out.println(d);
+            }
+            if (j==y){
+                if (b==d){
+                    if (j==b){
+
+                    }
                 }
 
             }
