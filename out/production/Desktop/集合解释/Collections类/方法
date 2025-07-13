@@ -1,0 +1,6 @@
+void reverse(List list)：对指定 List 集合元素进行逆向排序。
+void shuffle(List list)：对 List 集合元素进行随机排序（shuffle 方法模拟了“洗牌”动作）。
+void sort(List list)：根据元素的自然顺序对指定 List 集合的元素按升序进行排序。
+void sort(List list, Comparator c)：根据指定 Comparator 产生的顺序对 List 集合元素进行排序。
+void swap(List list, int i, int j)：将指定 List 集合中的 i 处元素和 j 处元素进行交换。
+void rotate(List list, int distance)：当 distance 为正数时，将 list 集合的后 distance 个元素“整体”移到前面；当 distance 为负数时，将 list 集合的前 distance 个元素“整体”移到后面。该方法不会改变集合的长度。
