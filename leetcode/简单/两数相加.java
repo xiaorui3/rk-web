@@ -28,5 +28,7 @@ public class 两数相加 {
             Integer i1 = arr1.get(i);
 
         }
+        return l1;
     }
+
 }
