@@ -50,7 +50,8 @@ insert into emp(empno, ename, job, mgr, hiredate, sal, comm, deptno) VALUES (778
 insert into emp(empno, ename, job, mgr, hiredate, sal, comm, deptno) VALUES (7902,'FORD','ANALYST',7566,'1981-12-03',3000,null,20);
 insert into emp(empno, ename, job, mgr, hiredate, sal, comm, deptno) VALUES (7369,'SMITH','CLERK',7902,'1980-12-17',800,null,20);
 insert into emp(empno, ename, job, mgr, hiredate, sal, comm, deptno) VALUES (7499,'ALLEN','SALESMAN',7698,'1981-02-20',1600,300,30);
-
+insert into emp(empno, ename, job, mgr, hiredate, sal, comm, deptno) VALUES (7500,'ALLEN','SALESMAN',7698,'1981-02-20',1600,300,50);
+insert into emp(empno, ename, job, mgr, hiredate, sal, comm, deptno) VALUES (7510,'ALLEN','SALESMAN',7698,'1981-02-20',1600,300,200);
 
 insert into salgrade(grade, losal, hisal) VALUES (1,700,1200);
 insert into salgrade(grade, losal, hisal) VALUES (2,1201,1400);
@@ -135,15 +136,15 @@ select ename,job,sal,
            else '无'
 
 end as '薪资等级'
-from emp
+from emp;
 
 -- 其他函数
 select database(),user(),version() from dual;
 
 -- 分组
-select deptno ,avg(sal) from emp;
-select deptno ,avg(sal) from emp group by deptno having avg(sal)>3000;
-
+select * from emp;
+select deptno ,avg(sal) from emp group by deptno having avg(sal)>1000;
+select deptno ,avg(sal) from emp where job<>'MANAGER' group by deptno having avg(sal)>1000;
 
 -- 多表 内连接
 -- 查询员工的编号 姓名 部门编号
@@ -154,3 +155,27 @@ select * from dept;
 select * from emp join dept;
 -- 自然连接 自动匹配同名列
 select * from emp natural join dept;
+
+select emp.empno,emp.comm,emp.ename,emp.deptno,dept.deptno,dept.dname,dept.loc from emp natural join dept order by emp.deptno;
+
+select * from emp join dept using(deptno);
+select * from emp as e  join dept as d on(e.deptno=d.deptno);
+
+-- 交叉连接 cross join
+-- 自然连接 natural join
+-- 内连接 using()
+-- 内连接 on()
+-- 综合来看 on()比较用的最多
+select * from emp as e  join dept as d on(e.deptno=d.deptno) where sal>=3000;
+
+select * from emp e left outer join dept d on (e.deptno=d.deptno);
+
+select * from emp e left outer join dept d on (e.deptno=d.deptno)
+union -- 并集
+select * from emp e right outer join dept d on (e.deptno=d.deptno);
+
+
+select deptno from emp where ename='CLARK';
+select sal from emp where ename='CLARK';
+select * from emp where deptno=(select deptno from emp where ename='CLARK');
+select ename,sal from emp where deptno=(select deptno from emp where ename='CLARK') and sal<(select sal from emp where ename='CLARK');
