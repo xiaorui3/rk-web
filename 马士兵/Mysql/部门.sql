@@ -79,3 +79,78 @@ select distinct job,deptno from emp;
 select * from emp order by sal desc ;
 --
 select * from emp order by sal ,deptno desc ;
+
+
+-- select distinct sal from emp;
+
+
+
+
+-- --- where语句
+
+select * from emp where deptno = 20;
+select * from emp where job in ('CLERK','ANALYST');
+
+select * from emp where ename like '%A%';
+
+select * from emp where comm IS not NULL;
+
+
+-- 函数
+select empno,ename,lower(ename),upper(ename),sal from emp;
+select max(sal),min(sal),count(sal),sum(sal),avg(sal) from emp;
+
+select ename,length(ename) from emp;
+
+
+-- 字符串
+select ename,length(ename) ,substring(ename,2,3) from emp;
+-- 数值函数
+select abs(-5),ceil(5.330),floor(5.9),round(3.14) from dual;
+select abs(-5),ceil(5.330),floor(5.9),round(3.14);
+-- 日期与时间函数
+select curtime(),curdate(),now() from dual;
+
+
+-- 流程
+select empno,ename,sal,if(sal>=2500,'高薪','底薪') as '薪资登记' from emp;
+select empno,ename,sal,comm,sal+ifnull(comm,0) ,job from emp;
+
+-- case
+select empno,ename,job ,
+       case job
+            when 'CLERK' then '店员'
+            when 'ANALYST' then '分析员'
+            when 'MANAGER' then '经理'
+            when 'SALESMAN' then '业务员'
+            else '其他职位'
+end as '职位',
+     sal from emp;
+
+select ename,job,sal,
+       case
+            when sal<=1000 then '太低了'
+            when sal >1000 and sal < 3000 then '还可以'
+            when sal >=3000 then '高薪啊'
+           else '无'
+
+end as '薪资等级'
+from emp
+
+-- 其他函数
+select database(),user(),version() from dual;
+
+-- 分组
+select deptno ,avg(sal) from emp;
+select deptno ,avg(sal) from emp group by deptno having avg(sal)>3000;
+
+
+-- 多表 内连接
+-- 查询员工的编号 姓名 部门编号
+select * from emp;
+select empno, ename,deptno from emp;
+-- 查询员工的编号 姓名 部门编号 部门名称
+select * from dept;
+select * from emp join dept;
+-- 自然连接 自动匹配同名列
+select * from emp natural join dept;
