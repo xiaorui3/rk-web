@@ -15,7 +15,7 @@ public class test5 {
         Scanner sc =new Scanner(System.in);
         int num = sc.nextInt();
         int p=0;
-        for (int v:arr){
+        to:for (int v:arr){
             if (v==num){
                 System.out.println(num+"存在找到啦");
                 p=1;
@@ -23,6 +23,7 @@ public class test5 {
         }
         if (p==0){
             System.out.println(num+"不存在");
+
         }
 
     }
