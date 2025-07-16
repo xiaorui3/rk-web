@@ -4,55 +4,68 @@ import 马士兵.JDBC.JDBCTest01.entity.Account;
 
 import java.sql.*;
 import java.util.Arrays;
+import java.util.LinkedList;
 
-public class TestDemo09转账效果 {
+public class TestDemo10回滚{
     public static String driver="com.mysql.cj.jdbc.Driver";
     public static String url="jdbc:mysql://localhost:3306/jbdc?useSSL=false&useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai";
     public static String user="root";
     public static String password="20041123zZ@";
     public static void main(String[] args) {
-
-
+        for (int i = 0; i < 10000; i++) {
+            getAccount(String.valueOf(i),String.valueOf(i),i);
+            //getAccount(i);
+            System.out.println(i);
+        }
     }
 
 
-    public static void getAccount(int n1,int money,int n2){
+    public static void getAccount(String n, String pwd,int money){
         Connection conn = null;
         Statement statement = null;
+        LinkedList<Savepoint> link=new LinkedList<>();
         try {
             Class.forName(driver);
             conn = DriverManager.getConnection(url, user, password);
-            conn.setAutoCommit(false);
-            String sql="update jbdc.account set money =account.money- ? where aid=?";
+            String sql="insert into jbdc.account values (null,?,?,?)";
             PreparedStatement preparedStatement = conn.prepareStatement(sql);
-            preparedStatement.setDouble(1,money);
-            preparedStatement.setInt(2,n1);
-            //preparedStatement.executeUpdate();
-
-            preparedStatement.setDouble(1,-money);
-            preparedStatement.setInt(2,n2);
-            //preparedStatement.executeUpdate();
-
-
-
+            conn.setAutoCommit(false);
+            for (int i = 0; i < 10000; i++) {
+                preparedStatement.setString(1,n);
+                preparedStatement.setString(2,pwd);
+                preparedStatement.setString(3, String.valueOf(money));
+                preparedStatement.addBatch();
+                if (i%1000==0){
+                    preparedStatement.executeBatch();
+                    preparedStatement.clearBatch();
+                    Savepoint savepoint = conn.setSavepoint();
+                    link.addLast(savepoint);
+                }
+            }
+            int[] ints = preparedStatement.executeBatch();
+            preparedStatement.clearBatch();
+            for (int i:ints){
+                System.out.print(i+" ");
+            }
 
 
         } catch (Exception e) {
-            if (null!=conn){
-                try {
-                    conn.rollback();
-                } catch (SQLException ex) {
-                    throw new RuntimeException(ex);
+            try {
+                Savepoint last = link.getLast();
+                if (conn != null && last!=null) {
+                    conn.rollback(last);
                 }
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
             }
             e.printStackTrace();
         } finally {
-            if (null!=conn){
-                try {
+            try {
+                if (conn != null) {
                     conn.commit();
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
                 }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
             }
             if (null!=statement){
                 try {
