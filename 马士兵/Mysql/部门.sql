@@ -82,6 +82,7 @@ select * from emp order by sal desc ;
 select * from emp order by sal ,deptno desc ;
 
 
+
 -- select distinct sal from emp;
 
 
