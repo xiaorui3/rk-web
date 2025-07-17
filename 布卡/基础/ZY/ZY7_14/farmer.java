@@ -15,6 +15,7 @@ public class farmer extends person{
     public void TillLand(String goods){
         System.out.println("农夫在种"+goods+this.getName()+"  "+this.getAge());
     }
+     
     
     public void plantSoybean() {
         soybean soy = new soybean();

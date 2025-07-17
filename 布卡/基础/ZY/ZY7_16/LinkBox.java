@@ -77,7 +77,6 @@ public class LinkBox<E> {
     }
     public E remove(int index) {
         LinkBox<E> current = this;
-        // 找到要移除的节点
         for (int i = 0; i < index; i++) {
             if (current.next == null) {
                 throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + (i + 1));

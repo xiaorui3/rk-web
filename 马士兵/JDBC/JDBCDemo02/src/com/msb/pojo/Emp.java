@@ -3,8 +3,11 @@ package com.msb.pojo;
 import java.io.Serializable;
 import java.util.Date;
 
+/**
+ * Emp表对应的类
+ */
 public class Emp implements Serializable {
-    private int empno;
+    private Integer empno;
     private String ename;
     private String job;
     private int mgr;
@@ -77,7 +80,7 @@ public class Emp implements Serializable {
         this.deptno = deptno;
     }
 
-    public Emp(int empno, String ename, String job, int mgr, Date hiredate, int sal, int comm, int deptno) {
+    public Emp(Integer empno, String ename, String job, int mgr, Date hiredate, int sal, int comm, int deptno) {
         this.empno = empno;
         this.ename = ename;
         this.job = job;
@@ -90,7 +93,7 @@ public class Emp implements Serializable {
 
     @Override
     public String toString() {
-        return "TestDemo06_Obj{" +
+        return "Emp{" +
                 "empno=" + empno +
                 ", ename='" + ename + '\'' +
                 ", job='" + job + '\'' +

@@ -7,7 +7,7 @@
       <sourceFolder url="file://$MODULE_DIR$/w1" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/w2" isTestSource="false" />
     </content>
-    <orderEntry type="inheritedJdk" />
+    <orderEntry type="jdk" jdkName="19" jdkType="JavaSDK" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="gson-2.6.2" level="project" />
     <orderEntry type="library" exported="" name="lib" level="project" />
