@@ -110,6 +110,7 @@ public class EmpDaoImpl implements EmpDao {
         PreparedStatement preparedStatement = null;
         List<Emp> arr = new ArrayList<>();
         try {
+            Class.forName(driver);
             connection = DriverManager.getConnection(url, user, password);
             String sql = "select * from jbdc.emp";
             preparedStatement = connection.prepareStatement(sql);
@@ -130,6 +131,8 @@ public class EmpDaoImpl implements EmpDao {
 
         } catch (SQLException e) {
 
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         } finally {
             try {

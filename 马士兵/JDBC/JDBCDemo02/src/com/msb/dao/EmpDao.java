@@ -26,4 +26,5 @@ public interface EmpDao {
      * @return Emp类型的所有员工表
      */
     List<Emp> findAll();
+
 }

@@ -30,11 +30,37 @@ public class EmpManageSystem {
                     List<Dept> all1 = deptDao.findAll();
                     all1.forEach(System.out::println);
                     break;
-                case 3:break;
-                case 4:break;
-                case 5:break;
-                case 6:break;
-                case 7:break;
+                case 3:
+                    System.out.print("请输入员工的工号: ");
+                    EmpDao empDao1 =new EmpDaoImpl();
+                    int i1 = empDao1.deleteByEmpno(sc.nextInt());
+                    System.out.println(i1>1?"删除成功！":"删除失败！");
+                    break;
+                case 4:
+                    System.out.println("请输入部门的编号");
+                    DeptDao deptDao1 =new DeptDaoImpl();
+                    boolean b = deptDao1.deleteByDeptno(sc.nextInt());
+                    System.out.println(b?"删除成功！":"删除失败！");
+                    break;
+                case 5:
+
+                    break;
+                case 6:
+                    System.out.println("请输入一个部门的信息: ");
+                    Dept dept =new Dept();
+                    System.out.print("请输入部门的编号: ");
+                    dept.setDeptno(sc.nextInt());
+                    System.out.print("请输入部门的名称: ");
+                    dept.setLoc(sc.next());
+                    System.out.println("请输入部门的位置: ");
+                    dept.setDname(sc.next());
+                    DeptDao deptDao2 =new DeptDaoImpl();
+                    boolean b1 = deptDao2.addByDeptno(dept);
+                    System.out.println(b1?"添加成功！":"添加失败！");
+                    break;
+                case 7:
+                    System.exit(0);
+                    break;
                 default:
                     System.out.println("输入错误！");
 

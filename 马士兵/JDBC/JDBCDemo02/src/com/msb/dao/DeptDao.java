@@ -12,4 +12,8 @@ public interface DeptDao {
      * @return 返回部门Dept类型的表
      */
     List<Dept> findAll();
+
+    boolean deleteByDeptno(int deptno);
+    boolean addByDeptno(Dept dept);
+
 }

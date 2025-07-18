@@ -55,4 +55,80 @@ public class DeptDaoImpl implements DeptDao {
 
         return arr;
     }
+
+    @Override
+    public boolean deleteByDeptno(int deptno) {
+        int i = 0;
+        Connection connection=null;
+        PreparedStatement preparedStatement =null;
+        try {
+            Class.forName(driver);
+            connection = DriverManager.getConnection(url,user,password);
+            String sql="delete from jbdc.dept where deptno=?";
+            preparedStatement = connection.prepareStatement(sql);
+            i = preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        } finally {
+            try {
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        if(i>0){
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean addByDeptno(Dept dept) {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        int i;
+        try {
+            Class.forName(driver);
+            connection = DriverManager.getConnection(url, user, password);
+
+            String sql = "insert into jdbc.dept values (?,?,?)";
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, dept.getDeptno());
+            preparedStatement.setString(2, dept.getDname());
+            preparedStatement.setString(3, dept.getLoc());
+            i = preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        } finally {
+            try {
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        if (i > 0) {
+            return true;
+        }
+        return false;
+    }
 }
