@@ -27,10 +27,13 @@ public class MyConnectionPool {
             }
         }
     }
+// 初始化数据库连接
     private static Connection initConnection(){
         try {
+            // 通过DriverManager获取数据库连接
             return DriverManager.getConnection(url,user,password);
         } catch (SQLException e) {
+            // 打印异常信息
             e.printStackTrace();
         }
         return null;
@@ -70,6 +73,7 @@ public class MyConnectionPool {
                     System.out.println(conn+"已被关闭");
                 }
             } catch (SQLException e) {
+
                 e.printStackTrace();
             }
 
