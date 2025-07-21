@@ -40,7 +40,7 @@ ens38:
 
 再进行ifconfig就好了
 
-
+systemctl restart network.service
 
 
 
