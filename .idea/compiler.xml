@@ -9,6 +9,7 @@
         <module name="Spring6Demo03" />
         <module name="Spring6Demo02" />
         <module name="Spring6IocDiy" />
+        <module name="Spring6Demo04" />
       </profile>
     </annotationProcessing>
   </component>

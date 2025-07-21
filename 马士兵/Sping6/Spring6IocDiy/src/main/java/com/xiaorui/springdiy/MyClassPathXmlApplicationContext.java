@@ -1,6 +1,5 @@
 package com.xiaorui.springdiy;
 
-import org.dom4j.io.SAXReader;
 
 import javax.xml.parsers.SAXParser;
 
@@ -14,7 +13,7 @@ public class MyClassPathXmlApplicationContext implements MyFactory{
     }
 
     private void parseXml(String xmlpath) {
-        SAXReader saxReader=new SAXReader();
+        //SAXReader saxReader=new SAXReader();
 
     }
 
