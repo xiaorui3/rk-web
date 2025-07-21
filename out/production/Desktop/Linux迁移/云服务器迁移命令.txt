@@ -39,3 +39,13 @@ ens38:
 执行 netplan apply 一下
 
 再进行ifconfig就好了
+
+systemctl restart network.service
+
+
+
+
+
+其他命令：
+wget -r -p -np -k http://ceie.usth.edu.cn/index.htm
+递归下载网站

@@ -8,5 +8,12 @@ public class StringDemo01 {
         System.out.println(s1==s2);
         System.out.println(s1==s3);
         System.out.println(s1.equals(s2));
+
+        String s4 = "abcde we sdwa df";
+        String s5=s4;
+        s4=s4.replace("a","11");
+        System.out.println(s4);
+        s5=s5.replaceAll("a","11");
+        System.out.println(s5);
     }
 }
