@@ -1,0 +1,51 @@
+ssh -C root@45.207.195.166 -p 1122 "dd if=/dev/vda bs=20M" | dd of=server.img bs=1M status=progress
+
+qemu-system-x86_64 -drive file=server.img,if=virtio,format=raw
+
+qemu-system-x86_64 -drive file=server.img,if=virtio
+
+fsck.ext4 -y /dev/sda1
+
+# "(qemu-img.exe的绝对路径)" convert -O vmdk (生成.vmdk文件的目标路径)
+"C:\qemu\qemu-img.exe" convert -O vmdk E:\\server.img E:\45.207.208.76备份\vm\backup.vmdk
+
+
+
+配置vm 的本地虚拟网络：
+
+先 ip addr show 查看网卡名字和mac地址 ，我这边建议创建一个虚拟网卡 然后找到网关ip，挂在到虚拟机上
+
+cd /etc/netplan
+ls
+一般来说只有一个文件 50-network.yaml
+
+cat 一下看看内容
+
+把对应的公网ip的内容删除掉
+
+使用dhcp
+
+ens38:
+    match:
+        macaddress: 00:00:00:00:00:00 # 替换为实际查询到的MAC地址
+    dhcp4: yes
+    optional: true
+    set-name: ens38
+    nameservers:
+        addresses:
+            - 8.8.8.8
+            - 114.114.114.114
+
+执行 netplan apply 一下
+
+再进行ifconfig就好了
+
+systemctl restart network.service
+
+
+
+
+
+其他命令：
+wget -r -p -np -k http://ceie.usth.edu.cn/index.htm
+递归下载网站
