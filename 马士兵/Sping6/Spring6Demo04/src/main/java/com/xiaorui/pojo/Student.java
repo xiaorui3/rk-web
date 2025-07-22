@@ -19,7 +19,24 @@ public class Student {
     public void setAge(int age) {
         this.age = age;
     }
+    public Student s;
 
-    public Student() {
+
+    public Student(Porson p) {
+        this.s = p.getStudent();
+    }
+
+    public Student(String name, int age) {
+        this.name = name;
+
+        this.age = age;
+    }
+
+    @Override
+    public String toString() {
+        return "Student{" +
+                "name='" + name + '\'' +
+                ", age=" + age +
+                '}';
     }
 }
