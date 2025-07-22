@@ -12,6 +12,7 @@
         <module>Spring6Demo02</module>
         <module>Spring6IocDiy</module>
         <module>Spring6Demo03</module>
+        <module>Spring6Demo04</module>
     </modules>
 
     <properties>
