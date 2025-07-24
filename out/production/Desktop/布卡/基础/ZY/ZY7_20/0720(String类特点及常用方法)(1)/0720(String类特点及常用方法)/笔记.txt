@@ -1,0 +1,236 @@
+刘鑫洋，肇钰鑫
+赵锐，孙泽鑫
+赵恒毅，王艺凡
+张宏煜，何俊锋
+曹祖康，王智博
+梁坤，韩驰
+
+请你说说==和equals方法的区别？
+1.==能用来比较基本数据类型，也可以比较引用类型
+	equals方法，只能比较引用数据类型
+	int a = 1;
+	int b = 1;			a==b
+	String s1 = "a";
+	String s2 = "b";	s1==s2	s1.equals(s2);
+	Person p1 = new Person();
+	Person p2 = new Person();	p1==p2	p1.equals(p2);
+2.==比较的是基本类型，比较的值	==比较引用类型，比的是地址(引用)
+	equals方法默认是从Object类中来的，方法里面的源代码默认就是==比较
+	equals只能比较引用类型，默认比较的是引用类型的地址
+3.如果想要equals方法的比较规则发生改变，需要重写equals方法
+	比如String类就重写了，比如Integer类重写了
+
+===================================================
+
+静态常量
+	为了可读性增强
+	属性修饰符，static final		静态元素空间里，信息不让更改
+	注意一下命名规约	全部字母大写，两个单词，下划线隔开
+	
+单例模式
+	私有构造方法
+	私有静态当前类的对象作为属性		直接给对象赋值(饿汉式--立即加载)
+	公有静态的方法将唯一对象返回		调用方法的时候再赋值(懒汉式--延迟)
+	多线程并发的情况，需要保证对象的创建是唯一的
+
+LinkedBox封装
+	目的：存储一组元素，个数看似可以动态，频繁的插入和删除(性能快)
+	Node(上一个对象的引用，当前存储的真实数据，下一个对象的引用)
+
+=====================================================
+
+	面向对象的编程思想
+	自己设计(描述)	类，类中的成员
+
+	学习"别人"描述好的类，供我们使用--------工具类
+		String
+		Scanner
+		Math
+		Integer		使用手册	API帮助文档		IDEA提示
+
+
+=======================================================
+		int a = 10		String s = "abc";
+
+	String
+	是一个类			public class String{}	自己类的结构，类中描述的成员
+	是一个引用类型		存储的方式(地址/引用)
+
+1.看一看这个类长什么样？	源代码
+	所在的包是java.lang，不需要导包的，可以直接使用
+	类结构
+	public final class String  
+			implements java.io.Serializable, Comparable<String>, CharSequence
+	public修饰
+	final修饰？String类不能被继承
+	没有extends继承类，默认继承Object
+	有三个接口的实现
+		Serializable	示意性接口	实现后可以将对象进行序列化/反序列化
+		Comparable	可比较的		compareTo方法
+		CharSequence	字符序列		只要实现这个接口，互相之间都可以进行字符转化
+	里面有两个非常重要的属性
+		value	数组char[]		byte[]
+		hash		int数值
+=======================================================
+字符串
+	可变字符串		StringBuilder，StringBuffer
+	不可变字符串		String类型
+
+	"abcd"	--->	String类	中的value属性-数组里	'a' '我' 'c' 'd'	char[]	
+
+String不可变的特性？？？
+	不可变体现在：
+		长度不可变，内容不可变
+	private final char value[];
+		数组什么特点？		地址连续，长度不可变	"abcd"   4长度
+		final修饰不让改？	地址不让改
+		私有属性？		属性不能直接被访问，又没有提供对应可以访问属性的方法
+
+	长度为什么不可变：final修饰的数组，数组本身长度不能改，final修饰地址还不让动
+	内容为什么不可变：因为用private修饰了，没有给外部提供公有的方法操作属性
+
+	内部字符串的内容真的不能改么？？？		反射(直接操作内存中的那个类)
+
+=======================================================
+
+String既然是一个类，就应该跟正常引用类型一样，可以创建对象
+	几种创建String的对象方式？
+	String s = "abc";							第一种
+	String s1 = "abc";
+	String s = new String();						第二种
+	反射		String s = clazz.newInstance();
+	clone();
+	反序列化	文件中字节碎片读出来组成对象
+
+	"abc"既然在常量区，正常常量一样(只有一份，不能改)
+
+
+	==	equals
+
+
+====================================================
+
+String既然可以通过new的方式创建
+	底层本质就是调用了String类中的构造方法
+	看一下String类的API
+
+	常用的 String构造方法就如下的几个：
+	String s = new String();
+	String s = new String("abc");
+	String s = new String(char[] c);
+	String s = new String(byte[] b);
+	特殊的写法，只有String可以，像常量一样赋值
+	String s = "abc";
+
+====================================================
+
+	如下代码，创建了几个String对象？？？
+
+	String s1 = "zzt";
+	String s2 = "zzt";
+	创建了几个String类型的对象?	放哪儿了?
+
+
+	String s3 = new String("zzt");
+	创建了几个String类型的对象?	放哪儿了?
+
+===================================================
+
+张宏煜，赵恒毅
+
+static可以修饰哪些东西？修饰以后的特点？
+属性
+方法
+代码段
+内部类(成员内部类)	属性/方法/代码段
+	类加载的时候就初始化
+	放在静态元素空间，有且只有一份(方法区，常量，字符串对象)
+			方法区里，有且只有一份，加载的很早，不能被GC回收，常驻内存
+	不用创建对象
+	类名.调用	属性/方法		对象.可以调用(通常不建议)
+	静态元素是属于类的，与对象没关系，不能使用this和super关键字
+	静态元素和"别人"的关系		静态--静态		非静态--静态	静态-no-非静态
+
+
+public class Test{
+	public String name;
+	public void test(){
+		String xxx;
+		class C{}
+	}
+	static{			LinkedBox	Node
+	}
+	static class B{}
+}
+
+public class LinkedBox extends AbstractBox{
+	属性first
+	属性last
+	属性size
+
+	方法add(){}
+	方法get(){}
+
+	class Node{
+		Node prev
+		Node next
+		E item;
+	}
+}
+
+=======================================================
+String是一个类，是一个引用数据类型
+1.看一看String类的源码
+	final		implements
+	*value	hash
+2.String不可变特性			不可变字符串		可变字符串
+	长度，内容不可变
+3.如何创建对象
+	像常量值一样的写法
+	String类中提供的各种构造方法		无参  String参数  char[]  byte[]
+4.内存中String的对象到底存在哪儿？
+	不同写法，存储的位置不同		字符串常量区，堆空间
+5.字符串拼接问题	+号
+	StringBuilder------->new String()
+	常量值拼接时候会做优化			final
+
+========================================================
+
+String 类中常用的方法
+	重写的那几个
+	常用的	charAt  codePointAt  split  substring  toCharArray getBytes
+			startsWith  endsWith   toUpperCase  toLowerCase  trim  replace
+	一般		concat   contains   isEmpty
+
+
+作业：
+	所有String类中的方法做一个笔记整理
+		方法名，参数类型，返回值类型，是否存在重载，大概是做什么的，自己随便写个小例子
+
+1.设计一个方法 将字符串反转   ok-->ko
+2.设计一个方法 将给定字符串的正序和反序进行连接  ok-->okko
+3.设计一个方法 判断给定字符串是否是回文    abccba   abcba
+4.设计一个方法 将给定的字符串右位移x位置  (helloworld,2) --> ldhellowor
+5.设计一个方法 寻找若干字符串中最长的那个  ab,abc,abcd--->abcd
+6.设计一个方法 统计给定字母在字符串中出现的次数   "this is a test of java","a"--->3
+7.设计一个方法 将给定的字符串每一个首字母大写   "this is a test of java"--->"This Is A Test Of Java"
+8.设计一个方法 获取给定字符串中的全部数字   "za1o1zbp24tcq"--->1124
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
