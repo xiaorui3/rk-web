@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 public class 插入排序 {
     public static void main(String[] args) {
-        int[] arr={4,5,8,7,9,21,4,6,2,4,6};
+        int[] arr={4,5,8,7,9,21,4,6,2,1,6};
         for (int i = 0; i < arr.length; i++) {
             int tmp=0;
             boolean b=false;
