@@ -13,6 +13,7 @@
         <module>Spring6IocDiy</module>
         <module>Spring6Demo03</module>
         <module>Spring6Demo04</module>
+        <module>SpringMyBatisDemo</module>
     </modules>
 
     <properties>
