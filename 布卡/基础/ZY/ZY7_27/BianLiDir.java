@@ -10,6 +10,8 @@ public class BianLiDir {
         System.out.println("一共有："+bianLiDir.k+"个文件");
     }
     public void Dir(String dir){
+
+        System.out.println("222");
         File f=new File(dir);
         if (f.exists()){
             if (f.isDirectory()){
