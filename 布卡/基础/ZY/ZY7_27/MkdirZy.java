@@ -22,11 +22,12 @@ public class MkdirZy {
         File[] files = f.listFiles();
         for (File ff : files){
             if (ff.isDirectory()){
-                f.delete();
+                boolean delete = f.delete();
+                System.out.println(delete);
             }
         }
         //System.out.println(f.getParentFile());
-        if (f.getParentFile().equals("D:\\code\\code库\\code\\git_java\\布卡\\基础\\ZY\\ZY7_27\\a")){
+        if (f.getParent().equals("D:\\code\\code库\\code\\git_java\\布卡\\基础\\ZY\\ZY7_27")){
             return "111";
         }
         return rmtest(String.valueOf(f.getParentFile()));
