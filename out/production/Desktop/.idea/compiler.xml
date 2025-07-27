@@ -7,10 +7,15 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="Spring6Demo03" />
+        <module name="SpringProxy01" />
         <module name="Spring6Demo02" />
-        <module name="Spring6IocDiy" />
+        <module name="SpringMyBatisDemo" />
         <module name="Spring6Demo04" />
+        <module name="Spring6IocDiy" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="SpringProxy02" target="1.5" />
+    </bytecodeTargetLevel>
   </component>
 </project>
