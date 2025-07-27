@@ -11,7 +11,7 @@ public class BianLiDir {
     }
     public void Dir(String dir){
 
-        System.out.println("222");
+        System.out.println("111");
         File f=new File(dir);
         if (f.exists()){
             if (f.isDirectory()){
