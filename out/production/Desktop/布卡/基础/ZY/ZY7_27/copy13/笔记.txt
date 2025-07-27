@@ -1,0 +1,201 @@
+刘鑫洋，肇钰鑫
+赵锐，孙泽鑫
+赵恒毅，王艺凡	
+张宏煜，何俊锋
+曹祖康，王智博
+梁坤，韩驰
+-----------------------
+张宏煜，赵恒毅
+梁坤，赵锐
+王智博，曹祖康
+王艺凡，刘鑫洋
+何俊锋，韩驰
+孙泽鑫，肇钰鑫
+-----------------------
+曹祖康，王智博
+肇钰鑫，王艺凡
+韩驰，梁坤
+何俊锋，刘鑫洋
+孙泽鑫，赵恒毅
+
+
+	HashMap的主要特性？		Hashtable		TreeMap
+	1.存储的是以key-value形式的，底层一个entry对象(Node)
+	2.HashMap底层的存储结构是hash结构(散列表)	数组+链表的形式
+		默认数组长度16个		1<<4
+		扩容的因子默认是0.75	
+		链表的长度超过8转为红黑树，小于6个转回链表
+	3.HashMap存储是允许null值(key和value都行)	Hashtable不允许
+	4.常用的情形，唯一的值快速寻找的时候，选用Map
+		put，get，keySet，entrySet
+		
+
+package test;
+import java.util.Date;
+public class SuperTest extends Date{	
+	private static final long serialVersionUID = 1L;
+	private void test(){
+		System.out.println(super.getClass().getName());
+	}		反射的技术 Class Method Field Constructor
+	public static void main(String[] args){
+		SuperTest st = new SuperTest()
+		st.test();		
+		反射中是没有多态
+		Date d = new SuperTest();		d.getXxx();
+		d.getClass();----->SuperTest.getName();
+			test.SuperTest
+	}
+}
+
+
+疯狂Java讲义	第四版
+研磨设计模式
+JavaScript
+
+
+
+=====================================================
+
+集合
+1.集合的分支体系
+	Collection			Map
+	List
+	Set
+2.每一个家族集合的特点
+	List	有序可重复
+	Set	无序不可重复
+	Map	key无序不可重复	value无序可重复
+3.常用的方法
+	List		add，get，remove，set，size，iterator
+	Set		add，iterator，remove，size
+	Map		put，get，remove，replace(put)，size，keySet，entrySet
+4.底层存储结构，什么场景下适用
+	List
+		ArrayList(Vector)		LinkedList
+	Set
+		HashSet				TreeSet
+	Map
+		HashMap(Hashtable)	TreeMap
+	Stack
+	ArrayDeque
+5.手撕集合
+
+
+关于集合删除元素的问题
+	在删除元素的时候，注意循环中i变量的变化与size的变化
+	如果同时变化，可能会产生小问题
+
+=======================================================
+
+	逻辑的	运算符号，分支语句，循环语句，方法内部代码
+	存储的	变量，数组，对象(属性)，数据结构的封装(线性结构，链表结构，hash，tree)
+
+	所有用来存储的容器都在内存里
+	将我们辛苦产生的数据，永久性保存起来-------硬盘里
+
+	数据的持久化------将数据永久性的保存起来(文件 硬盘)
+		文件本身，文件里的内容
+
+
+	文件(硬盘上存储的那个文件真身)
+	需要通过Java程序去操作那个文件	程序中的文件File
+
+		Input/Output
+
+	java.lang
+		String，Integer，System
+	java.util
+		Scanner，各种集合
+	java.math
+	java.text
+	java.io
+	java.lang.reflect
+		Class
+
+
+==================================================
+	File类
+		java.io包下
+		没有默认无参数构造方法，常用构造方法就是带String参数的
+		String参数表示的是文件或文件夹的全路径
+			canRead
+			canWrite
+			canExecute
+			isHidden
+			isDirectory
+			isFile
+			long = length();		字节	B	KB	MB	GB
+			long = lastModified(); 	毫秒
+		常用方法
+			String = getAbsolutePath
+			String = getName
+		----------------------------------------
+			获取父元素的名字
+				String = getParent
+			获取父元素对应的file对象
+				File = getParentFile
+			获取子元素的名字
+				String[]= list
+			获取子元素对应的file对象
+				File[] = listFiles
+
+			boolean = createNewFile		创建新文件的
+			boolean = mkdir			创建新文件夹
+					 mkdirs			同时创建多层次的文件夹
+			boolean = delete()			file是个文件/file是一个空文件夹 
+
+		文件的父亲目录，遍历
+		文件的孩子？？？------>	递归
+		自己试试删除文件		delete方法
+				文件--->
+				文件夹----->空
+				文件夹----->有内容
+		任意盘符下	D盘下
+		创建一个文件夹   a			D://a		D://a//b		D://a//b//z
+			里面有个b文件夹		file		file			file
+				里面有个c文件夹	mkdir
+					。。。
+						z文件夹
+			mkdir
+
+================================================
+	文件或文件夹的遍历------->	
+	文件或文件夹的删除------->	保证文件夹里面没东西	/	就是个文件
+
+
+	文件流(文件里面的内容/数据流动)
+		写内容	output
+		读内容	input
+
+		Input家族(读取文件内容)		Output家族(写文件内容)
+字节型	FileInputStream			FileOutputStream
+字符型	FileReader				FileWriter
+
+	缓冲流(高级流)
+		Buffered家族
+
+
+	文件复制？？？		100kb
+					1024---kb
+	源文件----读取出来			目标位置----写进去
+
+
+作业：：：：
+
+	0.文件夹删除(带有元素)
+		不用IO操作	delete
+	1.文件的复制(任何类型的)
+			Xxxx.txt	随便写点字	成功了(电影，音乐，论文，图片)
+		D://a			F://c	
+	2.文件夹的复制(递归)
+		mkdir
+		createNewFile------> I/O
+
+	考试系统
+	ATM系统
+
+
+
+
+
+
