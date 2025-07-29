@@ -14,7 +14,7 @@ services:
       - "33306:3306"  # 宿主机端口:容器端口
     volumes:
       - ./database-schema.sql:/docker-entrypoint-initdb.d/database-schema.sql  # 初始化 SQL 脚本
-      - ./mysql-data:/var/lib/mysql  # 持久化数据库数据
+      - mysql-data:/var/lib/mysql  # 持久化数据库数据
     networks:
       - app-network
     healthcheck:  # 健康检查确保服务可用
