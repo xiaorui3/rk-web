@@ -7,6 +7,8 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="SpringAOP" />
+        <module name="SpringBootDemo01" />
+        <module name="alumni-backend" />
         <module name="Spring6Demo04" />
         <module name="Spring6IocDiy" />
         <module name="Spring6Demo03" />
@@ -18,5 +20,11 @@
     <bytecodeTargetLevel>
       <module name="SpringProxy02" target="1.5" />
     </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="SpringBootDemo01" options="-parameters" />
+      <module name="alumni-backend" options="-parameters" />
+    </option>
   </component>
 </project>

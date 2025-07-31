@@ -2,11 +2,13 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
       <profile name="Maven default annotation processors profile" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="SpringAOP" />
+        <module name="SpringBootDemo01" />
         <module name="alumni-backend" />
         <module name="Spring6Demo04" />
         <module name="Spring6IocDiy" />
@@ -15,6 +17,15 @@
         <module name="Spring6Demo02" />
         <module name="SpringMyBatisDemo" />
       </profile>
+      <profile name="Annotation profile for SpringBootDemo02" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="false">
+          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.38/lombok-1.18.38.jar" />
+        </processorPath>
+        <module name="SpringBootDemo02" />
+      </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="SpringProxy02" target="1.5" />
@@ -22,6 +33,8 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="SpringBootDemo01" options="-parameters" />
+      <module name="SpringBootDemo02" options="-parameters" />
       <module name="alumni-backend" options="-parameters" />
     </option>
   </component>
