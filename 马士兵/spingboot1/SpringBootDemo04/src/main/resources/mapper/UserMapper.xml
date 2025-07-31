@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xiaorui.mapper.UserMapper">
+    <select id="selectUser" parameterType="int" resultType="User">
+        select * from user where id = #{arg0}
+    </select>
+    <update id="updateUser" parameterType="User">
+        update user set name=#{name} where id=#{id}
+    </update>
+    <insert id="saveUser" parameterType="User">
+        insert user (id,name,age) value (#{id},#{namee},#{age})
+    </insert>
+    <delete id="deleteUser" parameterType="int">
+        delete from user where id=#{arg0}
+    </delete>
+</mapper>

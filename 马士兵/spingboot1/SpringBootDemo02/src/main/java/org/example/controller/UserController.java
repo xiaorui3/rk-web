@@ -19,4 +19,10 @@ public class UserController {
     public List<User> selectAll(){
         return userService.selectAllUser();
     }
+
+    @RequestMapping("/selectAll2")
+    @ResponseBody
+    public User selectAll2(int id){
+        return userService.selectUserByName(id);
+    }
 }

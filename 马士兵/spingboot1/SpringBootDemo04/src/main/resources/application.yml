@@ -44,7 +44,4 @@ logging:
 
 mybatis:
   mapper-locations: classpath:mapper/*.xml
-  type-aliases-package: org.example.pojo
-
-
-
+  type-aliases-package: com.xiaorui.pojo

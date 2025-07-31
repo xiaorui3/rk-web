@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface UserService {
     public List<User> selectAllUser();
+    public User selectUserByName(int id);
 }

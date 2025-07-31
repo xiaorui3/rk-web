@@ -17,7 +17,7 @@
         <module name="Spring6Demo02" />
         <module name="SpringMyBatisDemo" />
       </profile>
-      <profile name="Annotation profile for SpringBootDemo02" enabled="true">
+      <profile name="Annotation profile for SpringBootDemo04" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
@@ -25,9 +25,11 @@
           <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.38/lombok-1.18.38.jar" />
         </processorPath>
         <module name="SpringBootDemo02" />
+        <module name="SpringBootDemo04" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="SpringBootDemo03" target="17" />
       <module name="SpringProxy02" target="1.5" />
     </bytecodeTargetLevel>
   </component>
@@ -35,6 +37,8 @@
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="SpringBootDemo01" options="-parameters" />
       <module name="SpringBootDemo02" options="-parameters" />
+      <module name="SpringBootDemo03" options="-parameters" />
+      <module name="SpringBootDemo04" options="-parameters" />
       <module name="alumni-backend" options="-parameters" />
     </option>
   </component>

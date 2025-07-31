@@ -1,10 +1,26 @@
 <!DOCTYPE html>
-<html lang="en" x>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
-
+hello
+    <div>
+        <span th:text="${msg2.name}"></span>
+        <table border="1" width="500">
+            <tr>
+                <td>编号</td>
+                <td>名字</td>
+                <td>年龄</td>
+            </tr>
+            <tr th:each="user : ${msg3}">
+                <td th:text="${user.id}"></td>
+                <td th:text="${user.name}"></td>
+                <td th:text="${user.age}"></td>
+            </tr>
+        </table>
+    </div>
+    <a th:href="@{/show3(id=30)}">跳转</a>
 </body>
 </html>
