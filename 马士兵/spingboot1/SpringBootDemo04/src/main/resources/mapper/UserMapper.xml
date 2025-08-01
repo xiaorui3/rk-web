@@ -10,9 +10,12 @@
         update user set name=#{name} where id=#{id}
     </update>
     <insert id="saveUser" parameterType="User">
-        insert user (id,name,age) value (#{id},#{namee},#{age})
+        insert user (id,name,age) value (#{id},#{name},#{age})
     </insert>
     <delete id="deleteUser" parameterType="int">
         delete from user where id=#{arg0}
     </delete>
+    <select id="selectAllUser">
+        select * from user
+    </select>
 </mapper>

@@ -1,5 +1,6 @@
 spring:
   datasource:
+    type: com.alibaba.druid.pool.DruidDataSource  # 明确指定Druid数据源
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://117.72.119.212:3306/roottest?characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai
     username: roottest
@@ -26,7 +27,7 @@ spring:
         login-password: admin
         url-pattern: /druid/*
         # IP白名单(没有配置或者为空，则允许所有访问)
-        allow: 192.167.10.1,127.0.0.1  # 本机和设置的ip可以访问后台管理界面
+        allow: 192.167.10.1,127.0.0.1,localhost  # 本机和设置的ip可以访问后台管理界面
         reset-enable: false # 不要重置
         # 启用控制台-后台管理界面，必须启用，否则访问界面会404
         enabled: true
