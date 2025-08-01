@@ -8,6 +8,7 @@ import com.xiaorui.service.UserService;
 import org.apache.ibatis.annotations.Delete;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Service;
 
@@ -41,7 +42,9 @@ public class UserSerivceImpl implements UserService {
 
     @Override
     public PageInfo<User> selectAll(int pageNum, int pageSize) {
+        System.out.println("查询数据库的Service层---01");
         PageHelper.startPage(pageNum, pageSize);
+        System.out.println("查询数据库的Service层---02");
         List<User> users = userMapper.selectAllUser();
         PageInfo<User> p =new PageInfo<>(users);
         return p;
