@@ -28,6 +28,7 @@ public class XiaoruiController {
     @ResponseBody
     @Parameter(name="查询 Get",description = "管理层 查询 用户 单条 信息 返回xiaorui对象 查询条件 输入 id")
     public xiaorui selectController(@PathVariable Integer id){
+        System.out.println("查询了一条消息");
         return xiaoruiService.selectOne(id);
     }
 
