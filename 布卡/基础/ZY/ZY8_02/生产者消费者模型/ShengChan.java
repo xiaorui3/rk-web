@@ -10,12 +10,14 @@ public class ShengChan implements Runnable{
 
     @Override
     public void run() {
-        ck.add();
-        System.out.println("生产者加入了！");
-        try {
-            Thread.sleep(200);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
+        while(true){
+            ck.add();
+            System.out.println("生产者加入了！");
+            try {
+                Thread.sleep(200);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 }
