@@ -5,22 +5,20 @@
     <title>Title</title>
 </head>
 <body>
-hello
-    <div>
-        <span th:text="${msg2.name}"></span>
-        <table border="1" width="500">
+    <!--<span th:text="${name}"></span>-->
+        <table th:each="user:${msg3}" width="500" border="2">
             <tr>
-                <td>编号</td>
-                <td>名字</td>
+                <td>用户ID</td>
+                <td>用户名</td>
                 <td>年龄</td>
+                <td>性别</td>
             </tr>
-            <tr th:each="user : ${msg3}" >
+            <tr>
                 <td th:text="${user.id}"></td>
                 <td th:text="${user.name}"></td>
                 <td th:text="${user.age}"></td>
+                <td th:text="${user.sex}"></td>
             </tr>
         </table>
-    </div>
-    <a th:href="@{/show3(id=30)}">跳转</a>
 </body>
 </html>
