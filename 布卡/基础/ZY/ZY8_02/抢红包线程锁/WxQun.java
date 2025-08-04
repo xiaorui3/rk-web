@@ -11,7 +11,6 @@ public class WxQun {
     private static final WX wx = new WX();
     private static double v1;
     public static List<Double> doubles;
-
     public static void main(String[] args) {
         for (int i = 0; i <Person ; i++) {
             String name="王"+(i+1);

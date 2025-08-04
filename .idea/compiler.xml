@@ -23,10 +23,20 @@
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="false">
           <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.38/lombok-1.18.38.jar" />
+          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.38/lombok-1.18.38.jar" />
         </processorPath>
         <module name="SpringBootDemo02" />
         <module name="SpringBootDemo04" />
         <module name="SpringBootDemo05" />
+      </profile>
+      <profile name="Annotation profile for SpringBootDemo06" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="false">
+          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.38/lombok-1.18.38.jar" />
+        </processorPath>
+        <module name="SpringBootDemo06" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -41,6 +51,7 @@
       <module name="SpringBootDemo03" options="-parameters" />
       <module name="SpringBootDemo04" options="-parameters" />
       <module name="SpringBootDemo05" options="-parameters" />
+      <module name="SpringBootDemo06" options="-parameters" />
       <module name="alumni-backend" options="-parameters" />
     </option>
   </component>
