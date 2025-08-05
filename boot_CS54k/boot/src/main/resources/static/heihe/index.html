@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>黑河市投票平台</title>
+    <link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* 使用您提供的CSS样式，这里省略以节省空间 */
+        /* 可以直接复制您提供的完整CSS样式部分 */
+
+        /* 新增投票特定样式 */
+        .vote-card {
+            transition: all 0.3s ease;
+            border: none;
+            border-radius: 12px;
+            background-color: var(--card-bg);
+            color: var(--text-color);
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(0, 240, 255, 0.2);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+
+        .vote-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 240, 255, 0.3);
+            border-color: var(--sci-fi-accent);
+        }
+
+        .vote-option {
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: 1px solid rgba(0, 240, 255, 0.3);
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 10px;
+            position: relative;
+        }
+
+        .vote-option:hover {
+            background: rgba(0, 240, 255, 0.1);
+            border-color: var(--sci-fi-accent);
+        }
+
+        .vote-option.selected {
+            background: rgba(0, 240, 255, 0.2);
+            border-color: var(--sci-fi-accent);
+            box-shadow: 0 0 15px rgba(0, 240, 255, 0.3);
+        }
+
+        .vote-option-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+
+        .progress {
+            height: 10px;
+            background-color: rgba(0, 240, 255, 0.2);
+            margin-top: 10px;
+        }
+
+        .progress-bar {
+            background-color: var(--sci-fi-accent);
+            box-shadow: 0 0 10px var(--sci-fi-accent);
+        }
+
+        .result-card {
+            background: rgba(20, 30, 50, 0.7);
+            border: 1px solid var(--sci-fi-accent);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stats-number {
+            font-size: 2.5rem;
+            font-family: 'Orbitron', sans-serif;
+            color: var(--sci-fi-accent);
+            text-shadow: var(--text-glow);
+        }
+
+        .stats-label {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+    </style>
+</head>
+<body>
+<!-- 二进制数字雨效果 -->
+<canvas id="matrixRain"></canvas>
+
+<!-- 悬浮粒子效果 -->
+<canvas id="particles"></canvas>
+
+<!-- 悬浮科技图标 -->
+<div class="tech-icon" style="top: 20%; left: 10%;"><i class="fas fa-atom"></i></div>
+<div class="tech-icon" style="top: 70%; left: 85%;"><i class="fas fa-microchip"></i></div>
+<div class="tech-icon" style="top: 40%; left: 90%;"><i class="fas fa-robot"></i></div>
+<div class="tech-icon" style="top: 80%; left: 15%;"><i class="fas fa-rocket"></i></div>
+
+<!-- 导航栏 -->
+<nav class="navbar navbar-expand-lg navbar-dark py-3">
+    <div class="container">
+        <a class="navbar-brand" href="index.html">
+            <img src="logo.png" alt="Logo" width="30" height="30" class="me-2">
+            黑河市投票平台
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item"><a class="nav-link active" href="index.html">首页</a></li>
+                <li class="nav-item"><a class="nav-link" href="results.html">投票结果</a></li>
+                <li class="nav-item"><a class="nav-link" href="about.html">关于我们</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- 主视觉区 -->
+<header class="hero-section">
+    <div class="hero-overlay">
+        <div class="text-center">
+            <h1 class="main-title animate__animated animate__fadeInDown">黑河市投票平台</h1>
+            <p class="lead text-white mt-3 animate__animated animate__fadeInUp">公正 · 透明 · 高效</p>
+        </div>
+    </div>
+</header>
+
+<!-- 投票主题列表 -->
+<section id="vote-topics" class="container my-5">
+    <div class="hologram-panel p-5">
+        <h2 class="text-center sci-fi-text mb-5">正在进行中的投票</h2>
+
+        <div id="topics-container" class="row">
+            <!-- 投票主题将通过JS动态加载 -->
+            <div class="col-12 text-center">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">加载中...</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 页脚 -->
+<footer class="text-white py-5">
+    <div class="container text-center">
+        <p class="mb-1">黑河市投票平台</p>
+        <p class="mb-0">技术支持：黑河学院软件项目开发社团</p>
+        <p class="mt-3">© 2025 黑河市信息化办公室</p>
+    </div>
+</footer>
+
+<!-- 模式切换按钮 -->
+<div class="theme-toggle animate__animated animate__fadeInRight" id="themeToggle">
+    <i class="fas fa-sun"></i>
+</div>
+
+<!-- 投票模态框 -->
+<div class="modal fade" id="voteModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content sci-fi-border" style="background: var(--card-bg);">
+            <div class="modal-header border-bottom border-secondary">
+                <h5 class="modal-title sci-fi-text" id="voteModalTitle">投票</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p id="voteModalDescription"></p>
+                <div id="voteOptionsContainer"></div>
+                <div class="alert alert-danger mt-3" id="voteError" style="display: none;"></div>
+            </div>
+            <div class="modal-footer border-top border-secondary">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary sci-fi-text" id="submitVoteBtn">提交投票</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 结果模态框 -->
+<div class="modal fade" id="resultsModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content sci-fi-border" style="background: var(--card-bg);">
+            <div class="modal-header border-bottom border-secondary">
+                <h5 class="modal-title sci-fi-text" id="resultsModalTitle">投票结果</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row mb-4">
+                    <div class="col-md-6 text-center">
+                        <div class="stats-number" id="totalVotes">0</div>
+                        <div class="stats-label">总票数</div>
+                    </div>
+                    <div class="col-md-6 text-center">
+                        <div class="stats-number" id="totalViews">0</div>
+                        <div class="stats-label">总访问量</div>
+                    </div>
+                </div>
+                <div id="resultsContainer"></div>
+            </div>
+            <div class="modal-footer border-top border-secondary">
+                <button type="button" class="btn btn-primary sci-fi-text" data-bs-dismiss="modal">关闭</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.bootcdn.net/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+<script>
+    // 使用您提供的JS代码，包括主题切换、数字雨效果等
+    // 这里省略以节省空间，可以直接复制您提供的JS部分
+
+    // 新增投票相关JS
+    document.addEventListener('DOMContentLoaded', function() {
+        // 加载投票主题
+        loadActiveTopics();
+
+        // 初始化模态框
+        const voteModal = new bootstrap.Modal(document.getElementById('voteModal'));
+        const resultsModal = new bootstrap.Modal(document.getElementById('resultsModal'));
+
+        // 全局变量存储当前选择的投票和选项
+        let currentTopicId = null;
+        let selectedOptionId = null;
+
+        // 加载活跃的投票主题
+        function loadActiveTopics() {
+            fetch('api.php?action=get_active_topics')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        renderTopics(data.data);
+                    } else {
+                        document.getElementById('topics-container').innerHTML = `
+                            <div class="col-12 text-center">
+                                <p>当前没有进行中的投票</p>
+                            </div>
+                        `;
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        }
+
+        // 渲染投票主题
+        function renderTopics(topics) {
+            const container = document.getElementById('topics-container');
+
+            if (topics.length === 0) {
+                container.innerHTML = `
+                    <div class="col-12 text-center">
+                        <p>当前没有进行中的投票</p>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = '';
+
+            topics.forEach(topic => {
+                // 记录访问量
+                recordView(topic.id);
+
+                const topicElement = document.createElement('div');
+                topicElement.className = 'col-md-6';
+                topicElement.innerHTML = `
+                    <div class="vote-card p-4 h-100">
+                        <h3 class="sci-fi-text">${topic.title}</h3>
+                        <p>${topic.description || '暂无描述'}</p>
+                        <div class="row mt-3">
+                            <div class="col-6">
+                                <div class="stats-number">${topic.stats.vote_count}</div>
+                                <div class="stats-label">总票数</div>
+                            </div>
+                            <div class="col-6">
+                                <div class="stats-number">${topic.stats.view_count}</div>
+                                <div class="stats-label">访问量</div>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-between mt-4">
+                            <button class="btn btn-outline-primary sci-fi-text btn-sm vote-btn"
+                                    data-topic-id="${topic.id}">
+                                <i class="fas fa-vote-yea me-2"></i>立即投票
+                            </button>
+                            <button class="btn btn-outline-info sci-fi-text btn-sm results-btn"
+                                    data-topic-id="${topic.id}">
+                                <i class="fas fa-chart-bar me-2"></i>查看结果
+                            </button>
+                        </div>
+                    </div>
+                `;
+
+                container.appendChild(topicElement);
+            });
+
+            // 添加投票按钮事件
+            document.querySelectorAll('.vote-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const topicId = this.getAttribute('data-topic-id');
+                    openVoteModal(topicId);
+                });
+            });
+
+            // 添加结果按钮事件
+            document.querySelectorAll('.results-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const topicId = this.getAttribute('data-topic-id');
+                    openResultsModal(topicId);
+                });
+            });
+        }
+
+        // 记录访问量
+        function recordView(topicId) {
+            fetch('api.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: `action=record_view&topic_id=${topicId}`
+            }).catch(error => console.error('Error recording view:', error));
+        }
+
+        // 打开投票模态框
+        function openVoteModal(topicId) {
+            currentTopicId = topicId;
+            selectedOptionId = null;
+
+            fetch(`api.php?action=get_active_topics`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        const topic = data.data.find(t => t.id == topicId);
+                        if (topic) {
+                            document.getElementById('voteModalTitle').textContent = topic.title;
+                            document.getElementById('voteModalDescription').textContent = topic.description || '';
+
+                            const optionsContainer = document.getElementById('voteOptionsContainer');
+                            optionsContainer.innerHTML = '';
+
+                            topic.options.forEach(option => {
+                                const optionElement = document.createElement('div');
+                                optionElement.className = 'vote-option';
+                                optionElement.setAttribute('data-option-id', option.id);
+
+                                let imageHtml = '';
+                                if (option.image_url) {
+                                    imageHtml = `<img src="${option.image_url}" alt="${option.option_text}" class="vote-option-image">`;
+                                }
+
+                                optionElement.innerHTML = `
+                                    ${imageHtml}
+                                    <h5>${option.option_text}</h5>
+                                    <p>${option.description || ''}</p>
+                                `;
+
+                                optionElement.addEventListener('click', function() {
+                                    document.querySelectorAll('.vote-option').forEach(el => {
+                                        el.classList.remove('selected');
+                                    });
+                                    this.classList.add('selected');
+                                    selectedOptionId = this.getAttribute('data-option-id');
+                                });
+
+                                optionsContainer.appendChild(optionElement);
+                            });
+
+                            document.getElementById('voteError').style.display = 'none';
+                            voteModal.show();
+                        }
+                    }
+                });
+        }
+
+        // 提交投票
+        document.getElementById('submitVoteBtn').addEventListener('click', function() {
+            if (!selectedOptionId) {
+                const errorElement = document.getElementById('voteError');
+                errorElement.textContent = '请选择一个投票选项';
+                errorElement.style.display = 'block';
+                return;
+            }
+
+            fetch('api.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: `action=submit_vote&topic_id=${currentTopicId}&option_id=${selectedOptionId}`
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        voteModal.hide();
+                        // 刷新投票列表
+                        loadActiveTopics();
+                        // 显示成功消息
+                        alert('投票成功！感谢您的参与。');
+                    } else {
+                        const errorElement = document.getElementById('voteError');
+                        errorElement.textContent = data.message || '投票失败';
+                        errorElement.style.display = 'block';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    const errorElement = document.getElementById('voteError');
+                    errorElement.textContent = '投票过程中发生错误';
+                    errorElement.style.display = 'block';
+                });
+        });
+
+        // 打开结果模态框
+        function openResultsModal(topicId) {
+            fetch(`api.php?action=get_results&topic_id=${topicId}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        document.getElementById('resultsModalTitle').textContent = data.data.topic.title;
+                        document.getElementById('totalVotes').textContent = data.data.total_votes;
+
+                        // 获取访问量统计
+                        fetch(`api.php?action=get_active_topics`)
+                            .then(response => response.json())
+                            .then(topicsData => {
+                                if (topicsData.success) {
+                                    const topic = topicsData.data.find(t => t.id == topicId);
+                                    if (topic) {
+                                        document.getElementById('totalViews').textContent = topic.stats.view_count;
+                                    }
+                                }
+                            });
+
+                        const resultsContainer = document.getElementById('resultsContainer');
+                        resultsContainer.innerHTML = '';
+
+                        data.data.options.forEach(option => {
+                            const optionElement = document.createElement('div');
+                            optionElement.className = 'mb-4';
+
+                            optionElement.innerHTML = `
+                                <div class="d-flex justify-content-between mb-2">
+                                    <h5>${option.option_text}</h5>
+                                    <span>${option.vote_count}票 (${option.percentage}%)</span>
+                                </div>
+                                <div class="progress">
+                                    <div class="progress-bar" role="progressbar"
+                                         style="width: ${option.percentage}%"
+                                         aria-valuenow="${option.percentage}"
+                                         aria-valuemin="0"
+                                         aria-valuemax="100"></div>
+                                </div>
+                            `;
+
+                            resultsContainer.appendChild(optionElement);
+                        });
+
+                        resultsModal.show();
+                    }
+                });
+        }
+    });
+</script>
+</body>
+</html>

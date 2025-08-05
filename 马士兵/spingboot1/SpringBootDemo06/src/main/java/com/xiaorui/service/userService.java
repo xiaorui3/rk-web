@@ -8,4 +8,6 @@ public interface userService {
     public int deleteUserService(int id);
     public int insertUserService(user user);
     public int updateUserService(user user);
+
+    //public abstract int hello();
 }

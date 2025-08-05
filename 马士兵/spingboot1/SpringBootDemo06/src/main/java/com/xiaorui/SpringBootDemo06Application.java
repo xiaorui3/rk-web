@@ -10,6 +10,9 @@ public class SpringBootDemo06Application {
 
     public static void main(String[] args) {
         SpringApplication.run(SpringBootDemo06Application.class, args);
+
+
+
     }
 
 }

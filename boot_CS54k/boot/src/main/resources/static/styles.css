@@ -1,0 +1,265 @@
+:root {
+    /* 主色调 */
+    --primary-color: #2a5ca8;
+    --secondary-color: #6c757d;
+    --bg-color: #0a0a12;
+    --text-color: #e0e0e0;
+    --card-bg: #1a1a2a;
+    --header-bg: linear-gradient(135deg, #0a192f 0%, #0f0c29 100%);
+    --hero-overlay: rgba(0, 0, 0, 0.8);
+    --border-glow: 0 0 15px rgba(0, 240, 255, 0.7);
+    --text-glow: 0 0 12px rgba(0, 240, 255, 0.9);
+    --sci-fi-accent: #00f0ff;
+    --grid-color: rgba(0, 240, 255, 0.1);
+    --hologram-color: rgba(0, 240, 255, 0.25);
+    
+    /* 间距系统 */
+    --base-padding: 1rem;
+    --section-spacing: 3rem;
+    
+    /* 圆角尺寸 */
+    --border-radius-sm: 5px;
+    --border-radius-lg: 15px;
+    
+    /* 阴影效果 */
+    --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --hover-shadow: 0 8px 12px rgba(0, 0, 0, 0.15);
+    
+    /* 过渡动画 */
+    --transition-fast: 0.2s;
+    --transition-normal: 0.3s;
+}
+
+/* 全局动画背景 */
+@keyframes gradientFlow {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    min-height: 100vh;
+    transition: all 0.5s ease;
+    font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+    position: relative;
+    overflow-x: hidden;
+}
+
+/* 科幻网格背景 */
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background:
+            linear-gradient(90deg, var(--grid-color) 1px, transparent 1px),
+            linear-gradient(var(--grid-color) 1px, transparent 1px);
+    background-size: 30px 30px;
+    pointer-events: none;
+    z-index: -1;
+}
+
+/* 二进制数字雨效果容器 */
+#matrixRain {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    opacity: 0.25;
+    pointer-events: none;
+}
+
+/* 悬浮粒子效果 */
+#particles {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    pointer-events: none;
+}
+
+/* 全息投影效果 */
+.hologram-effect {
+    position: relative;
+    overflow: hidden;
+}
+
+.hologram-effect::before {
+    content: "";
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+            to bottom right,
+            transparent,
+            transparent,
+            var(--hologram-color),
+            transparent,
+            transparent
+    );
+    transform: rotate(30deg);
+    animation: hologram 6s linear infinite;
+    pointer-events: none;
+}
+
+@keyframes hologram {
+    0% { transform: rotate(30deg) translate(-30%, -30%); }
+    100% { transform: rotate(30deg) translate(30%, 30%); }
+}
+
+/* 科幻风格元素 */
+.sci-fi-border {
+    position: relative;
+    border: 1px solid var(--sci-fi-accent);
+    box-shadow: var(--border-glow);
+}
+
+.sci-fi-border::before {
+    content: "";
+    position: absolute;
+    top: -5px;
+    left: -5px;
+    right: -5px;
+    bottom: -5px;
+    border: 2px solid transparent;
+    border-image: linear-gradient(45deg, var(--sci-fi-accent), transparent);
+    border-image-slice: 1;
+    pointer-events: none;
+    z-index: -1;
+}
+
+.sci-fi-text {
+    text-shadow: var(--text-glow);
+    color: var(--sci-fi-accent);
+}
+
+/* 动态粒子特效 */
+.particle {
+    position: absolute;
+    background: rgba(255,255,255,0.5);
+    border-radius: 50%;
+    pointer-events: none;
+    animation: float 3s infinite ease-in-out;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0) scale(1); }
+    50% { transform: translateY(-20px) scale(0.8); }
+}
+
+/* 新增导航栏动态下划线 */
+.nav-link {
+    position: relative;
+    padding: 0.5rem 1rem;
+    transition: all 0.3s ease;
+}
+
+.nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #7f00ff 0%, #e100ff 100%);
+    transition: all 0.3s ease;
+}
+
+.nav-link:hover::after {
+    width: 80%;
+    left: 10%;
+}
+
+/* 玻璃拟态效果 */
+.feature-card {
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 8px 32px rgba(31, 38, 135, 0.15);
+}
+
+/* 3D轮播动效 */
+.carousel-item {
+    transform-style: preserve-3d;
+    transition: transform 1s ease;
+}
+
+.carousel-item-next {
+    transform: rotateY(-20deg) translateZ(100px);
+}
+
+.carousel-item-prev {
+    transform: rotateY(20deg) translateZ(100px);
+}
+
+/* 页脚渐变边框 */
+footer {
+    position: relative;
+    background: linear-gradient(45deg, #2a5ca8, #3a86ff);
+    padding: 4px;
+}
+
+footer > .container {
+    background: #1a1a1a;
+    padding: 2rem;
+    position: relative;
+    z-index: 1;
+}
+
+/* 按钮流光动画 */
+.btn-primary {
+    background: linear-gradient(90deg, #7f00ff, #e100ff, #7f00ff);
+    background-size: 200% auto;
+    animation: gradientFlow 3s linear infinite;
+}
+
+@keyframes gradientFlow {
+    to {
+        background-position: 200% center;
+    }
+}
+
+/* 自定义滚动条 */
+::-webkit-scrollbar {
+    width: 12px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(255,255,255,0.1);
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(45deg, #23a6d5, #23d5ab);
+    border-radius: 6px;
+}
+
+/* 雪花飘落动画 */
+@keyframes snowFall {
+    0% { transform: translateY(-100vh) translateX(-10px); }
+    100% { transform: translateY(100vh) translateX(10px); }
+}
+
+/* 全局光标样式 */
+body {
+    cursor: url('snowflake.png'), auto;
+}
+
+/* 页面过渡动画 */
+.page-transition {
+    animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}

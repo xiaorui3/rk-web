@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>获奖名单 - 软开人工智能平台-中俄大模型项目研究中心：黑河学院的多元展现大赛</title>
+    <link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.bootcdn.net/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #2a5ca8;
+            --secondary-color: #6c757d;
+            --bg-color: #0a0a12;
+            --text-color: #e0e0e0;
+            --card-bg: #1a1a2a;
+            --sci-fi-accent: #00f0ff;
+            --border-glow: 0 0 15px rgba(0, 240, 255, 0.7);
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+        }
+
+        .navbar {
+            background: linear-gradient(135deg, #0a192f 0%, #0f0c29 100%) !important;
+            border-bottom: 1px solid var(--sci-fi-accent);
+            box-shadow: 0 0 30px rgba(0, 240, 255, 0.3);
+        }
+
+        .navbar-brand {
+            font-family: 'Orbitron', sans-serif;
+            letter-spacing: 1px;
+        }
+
+        .awards-container {
+            max-width: 900px;
+            margin: 2rem auto;
+        }
+
+        .awards-card {
+            background: var(--card-bg);
+            border: 1px solid var(--sci-fi-accent);
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: var(--border-glow);
+            position: relative;
+            overflow: hidden;
+        }
+
+        h2 {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--sci-fi-accent);
+            text-align: center;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        h2::after {
+            content: "";
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: var(--sci-fi-accent);
+            box-shadow: 0 0 15px var(--sci-fi-accent);
+        }
+
+        .award-category {
+            margin-bottom: 2rem;
+        }
+
+        .award-title {
+            color: var(--sci-fi-accent);
+            font-weight: bold;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .winner-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .winner {
+            background: rgba(10, 20, 40, 0.5);
+            padding: 0.75rem;
+            border-radius: 8px;
+            border-left: 3px solid var(--sci-fi-accent);
+        }
+
+        .winner-name {
+            font-weight: bold;
+        }
+
+        .winner-prize {
+            color: var(--sci-fi-accent);
+            font-size: 0.9rem;
+        }
+
+        .first-prize {
+            border-left-color: gold;
+        }
+
+        .second-prize {
+            border-left-color: silver;
+        }
+
+        .third-prize {
+            border-left-color: #cd7f32;
+        }
+
+        @media (max-width: 768px) {
+            .winner-list {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+<!-- 比赛结束提示 -->
+<div class="alert alert-info text-center mb-0" style="background: rgba(0, 150, 255, 0.2); border: 1px solid rgba(0, 150, 255, 0.5); color: #0095ff;">
+<i class="fas fa-info-circle me-2"></i>比赛已结束，感谢您的参与！比赛结果已公布，请前往<a href="awards-list.html" style="color: var(--sci-fi-accent)">获奖名单</a>页面查看。
+</div>
+<!-- 导航栏 -->
+<nav class="navbar navbar-expand-lg navbar-dark py-3">
+    <div class="container">
+        <a class="navbar-brand" href="#">
+            <img src="logo.png" alt="校徽" width="40" class="me-2">
+            <span class="sci-fi-text">AI绘校园</span>
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item"><a class="nav-link" href="rk.html#about">当前比赛首页</a></li>
+                <li class="nav-item"><a class="nav-link" href="../../works.html">作品展示</a></li>
+                <li class="nav-item"><a class="nav-link" href="process.html">参赛流程</a></li>
+                <li class="nav-item"><a class="nav-link" href="awards.html">奖项设置</a></li>
+                <li class="nav-item"><a class="nav-link" href="submit.html">作品提交</a></li>
+                <li class="nav-item"><a class="nav-link" href="../../contact.html">联系我们</a></li>
+                <li class="nav-item"><a class="nav-link" href="../../index.html">软开社团首页</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- 主内容区 -->
+<div class="container awards-container">
+    <h2 class="animate__animated animate__fadeInDown">获奖名单</h2>
+
+    <div class="awards-card">
+        <div class="award-category">
+            <div class="award-title">文学创作</div>
+            <div class="winner-list">
+                <div class="winner first-prize">
+                    <div class="winner-name">李佳宁</div>
+                    <div class="winner-prize">一等奖</div>
+                </div>
+                <div class="winner first-prize">
+                    <div class="winner-name">牟芳菲</div>
+                    <div class="winner-prize">一等奖</div>
+                </div>
+                <div class="winner second-prize">
+                    <div class="winner-name">张辉龙</div>
+                    <div class="winner-prize">二等奖</div>
+                </div>
+                <div class="winner second-prize">
+                    <div class="winner-name">杨宁欣</div>
+                    <div class="winner-prize">二等奖</div>
+                </div>
+                <div class="winner second-prize">
+                    <div class="winner-name">王艺凡</div>
+                    <div class="winner-prize">二等奖</div>
+                </div>
+                <div class="winner third-prize">
+                    <div class="winner-name">张思艺</div>
+                    <div class="winner-prize">三等奖</div>
+                </div>
+                <div class="winner third-prize">
+                    <div class="winner-name">芦起同</div>
+                    <div class="winner-prize">三等奖</div>
+                </div>
+                <div class="winner third-prize">
+                    <div class="winner-name">张文霞</div>
+                    <div class="winner-prize">三等奖</div>
+                </div>
+                <div class="winner third-prize">
+                    <div class="winner-name">闰静雯</div>
+                    <div class="winner-prize">三等奖</div>
+                </div>
+                <div class="winner third-prize">
+                    <div class="winner-name">周可心</div>
+                    <div class="winner-prize">三等奖</div>
+                </div>
+                <div class="winner third-prize">
+                    <div class="winner-name">王丁薇</div>
+                    <div class="winner-prize">三等奖</div>
+                </div>
+                <div class="winner">
+                    <div class="winner-name">常悦</div>
+                    <div class="winner-prize">优秀奖</div>
+                </div>
+                <div class="winner">
+                    <div class="winner-name">徐硕</div>
+                    <div class="winner-prize">优秀奖</div>
+                </div>
+                <div class="winner">
+                    <div class="winner-name">孙文硕</div>
+                    <div class="winner-prize">优秀奖</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="award-category">
+            <div class="award-title">小说</div>
+            <div class="winner-list">
+                <div class="winner first-prize">
+                    <div class="winner-name">李佳鑫</div>
+                    <div class="winner-prize">一等奖</div>
+                </div>
+                <div class="winner first-prize">
+                    <div class="winner-name">蔡元菻</div>
+                    <div class="winner-prize">一等奖</div>
+                </div>
+                <div class="winner second-prize">
+                    <div class="winner-name">贾欣悦</div>
+                    <div class="winner-prize">二等奖</div>
+                </div>
+                <div class="winner second-prize">
+                    <div class="winner-name">韩驰</div>
+                    <div class="winner-prize">二等奖</div>
+                </div>
+                <div class="winner second-prize">
+                    <div class="winner-name">李思蒙</div>
+                    <div class="winner-prize">二等奖</div>
+                </div>
+                <div class="winner third-prize">
+                    <div class="winner-name">国皓然</div>
+                    <div class="winner-prize">三等奖</div>
+                </div>
+                <div class="winner third-prize">
+                    <div class="winner-name">安国</div>
+                    <div class="winner-prize">三等奖</div>
+                </div>
+                <div class="winner third-prize">
+                    <div class="winner-name">王威</div>
+                    <div class="winner-prize">三等奖</div>
+                </div>
+                <div class="winner third-prize">
+                    <div class="winner-name">王可新</div>
+                    <div class="winner-prize">三等奖</div>
+                </div>
+                <div class="winner">
+                    <div class="winner-name">马瑞霞</div>
+                    <div class="winner-prize">优秀奖</div>
+                </div>
+                <div class="winner">
+                    <div class="winner-name">刘嘉宁</div>
+                    <div class="winner-prize">优秀奖</div>
+                </div>
+                <div class="winner">
+                    <div class="winner-name">万湫娜</div>
+                    <div class="winner-prize">优秀奖</div>
+                </div>
+                <div class="winner">
+                    <div class="winner-name">许浩</div>
+                    <div class="winner-prize">优秀奖</div>
+                </div>
+                <div class="winner">
+                    <div class="winner-name">俞海祥</div>
+                    <div class="winner-prize">优秀奖</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="award-category">
+            <div class="award-title">诗歌</div>
+            <div class="winner-list">
+                <div class="winner first-prize">
+                    <div class="winner-name">赵锐</div>
+                    <div class="winner-prize">一等奖 (2022593031)</div>
+                </div>
+                <div class="winner first-prize">
+                    <div class="winner-name">魏玉婷</div>
+                    <div class="winner-prize">一等奖 (2022832063)</div>
+                </div>
+                <div class="winner second-prize">
+                    <div class="winner-name">马鹏博</div>
+                    <div class="winner-prize">二等奖 (2024652031)</div>
+                </div>
+                <div class="winner second-prize">
+                    <div class="winner-name">周泓旭</div>
+                    <div class="winner-prize">二等奖 (2022593041)</div>
+                </div>
+                <div class="winner second-prize">
+                    <div class="winner-name">杨成相</div>
+                    <div class="winner-prize">二等奖 (2023742054)</div>
+                </div>
+                <div class="winner third-prize">
+                    <div class="winner-name">赵俊昊</div>
+                    <div class="winner-prize">三等奖 (2024592112)</div>
+                </div>
+                <div class="winner third-prize">
+                    <div class="winner-name">符家碧</div>
+                    <div class="winner-prize">三等奖 (202472064)</div>
+                </div>
+                <div class="winner third-prize">
+                    <div class="winner-name">赵静怡</div>
+                    <div class="winner-prize">三等奖 (2024592002)</div>
+                </div>
+                <div class="winner third-prize">
+                    <div class="winner-name">王欣雨</div>
+                    <div class="winner-prize">三等奖 (2024592093)</div>
+                </div>
+                <div class="winner">
+                    <div class="winner-name">杨露</div>
+                    <div class="winner-prize">优秀奖 (2024592032)</div>
+                </div>
+                <div class="winner">
+                    <div class="winner-name">李雪薇</div>
+                    <div class="winner-prize">优秀奖 (2024793051)</div>
+                </div>
+                <div class="winner">
+                    <div class="winner-name">陆美凤</div>
+                    <div class="winner-prize">优秀奖 (2024592080)</div>
+                </div>
+                <div class="winner">
+                    <div class="winner-name">王颉頔</div>
+                    <div class="winner-prize">优秀奖 (2022592025)</div>
+                </div>
+                <div class="winner">
+                    <div class="winner-name">吕雪莹</div>
+                    <div class="winner-prize">优秀奖 (2024542053)</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.bootcdn.net/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
