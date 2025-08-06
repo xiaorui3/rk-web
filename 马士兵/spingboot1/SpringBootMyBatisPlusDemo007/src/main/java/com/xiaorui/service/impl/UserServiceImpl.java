@@ -10,4 +10,13 @@ import org.springframework.stereotype.Service;
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
 
 
+    @Override
+    public int a() {
+        return 0;
+    }
+
+    @Override
+    public int b() {
+        return UserService.super.b();
+    }
 }

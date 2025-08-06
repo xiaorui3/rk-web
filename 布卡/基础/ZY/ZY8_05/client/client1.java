@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class client1 {
     public static void main(String[] args) throws IOException {
-        Socket socket = new Socket("127.0.0.1", 8888);
+        Socket socket = new Socket("45.207.195.154", 8890);
         System.out.println("已连接到服务器"+socket.getInetAddress().getHostAddress());
         //BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
         OutputStream outputStream = socket.getOutputStream();
