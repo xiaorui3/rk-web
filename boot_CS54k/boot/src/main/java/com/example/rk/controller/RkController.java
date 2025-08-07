@@ -88,59 +88,72 @@ public class RkController {
 
     public String sendJoinRequestNotice(JoinRequest request) {
         System.out.println(request);
-        // 构建HTML邮件内容（使用JoinRequest的get方法获取属性）
-        String htmlContent = "" +
-                "<html lang='zh-CN'>" +
-                "<head>" +
-                "   <meta charset='UTF-8'>" +
-                "   <title>社团成员新申请通知</title>" +
-                "</head>" +
-                "<body style='background: #0f1722; font-family: \"Microsoft YaHei\", Arial, sans-serif; color: #fff; padding: 20px;'>" +
-                "   <div style='max-width: 640px; margin: 0 auto; background: #1a2636; padding: 30px; border-radius: 12px;'>" +
-                "       <h1 style='color: #00ffff; text-align: center;'>新成员申请通知</h1>" +
-                "       <div style='border: 1px solid #00ccff; padding: 20px; border-radius: 8px; margin: 20px 0;'>" +
-                "           <p style='color: #b3d9ff;'>申请人信息如下：</p>" +
-                "           <ul style='list-style: none; padding: 0;'>" +
-                "               <li style='margin: 10px 0;'>" +
-                "                   <span style='display: inline-block; width: 80px; color: #66ccff; font-weight: bold;'>姓名：</span>" +
-                "                   <span>" + request.getName() + "</span>" +  // 调用getName()
-                "               </li>" +
-                "               <li style='margin: 10px 0;'>" +
-                "                   <span style='display: inline-block; width: 80px; color: #66ccff; font-weight: bold;'>学号：</span>" +
-                "                   <span>" + request.getStudentId() + "</span>" +  // 调用getStudentId()
-                "               </li>" +
-                "               <li style='margin: 10px 0;'>" +
-                "                   <span style='display: inline-block; width: 80px; color: #66ccff; font-weight: bold;'>专业：</span>" +
-                "                   <span>" + request.getMajor() + "</span>" +  // 调用getMajor()
-                "               </li>" +
-                "               <li style='margin: 10px 0;'>" +
-                "                   <span style='display: inline-block; width: 80px; color: #66ccff; font-weight: bold;'>电话：</span>" +
-                "                   <span>" + request.getPhone() + "</span>" +  // 调用getPhone()
-                "               </li>" +
-                "               <li style='margin: 10px 0;'>" +
-                "                   <span style='display: inline-block; width: 80px; color: #66ccff; font-weight: bold;'>邮箱：</span>" +
-                "                   <span>" + request.getEmail() + "</span>" +  // 调用getEmail()
-                "               </li>" +
-                "               <li style='margin: 10px 0;'>" +
-                "                   <span style='display: inline-block; width: 80px; color: #66ccff; font-weight: bold;'>兴趣：</span>" +
-                "                   <span>" + request.getInterest() + "</span>" +  // 调用getInterest()
-                "               </li>" +
-                "               <li style='margin: 10px 0;'>" +
-                "                   <span style='display: inline-block; width: 80px; color: #66ccff; font-weight: bold;'>经验：</span>" +
-                "                   <span style='white-space: pre-line;'>" + request.getExperience() + "</span>" +  // 调用getExperience()
-                "               </li>" +
-                "           </ul>" +
-                "       </div>" +
-                "       <div style='text-align: center; color: #999;'>" +
-                "           <p>社团申请服务组 · " + new SimpleDateFormat("yyyy年MM月dd日").format(new Date()) + "</p>" +
-                "       </div>" +
-                "   </div>" +
-                "</body>" +
-                "</html>";
 
-        return htmlContent;
+        // 使用StringBuilder更高效地构建HTML内容
+        StringBuilder htmlContent = new StringBuilder();
 
-        // 假设使用messageHelper设置邮件内容（第二个参数true表示HTML格式）
-        // messageHelper.setText(htmlContent, true);
+        // 构建HTML邮件内容
+        htmlContent.append("<html lang='zh-CN'>")
+                .append("<head>")
+                .append("   <meta charset='UTF-8'>")
+                .append("   <title>社团成员新申请通知</title>")
+                .append("</head>")
+                .append("<body style='background: #0f1722; font-family: \"Microsoft YaHei\", Arial, sans-serif; color: #fff; padding: 20px;'>")
+                .append("   <div style='max-width: 640px; margin: 0 auto; background: #1a2636; padding: 30px; border-radius: 12px;'>")
+                .append("       <h1 style='color: #00ffff; text-align: center;'>新成员申请通知</h1>")
+                .append("       <div style='border: 1px solid #00ccff; padding: 20px; border-radius: 8px; margin: 20px 0;'>")
+                .append("           <p style='color: #b3d9ff;'>申请人信息如下：</p>")
+                .append("           <ul style='list-style: none; padding: 0;'>")
+                .append("               <li style='margin: 10px 0;'>")
+                .append("                   <span style='display: inline-block; width: 80px; color: #66ccff; font-weight: bold;'>姓名：</span>")
+                .append("                   <span>").append(escapeHtml(request.getName())).append("</span>")
+                .append("               </li>")
+                .append("               <li style='margin: 10px 0;'>")
+                .append("                   <span style='display: inline-block; width: 80px; color: #66ccff; font-weight: bold;'>学号：</span>")
+                .append("                   <span>").append(escapeHtml(request.getStudentId())).append("</span>")
+                .append("               </li>")
+                .append("               <li style='margin: 10px 0;'>")
+                .append("                   <span style='display: inline-block; width: 80px; color: #66ccff; font-weight: bold;'>专业：</span>")
+                .append("                   <span>").append(escapeHtml(request.getMajor())).append("</span>")
+                .append("               </li>")
+                .append("               <li style='margin: 10px 0;'>")
+                .append("                   <span style='display: inline-block; width: 80px; color: #66ccff; font-weight: bold;'>电话：</span>")
+                .append("                   <span>").append(escapeHtml(request.getPhone())).append("</span>")
+                .append("               </li>")
+                .append("               <li style='margin: 10px 0;'>")
+                .append("                   <span style='display: inline-block; width: 80px; color: #66ccff; font-weight: bold;'>邮箱：</span>")
+                .append("                   <span>").append(escapeHtml(request.getEmail())).append("</span>")
+                .append("               </li>")
+                .append("               <li style='margin: 10px 0;'>")
+                .append("                   <span style='display: inline-block; width: 80px; color: #66ccff; font-weight: bold;'>兴趣：</span>")
+                .append("                   <span>").append(escapeHtml(request.getInterest())).append("</span>")
+                .append("               </li>")
+                .append("               <li style='margin: 10px 0;'>")
+                .append("                   <span style='display: inline-block; width: 80px; color: #66ccff; font-weight: bold;'>经验：</span>")
+                .append("                   <span style='white-space: pre-line;'>").append(escapeHtml(request.getExperience())).append("</span>")
+                .append("               </li>")
+                .append("           </ul>")
+                .append("       </div>")
+                .append("       <div style='text-align: center; color: #999;'>")
+                .append("           <p>社团申请服务组 · ").append(new SimpleDateFormat("yyyy年MM月dd日").format(new Date())).append("</p>")
+                .append("       </div>")
+                .append("   </div>")
+                .append("</body>")
+                .append("</html>");
+
+        return htmlContent.toString();
     }
+
+    // 添加HTML特殊字符转义方法，防止XSS攻击和HTML解析错误
+    private String escapeHtml(String input) {
+        if (input == null) {
+            return "";
+        }
+        return input.replace("&", "&amp;")
+                .replace("<", "&lt;")
+                .replace(">", "&gt;")
+                .replace("\"", "&quot;")
+                .replace("'", "&#39;");
+    }
+
 }
