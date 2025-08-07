@@ -6,6 +6,7 @@ import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Component;
@@ -16,15 +17,25 @@ import java.io.File;
 public class SendMailUtils {
     @Autowired
     JavaMailSenderImpl javaMailSender;
+    @Autowired
+    private JavaMailSender mailSender;
 
-    //发送普通文字邮件
-    public  void sendText(String Subject, String Text, String setFrom, String setTo) {
-        SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
-        simpleMailMessage.setSubject(Subject);//标题
-        simpleMailMessage.setText(Text);//内容
-        simpleMailMessage.setFrom(setFrom);//发送人邮箱
-        simpleMailMessage.setTo(setTo);//发送目的地邮箱
-        javaMailSender.send(simpleMailMessage);
+    public  void sendText(String Subject, String Text, String setFrom, String setTo) throws MessagingException {
+        //SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
+        //simpleMailMessage.setSubject(Subject);//标题
+        //simpleMailMessage.setText(Text);//内容
+        //simpleMailMessage.setFrom(setFrom);//发送人邮箱
+        //simpleMailMessage.setTo(setTo);//发送目的地邮箱
+        ////message.setContent(htmlContent, "text/html; charset=utf-8");
+        //javaMailSender.send(simpleMailMessage);
+
+        MimeMessage mimeMessage = mailSender.createMimeMessage();
+        MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage, true);
+        messageHelper.setFrom("z13039811650@163.com");
+        messageHelper.setTo(setTo);
+        messageHelper.setSubject(Subject);
+        messageHelper.setText(Text,true);
+        mailSender.send(mimeMessage);
     }
 
     public  void sendTextRk(String Subject, String Text, String setFrom, String setTo, JoinRequest request) {

@@ -58,7 +58,7 @@ public class RkController {
     SendMailUtils sendMailUtils;
 
     @GetMapping("/sendMail")
-    public String sendMail(@RequestBody MailUser mailUser) throws UnsupportedEncodingException {
+    public String sendMail(@RequestBody MailUser mailUser) throws UnsupportedEncodingException, MessagingException {
         System.out.println(mailUser);
         if (mailUser.getMess().isEmpty()) {
             String msg = "无告警信息";
