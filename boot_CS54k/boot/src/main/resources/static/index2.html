@@ -8,6 +8,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
     <style>
+        /* 所有原有样式保持不变 */
         :root {
             --primary-color: #2a5ca8;
             --secondary-color: #6c757d;
@@ -23,7 +24,6 @@
             --hologram-color: rgba(0, 240, 255, 0.25);
         }
 
-        /* 浅色模式变量 */
         [data-theme="light"] {
             --bg-color: #f8f9fa;
             --text-color: #212529;
@@ -47,7 +47,6 @@
             overflow-x: hidden;
         }
 
-        /* 科幻网格背景 */
         body::before {
             content: "";
             position: fixed;
@@ -63,7 +62,6 @@
             z-index: -1;
         }
 
-        /* 二进制数字雨效果容器 */
         #matrixRain {
             position: fixed;
             top: 0;
@@ -75,7 +73,6 @@
             pointer-events: none;
         }
 
-        /* 悬浮粒子效果 */
         #particles {
             position: fixed;
             top: 0;
@@ -86,7 +83,6 @@
             pointer-events: none;
         }
 
-        /* 全息投影效果 */
         .hologram-effect {
             position: relative;
             overflow: hidden;
@@ -117,7 +113,6 @@
             100% { transform: rotate(30deg) translate(30%, 30%); }
         }
 
-        /* 科幻风格元素 */
         .sci-fi-border {
             position: relative;
             border: 1px solid var(--sci-fi-accent);
@@ -202,7 +197,6 @@
             box-shadow: 0 0 15px var(--sci-fi-accent);
         }
 
-        /* 全息投影内容区 */
         .hologram-panel {
             background: rgba(10, 20, 40, 0.7);
             border-radius: 15px;
@@ -216,7 +210,7 @@
         .hologram-panel::before {
             content: "";
             position: absolute;
-            top: 0;
+            top: 极
             left: 0;
             width: 100%;
             height: 100%;
@@ -247,7 +241,7 @@
             left: 0;
             width: 100%;
             height: 3px;
-            background: linear-gradient(90deg, transparent, var(--sci-fi-accent), transparent);
+            background: linear-gradient(90deg, transparent, var(--s极fi-accent), transparent);
             animation: scanline 3s linear infinite;
         }
 
@@ -308,7 +302,6 @@
             transform: scaleX(1);
         }
 
-        /* 励志语样式 */
         .inspiration-quote {
             font-family: 'Orbitron', sans-serif;
             color: var(--sci-fi-accent);
@@ -340,7 +333,6 @@
             right: 0;
         }
 
-        /* 科幻数据面板 */
         .data-panel {
             height: 120px;
             background: rgba(0, 10, 20, 0.5);
@@ -381,7 +373,6 @@
             100% { transform: translateX(100%); }
         }
 
-        /* 悬浮科技图标 */
         .tech-icon {
             position: absolute;
             font-size: 1.5rem;
@@ -396,7 +387,6 @@
             50% { transform: translateY(-20px) rotate(5deg); }
         }
 
-        /* 模式切换按钮 */
         .theme-toggle {
             position: fixed;
             bottom: 30px;
@@ -425,11 +415,10 @@
             color: var(--sci-fi-accent);
         }
 
-        /* 导航栏样式 */
         .navbar {
             background: var(--header-bg) !important;
             border-bottom: 1px solid var(--sci-fi-accent);
-            box-shadow: 0 0 30px rgba(0, 240, 255, 0.3);
+            box-shadow: 0 0 30px rgba(0, 240, 255, 极.3);
             padding: 0.5rem 1rem;
         }
 
@@ -472,7 +461,6 @@
             width: 80%;
         }
 
-        /* 轮播图样式 */
         .carousel {
             border: 1px solid var(--sci-fi-accent);
             box-shadow: var(--border-glow);
@@ -494,7 +482,6 @@
             box-shadow: 0 0 15px var(--sci-fi-accent);
         }
 
-        /* 页脚样式 */
         footer {
             background: rgba(10, 20, 40, 0.7) !important;
             border-top: 1px solid var(--sci-fi-accent);
@@ -521,7 +508,6 @@
             opacity: 0.8;
         }
 
-        /* 响应式调整 */
         @media (max-width: 768px) {
             .main-title {
                 font-size: 2.5rem;
@@ -543,7 +529,6 @@
             }
         }
 
-        /* 社团特色样式 */
         .team-section {
             position: relative;
             padding: 4rem 0;
@@ -616,7 +601,6 @@
             box-shadow: 0 0 10px var(--sci-fi-accent);
         }
 
-        /* 成果展示样式 */
         .achievement-card {
             background: rgba(15, 25, 45, 0.7);
             border: 1px solid var(--sci-fi-accent);
@@ -650,7 +634,6 @@
             font-family: 'Orbitron', sans-serif;
         }
 
-        /* 时间线样式 */
         .timeline {
             position: relative;
             padding-left: 3rem;
@@ -715,6 +698,113 @@
             );
             pointer-events: none;
         }
+
+        #welcomeModal {
+            z-index: 1050;
+        }
+
+        .modal-content {
+            background: var(--card-bg);
+            border: 1px solid var(--sci-fi-accent);
+            box-shadow: 0 0 30px rgba(0, 240, 255, 0.5);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .modal-header {
+            border-bottom: 1px solid var(--sci-fi-accent);
+            background: linear-gradient(135deg, #0a192f 0%, #0f0c29 100%);
+        }
+
+        .modal-title {
+            font-family: 'Orbitron', sans-serif;
+            letter-spacing: 1极
+            color: var(--sci-fi-accent);
+            text-shadow: var(--text-glow);
+        }
+
+        .modal-body {
+            font-size: 1.1rem;
+            padding: 20px;
+        }
+
+        .modal-footer {
+            border-top: 1px solid var(--sci-fi-accent);
+            background: rgba(10, 20, 40, 0.7);
+        }
+
+        .btn-sci-fi {
+            background: transparent;
+            border: 1px solid var(--sci-fi-accent);
+            color: var(--sci-fi-accent);
+            text-shadow: var(--text-glow);
+            border-radius: 20px;
+            padding: 8px 20px;
+            transition: all 0.3s ease;
+            font-family: 'Orbitron', sans-serif;
+            letter-spacing: 1px;
+        }
+
+        .btn-sci-fi:hover {
+            background: rgba(0, 240, 255, 0.2);
+            box-shadow: 0 0 15px var(--sci-fi-accent);
+            transform: translateY(-2px);
+        }
+
+        .btn-sci-fi:active {
+            transform: translateY(0);
+        }
+
+        #adBanner {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--header-bg);
+            border: 1px solid var(--sci-fi-accent);
+            box-shadow: var(--border-glow);
+            border-radius: 8px;
+            padding: 12px 30px;
+            font-family: 'Orbitron', sans-serif;
+            letter-spacing: 1px;
+            font-size: 1.1rem;
+            color: white;
+            z-index: 1000;
+            display: none; /* 默认隐藏 */
+            animation: floatBanner 3s infinite ease-in-out;
+        }
+
+        #adBanner .close-btn {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: var(--sci-fi-accent);
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: var(--border-glow);
+        }
+
+        @keyframes floatBanner {
+            0% { transform: translateX(-50%) translateY(0) rotate(0deg); }
+            25% { transform: translateX(-50%) translateY(-10px) rotate(3deg); }
+            50% { transform: translateX(-50%) translateY(0) rotate(0deg); }
+            75% { transform: translateX(-50%) translateY(10px) rotate(-3deg); }
+            100% { transform: translateX(-50%) translateY(0) rotate(0deg); }
+        }
+
+        @media (max-width: 768px) {
+            #adBanner {
+                width: 90%;
+                font-size: 1rem;
+                padding: 10px 20px;
+                bottom: 10px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -730,23 +820,23 @@
 <div class="tech-icon" style="top: 40%; left: 90%;"><i class="fas fa-robot"></i></div>
 <div class="tech-icon" style="top: 80%; left: 15%;"><i class="fas fa-rocket"></i></div>
 
-<!-- 导航栏 -->
-<!-- 插入导航栏 -->
+<!-- 新增的广告条 -->
+<div id="adBanner">
+    <div class="close-btn">×</div>
+    <span class="sci-fi-text">2025届新内容即将上线，敬请期待！</span>
+</div>
 
 <!-- 导航栏 -->
 <nav class="navbar navbar-expand-lg navbar-dark py-3">
     <div class="container">
         <a class="navbar-brand" href="index.html">
-            <img src="logo.png" alt="Logo" width="30" height="30" class="me-2">
             软开人工智能平台-中俄大模型项目研究中心
-            <img src="黑河学院软件项目开发社团.png" alt="黑河学院软件项目开发社团" width="70" height="40" class="me-2">
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
-                <li class="nav-item"><a class="nav-link" href="./2025/index_2025.html" id="nav-index2025">2025软开招募</a></li>
                 <li class="nav-item"><a class="nav-link" href="index.html" id="nav-index">软开社团</a></li>
                 <li class="nav-item"><a class="nav-link" href="competition.html" id="nav-competition">软开比赛集结</a></li>
                 <li class="nav-item"><a class="nav-link" href="works.html" id="nav-works">各项比赛作品展示</a></li>
@@ -758,7 +848,25 @@
         </div>
     </div>
 </nav>
-<!-- 在页面底部添加导航栏加载脚本 -->
+
+<!-- 新增的欢迎提示框 -->
+<div class="modal fade" id="welcomeModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">2025届新内容通知</h5>
+            </div>
+            <div class="modal-body">
+                <p>欢迎来到黑河学院软件项目开发社团！</p>
+                <p>我们已更新2025届全新内容，是否立即跳转到新页面？</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-sci-fi" id="btnNo">暂时不跳转</button>
+                <button type="button" class="btn btn-sci-fi" id="btnYes">立即前往</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 <!-- 主视觉区 -->
 <header class="hero-section">
@@ -787,10 +895,10 @@
                     <h3>社团宗旨</h3>
                     <p>黑河学院软件开发社团自秉承着培养未来软件开发精英的使命。我们致力于打造一个充满活力、创新和协作精神的技术社区。</p>
                     <p>通过实际项目开发、技术研讨和团队合作，让学生在实践中学习和成长。</p>
+                    </极
                 </div>
             </div>
         </div>
-    </div>
 </section>
 
 <!-- 社团成员 -->
@@ -1174,12 +1282,32 @@
             particlesCanvas.height = window.innerHeight;
         });
 
-        // 加载导航栏
-        fetch('navbar.html')
-            .then(response => response.text())
-            .then(data => {
-                document.getElementById('navbar-container').innerHTML = data;
-            });
+        // 修复1：页面加载时立即显示模态框
+        const welcomeModal = new bootstrap.Modal(document.getElementById('welcomeModal'), {
+            backdrop: 'static',
+            keyboard: false
+        });
+
+        // 在DOM加载完成后立即显示模态框
+        welcomeModal.show();
+
+        // 修复2：修正跳转链接
+        document.getElementById('btnYes').addEventListener('click', function() {
+            // 使用正确的相对路径
+            window.location.href = '2025/index_2025.html';
+        });
+
+        document.getElementById('btnNo').addEventListener('click', function() {
+            welcomeModal.hide();
+            // 显示摇摆的广告条
+            const adBanner = document.getElementById('adBanner');
+            adBanner.style.display = 'block';
+        });
+
+        // 关闭广告条
+        document.querySelector('#adBanner .close-btn').addEventListener('click', function() {
+            document.getElementById('adBanner').style.display = 'none';
+        });
     });
 
     // 表单提交处理
@@ -1206,7 +1334,6 @@
         })
             .then(response => response.json())
             .then(data => {
-
                 if (data.success) {
                     document.getElementById('successMessage').style.display = 'block';
                     document.getElementById('joinForm').reset();
@@ -1215,18 +1342,12 @@
                     }, 3000);
                 } else {
                     alert('提交失败: ' + data.message);
-                    alert('提交失败: ' + data);
-                    alert('提交失败: ' + data.success);
-                    alert('提交失败: ' + data.data);
-                    //alert(data);
-
                 }
             })
             .catch(error => {
                 console.error('Error:', error);
                 alert('提交过程中发生错误');
             });
-
     });
 </script>
 </body>

@@ -104,5 +104,17 @@ D:/code/code库/code/git_java/马士兵/Sping6/SpringMyBatisDemo/src/main/src/ma
       <jdbc-url>jdbc:mysql://localhost:3306/sm?useUnicode=true&amp;amp;characterEncoding=utf-8&amp;amp;useSSL=false&amp;amp;serverTimezone=GMT%2B8&amp;amp;allowPublicKeyRetrieval=true</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
+    <data-source source="LOCAL" name="@45.207.195.166" uuid="63ae307e-78cb-41fe-b17b-401f5cf31a59">
+      <driver-ref>mysql.8</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://45.207.195.166:3306</jdbc-url>
+      <jdbc-additional-properties>
+        <property name="com.intellij.clouds.kubernetes.db.host.port" />
+        <property name="com.intellij.clouds.kubernetes.db.enabled" value="false" />
+        <property name="com.intellij.clouds.kubernetes.db.container.port" />
+      </jdbc-additional-properties>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
   </component>
 </project>
