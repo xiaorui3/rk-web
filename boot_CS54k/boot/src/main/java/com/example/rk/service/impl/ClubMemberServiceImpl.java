@@ -18,6 +18,7 @@ import java.lang.reflect.Array;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.regex.Pattern;
 
 @Service
@@ -91,27 +92,61 @@ public class ClubMemberServiceImpl implements ClubMemberService {
     @Override
     @Transactional
     public ApiResponse handleMail(JoinRequest request) throws MessagingException {
-        String msg="";
-        String subject="新社员入社提醒--软件项目开发社团";
+        /// 新用户发送
 
+        String email = request.getEmail();
+        String msg="";
+        String subject="欢迎 "+request.getName()+" 同学加入软件项目开发社团";
         String fromAddress = "=?UTF-8?B?" + java.util.Base64.getEncoder().encodeToString("软件项目开发社团".getBytes(StandardCharsets.UTF_8)) + "?= <z13039811650@163.com>";
-        ArrayList<String> arr=new ArrayList<>();
-        arr.add("3505469466@qq.com");
-        arr.add("ruimeilademaye@163.com");
-        arr.add("2148906016@qq.com");
-        arr.add("lxy521521456@qq.com");
-        for (int i = 0; i < arr.size(); i++) {
-            int finalI = i;
+
+        sendMailUtils.sendText(subject, msg +"\n"+sendMailUtils.sendJoinRequestNoticeUser(request), fromAddress, email);
+
+        ///  社团人员 发送
+        msg="";
+        subject="新社员入社提醒--软件项目开发社团";
+        fromAddress = "=?UTF-8?B?" + java.util.Base64.getEncoder().encodeToString("软件项目开发社团".getBytes(StandardCharsets.UTF_8)) + "?= <z13039811650@163.com>";
+        //ArrayList<String> arr=new ArrayList<>();
+        HashMap<String,String> map=new HashMap<>();
+        map.put("3505469466@qq.com","赵锐");
+        map.put("ruimeilademaye@163.com","韩驰");
+        map.put("2148906016@qq.com","马鹏博");
+        map.put("lxy521521456@163.com","刘晓雨");
+        map.put("w87027619332@163.com","郑志远");
+
+        //arr.add("3505469466@qq.com");
+        //arr.add("ruimeilademaye@163.com");
+        //arr.add("2148906016@qq.com");
+        //arr.add("lxy521521456@163.com");
+        //arr.add("w87027619332@163.com");
+        String finalSubject1 = subject;
+        String finalMsg1 = msg;
+        String finalFromAddress1 = fromAddress;
+        map.forEach((s, e)->{
             emailTaskExecutor.execute(() -> {
-                System.out.println(arr.get(finalI)+" 准备发送");
+                System.out.println(e+" 的邮箱"+s+"准备发送");
                 try {
-                    sendMailUtils.sendText(subject, msg+"\n"+sendMailUtils.sendJoinRequestNotice(request), fromAddress, arr.get(finalI));
+                    sendMailUtils.sendText(finalSubject1, finalMsg1 +"\n"+sendMailUtils.sendJoinRequestNotice(request,e), finalFromAddress1, s);
+                } catch (MessagingException e1) {
+                    throw new RuntimeException(e1);
+                }
+                System.out.println(e+" 的邮箱"+s+"发送完成");
+            });
+        });
+        /*for (int i = 0; i < map.size(); i++) {
+            int finalI = i;
+            String finalSubject = subject;
+            String finalMsg = msg;
+            String finalFromAddress = fromAddress;
+            emailTaskExecutor.execute(() -> {
+                System.out.println(map.get(finalI)+" 准备发送");
+                try {
+                    sendMailUtils.sendText(finalSubject, finalMsg +"\n"+sendMailUtils.sendJoinRequestNotice(request), finalFromAddress, arr.get(finalI));
                 } catch (MessagingException e) {
                     throw new RuntimeException(e);
                 }
                 System.out.println(arr.get(finalI)+" 发送完成");
             });
-        }
+        }*/
         //handleMail2(request,mail2);
         return ApiResponse.success("ok! 发送成功").addData("memberId", request.getStudentId());
     }
