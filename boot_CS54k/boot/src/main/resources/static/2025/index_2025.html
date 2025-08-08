@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>2025届新生招募 | 黑河学院软件项目开发社团</title>
-    <link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/css2?family=Orbitron:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
     <style>
         :root {
@@ -893,7 +893,7 @@
     <div class="container">
         <a class="navbar-brand" href="../index.html">
             <img src="../logo.png" alt="Logo" width="30" height="30" class="me-2">
-            软开人工智能平台-中俄大模型项目研究中心
+            黑河学院中俄大模型项目研究中心
             <img src="../黑河学院软件项目开发社团.png" alt="黑河学院软件项目开发社团" width="70" height="40" class="me-2">
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
@@ -901,6 +901,7 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
+                <li class="nav-item"><a class="nav-link" href="./study_student.html">新生培训计划</a></li>
                 <li class="nav-item"><a class="nav-link" href="../index.html">软开社团</a></li>
                 <li class="nav-item"><a class="nav-link active" href="./index_2025.html">2025届招募</a></li>
                 <li class="nav-item"><a class="nav-link" href="../competition.html">软开比赛集结</a></li>
@@ -1212,8 +1213,8 @@
                 x: Math.random() * particlesCanvas.width,
                 y: Math.random() * particlesCanvas.height,
                 size: Math.random() * 3 + 1,
-                speedX: Math.random() * 1 - 0.5,
-                speedY: Math.random() * 1 - 0.5,
+                speedX: Math.random() - 0.5,
+                speedY: Math.random() - 0.5,
                 color: `rgba(0, 240, 255, ${Math.random() * 0.5 + 0.1})`
             });
         }
@@ -1259,6 +1260,13 @@
                 interest: document.getElementById('interest').value,
                 experience: document.getElementById('experience').value
             };
+            const successMessage = document.getElementById('successMessage');
+            successMessage.style.display = 'block';
+            // 可以添加一个加载中的样式（如果需要）
+            successMessage.classList.remove('alert-success', 'alert-danger');
+            successMessage.classList.add('alert-info');
+
+            successMessage.textContent = "正在提交并提醒软开相关负责人........请不要重复点击"
 
             // 发送到后端API
             fetch('/api/join', {
@@ -1267,18 +1275,38 @@
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify(formData)
+
             })
                 .then(response => response.json())
                 .then(data => {
-                    const successMessage = document.getElementById('successMessage');
+
                     if (data.success) {
                         successMessage.style.display = 'block';
                         document.getElementById('recruitForm').reset();
                         setTimeout(() => {
                             successMessage.style.display = 'none';
                         }, 5000);
-                        successMessage.textContent = '提交成功！ 将在三日内审核！';
+                        successMessage.textContent = data.message;
+                        /*fetch('/api/sendMail', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify(formData)
+                        })
+                            .then(response => response.json())
+                            .then(data=>{
+                                if (data.success) {
+                                    successMessage.style.display = 'block';
+                                    document.getElementById('recruitForm').reset();
+                                    setTimeout(() => {
+                                        successMessage.style.display = 'none';
+                                    }, 5000);
+                                    successMessage.textContent = data.message;
+                                }
+                            })*/
                     } else {
+
                         //successMessage.textContent = '提交失败: ' + +data;
                         successMessage.textContent = '提交失败: ' + data.message;
                         //successMessage.textContent = '提交失败: ' + +data.success;

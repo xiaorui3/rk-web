@@ -31,18 +31,20 @@ public class RkController {
     }
 
     @PostMapping("/join")
-    public ResponseEntity<ApiResponse> handleJoinRequest(@RequestBody JoinRequest request) {
+    public ResponseEntity<ApiResponse> handleJoinRequest(@RequestBody JoinRequest request) throws MessagingException, UnsupportedEncodingException {
         System.out.println("request:   "+request);
         ApiResponse response = clubMemberService.handleJoinRequest(request);
-
-        System.out.println("response:   "+response);
+        sendMailPost(request);
+        //System.out.println("response:   "+response);
         if (response.isSuccess()) {
-            System.out.println("response:   "+response);
-            System.out.println("ResponseEntity.ok(response):   "+ResponseEntity.ok(response));
+            //System.out.println("response:   "+response);
+            //System.out.println("ResponseEntity.ok(response):   "+ResponseEntity.ok(response));
+
+
             return ResponseEntity.ok(response);
         } else {
-            System.out.println("response:   "+response);
-            System.out.println("ResponseEntity.badRequest().body(response):   "+ResponseEntity.badRequest().body(response));
+            //System.out.println("response:   "+response);
+            //System.out.println("ResponseEntity.badRequest().body(response):   "+ResponseEntity.badRequest().body(response));
             return ResponseEntity.badRequest().body(response);
         }
     }
@@ -71,6 +73,26 @@ public class RkController {
 
         System.out.println("发送完成");
         return "ok";
+    }
+
+    @PostMapping("/sendMail")
+    public ResponseEntity<ApiResponse> sendMailPost(@RequestBody JoinRequest request) throws UnsupportedEncodingException, MessagingException {
+        //System.out.println(mailUser);
+
+        ApiResponse response = clubMemberService.handleMail(request);
+
+        //System.out.println("response:   "+response);
+        if (response.isSuccess()) {
+            //System.out.println("response:   "+response);
+            //System.out.println("ResponseEntity.ok(response):   "+ResponseEntity.ok(response));
+            return ResponseEntity.ok(response);
+        } else {
+            //System.out.println("response:   "+response);
+            //System.out.println("ResponseEntity.badRequest().body(response):   "+ResponseEntity.badRequest().body(response));
+            return ResponseEntity.badRequest().body(response);
+        }
+
+
     }
 
 

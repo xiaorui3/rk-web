@@ -5,12 +5,19 @@ import com.example.rk.mapper.ClubMemberMapper;
 import com.example.rk.pojo.ClubMember;
 import com.example.rk.pojo.JoinRequest;
 import com.example.rk.pojo.ApiResponse;
+import com.example.rk.pojo.MailUser;
 import com.example.rk.service.ClubMemberService;
+import com.example.rk.util.SendMailUtils;
+import jakarta.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.lang.reflect.Array;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.regex.Pattern;
 
 @Service
@@ -19,10 +26,23 @@ public class ClubMemberServiceImpl implements ClubMemberService {
     private static final String EMAIL_REGEX = "^[\\w-.]+@([\\w-]+\\.)+[\\w-]{2,4}$";
     private final ClubMemberMapper clubMemberMapper;
 
+
+    //@Autowired
+    //private MailUser mailUser;
+
+
+    @Autowired
+    private SendMailUtils sendMailUtils;
+
+    @Autowired
+    private ThreadPoolTaskExecutor emailTaskExecutor;
+
+
     @Autowired
     public ClubMemberServiceImpl(ClubMemberMapper clubMemberMapper) {
         this.clubMemberMapper = clubMemberMapper;
     }
+
 
     @Override
     @Transactional
@@ -63,10 +83,47 @@ public class ClubMemberServiceImpl implements ClubMemberService {
         member.setSubmitTime(LocalDateTime.now());
 
         clubMemberMapper.insert(member);
-        System.out.println("");
+        //System.out.println("");
 
-        return ApiResponse.success("申请提交成功").addData("memberId", member.getId());
+        return ApiResponse.success("申请提交成功 审核结果将在三日后发邮件通知").addData("memberId", member.getId());
     }
+
+    @Override
+    @Transactional
+    public ApiResponse handleMail(JoinRequest request) throws MessagingException {
+        String msg="";
+        String subject="新社员入社提醒--软件项目开发社团";
+
+        String fromAddress = "=?UTF-8?B?" + java.util.Base64.getEncoder().encodeToString("软件项目开发社团".getBytes(StandardCharsets.UTF_8)) + "?= <z13039811650@163.com>";
+        ArrayList<String> arr=new ArrayList<>();
+        arr.add("3505469466@qq.com");
+        arr.add("ruimeilademaye@163.com");
+        arr.add("2148906016@qq.com");
+        arr.add("lxy521521456@qq.com");
+        for (int i = 0; i < arr.size(); i++) {
+            int finalI = i;
+            emailTaskExecutor.execute(() -> {
+                System.out.println(arr.get(finalI)+" 准备发送");
+                try {
+                    sendMailUtils.sendText(subject, msg+"\n"+sendMailUtils.sendJoinRequestNotice(request), fromAddress, arr.get(finalI));
+                } catch (MessagingException e) {
+                    throw new RuntimeException(e);
+                }
+                System.out.println(arr.get(finalI)+" 发送完成");
+            });
+        }
+        //handleMail2(request,mail2);
+        return ApiResponse.success("ok! 发送成功").addData("memberId", request.getStudentId());
+    }
+
+    //public void handleMail2(JoinRequest request,String mail) throws MessagingException {
+    //    String msg="";
+    //    String subject="新社员入社提醒--软件项目开发社团";
+    //    System.out.println(mail+" 准备发送");
+    //    String fromAddress = "=?UTF-8?B?" + java.util.Base64.getEncoder().encodeToString("软件项目开发社团".getBytes(StandardCharsets.UTF_8)) + "?= <z13039811650@163.com>";
+    //    sendMailUtils.sendText(subject, msg+"\n"+sendMailUtils.sendJoinRequestNotice(request), fromAddress, mail);
+    //    System.out.println(mail+" 发送完成");
+    //}
 
     @Override
     public String selectOneServiceId(String STU_ID) {

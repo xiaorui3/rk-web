@@ -13,6 +13,9 @@ import org.springframework.stereotype.Component;
 
 
 import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 @Component
 public class SendMailUtils {
     @Autowired
@@ -58,6 +61,75 @@ public class SendMailUtils {
         helper.setTo(setTo);//目的地邮箱
         helper.addAttachment(attachmentFilename,new File(filePathName));  //图片路径
         javaMailSender.send(mimeMessage);
+    }
+
+    public String sendJoinRequestNotice(JoinRequest request) {
+        //System.out.println(request);
+
+        // 使用StringBuilder更高效地构建HTML内容
+        StringBuilder htmlContent = new StringBuilder();
+
+        // 构建HTML邮件内容
+        htmlContent.append("<html lang='zh-CN'>")
+                .append("<head>")
+                .append("   <meta charset='UTF-8'>")
+                .append("   <title>社团成员新申请通知</title>")
+                .append("</head>")
+                .append("<body style='background: #0f1722; font-family: \"Microsoft YaHei\", Arial, sans-serif; color: #fff; padding: 20px;'>")
+                .append("   <div style='max-width: 640px; margin: 0 auto; background: #1a2636; padding: 30px; border-radius: 12px;'>")
+                .append("       <h1 style='color: #00ffff; text-align: center;'>新成员申请通知</h1>")
+                .append("       <div style='border: 1px solid #00ccff; padding: 20px; border-radius: 8px; margin: 20px 0;'>")
+                .append("           <p style='color: #b3d9ff;'>申请人信息如下：</p>")
+                .append("           <ul style='list-style: none; padding: 0;'>")
+                .append("               <li style='margin: 10px 0;'>")
+                .append("                   <span style='display: inline-block; width: 80px; color: #66ccff; font-weight: bold;'>姓名：</span>")
+                .append("                   <span>").append(escapeHtml(request.getName())).append("</span>")
+                .append("               </li>")
+                .append("               <li style='margin: 10px 0;'>")
+                .append("                   <span style='display: inline-block; width: 80px; color: #66ccff; font-weight: bold;'>学号：</span>")
+                .append("                   <span>").append(escapeHtml(request.getStudentId())).append("</span>")
+                .append("               </li>")
+                .append("               <li style='margin: 10px 0;'>")
+                .append("                   <span style='display: inline-block; width: 80px; color: #66ccff; font-weight: bold;'>专业：</span>")
+                .append("                   <span>").append(escapeHtml(request.getMajor())).append("</span>")
+                .append("               </li>")
+                .append("               <li style='margin: 10px 0;'>")
+                .append("                   <span style='display: inline-block; width: 80px; color: #66ccff; font-weight: bold;'>电话：</span>")
+                .append("                   <span>").append(escapeHtml(request.getPhone())).append("</span>")
+                .append("               </li>")
+                .append("               <li style='margin: 10px 0;'>")
+                .append("                   <span style='display: inline-block; width: 80px; color: #66ccff; font-weight: bold;'>邮箱：</span>")
+                .append("                   <span>").append(escapeHtml(request.getEmail())).append("</span>")
+                .append("               </li>")
+                .append("               <li style='margin: 10px 0;'>")
+                .append("                   <span style='display: inline-block; width: 80px; color: #66ccff; font-weight: bold;'>兴趣：</span>")
+                .append("                   <span>").append(escapeHtml(request.getInterest())).append("</span>")
+                .append("               </li>")
+                .append("               <li style='margin: 10px 0;'>")
+                .append("                   <span style='display: inline-block; width: 80px; color: #66ccff; font-weight: bold;'>经验：</span>")
+                .append("                   <span style='white-space: pre-line;'>").append(escapeHtml(request.getExperience())).append("</span>")
+                .append("               </li>")
+                .append("           </ul>")
+                .append("       </div>")
+                .append("       <div style='text-align: center; color: #999;'>")
+                .append("           <p>社团申请服务组 · ").append(new SimpleDateFormat("yyyy年MM月dd日").format(new Date())).append("</p>")
+                .append("       </div>")
+                .append("   </div>")
+                .append("</body>")
+                .append("</html>");
+
+        return htmlContent.toString();
+    }
+
+    private String escapeHtml(String input) {
+        if (input == null) {
+            return "";
+        }
+        return input.replace("&", "&amp;")
+                .replace("<", "&lt;")
+                .replace(">", "&gt;")
+                .replace("\"", "&quot;")
+                .replace("'", "&#39;");
     }
 
 

@@ -1,0 +1,25 @@
+https://nacos.io/docs/latest/quickstart/quick-start/?spm=5238cd80.6a33be36.0.0.10651e5dXwezTU
+
+上面是文档
+
+启动：cd C:\杂乱\技术\nacos-server-3.0.2\nacos\bin
+startup.cmd -m standalone
+
+我修改了C:\杂乱\技术\nacos-server-3.0.2\nacos\conf\application.properties文件
+要不然启动不了
+192行到200行
+nacos.core.auth.server.identity.key=authKey
+nacos.core.auth.server.identity.value=xiaorui
+### worked when nacos.core.auth.system.type=nacos or nacos.core.auth.console.enabled=true
+### The token expiration in seconds:
+nacos.core.auth.plugin.nacos.token.cache.enable=false
+nacos.core.auth.plugin.nacos.token.expire.seconds=18000
+### The default token (Base64 string):
+#nacos.core.auth.plugin.nacos.token.secret.key=VGhpc0lzTXlDdXN0b21TZWNyZXRLZXkwMTIzNDU2Nzg=
+nacos.core.auth.plugin.nacos.token.secret.key=bmFjb3NfMjAyNDAxMTBfc2hpZ3poX25hY29zX3Rva2Vu
+
+
+账户：nacos
+密码：20041123zZ@
+
+必须要java_home  我配置1.8不能用 java 17可以

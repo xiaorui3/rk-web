@@ -3,6 +3,7 @@ package com.example.rk.service;
 
 import com.example.rk.pojo.JoinRequest;
 import com.example.rk.pojo.ApiResponse;
+import jakarta.mail.MessagingException;
 
 public interface ClubMemberService {
     ApiResponse handleJoinRequest(JoinRequest request);
@@ -11,4 +12,6 @@ public interface ClubMemberService {
 
 
     JoinRequest selectOneServiceJoinRequest(String STU_ID);
+
+    ApiResponse handleMail(JoinRequest request) throws MessagingException;
 }
