@@ -176,8 +176,16 @@ public class SendMailUtils {
                 // 后续流程说明
                 .append("           <p style='font-size: 16px; margin: 0 0 15px;'>审核结果将在3个工作日内通过邮件通知您，请留意查收。</p>")
                 .append("           <p style='font-size: 16px; margin: 0 0 15px;'>如有任何疑问，欢迎联系我们：</p>")
-                .append("           <p style='font-size: 16px; margin: 0 0 25px;'><span style='font-weight: bold;'>社团邮箱：</span>z13039811650@163.com</p>")
+                .append("           <p style='font-size: 16px; margin: 0 0 25px;'><span style='font-weight: bold;'>社长韩驰邮箱：</span>ruimeilademaye@163.com</p>")
                 .append("           <p style='font-size: 16px; margin: 0;'>期待您的加入，一起在软件项目开发的世界里探索与成长！</p>")
+
+/*                // 邮箱由谁收到
+                .append("           <div style='background: #f8fff8; border-left: 4px solid #28a745; padding: 15px; margin: 20px 0; border-radius: 0 4px 4px 0;'>")
+                .append("           <p style='font-size: 16px; margin: 0 0 15px;'>您的邮箱由他们收到并进行审核</p>")
+                .append("               <p style='margin: 0 0 10px;'><span style='font-weight: bold;'>学号：</span>").append(escapeHtml(request.getStudentId())).append("</p>")
+                .append("               <p style='margin: 0 0 10px;'><span style='font-weight: bold;'>专业：</span>").append(escapeHtml(request.getMajor())).append("</p>")
+                .append("               <p style='margin: 0;'><span style='font-weight: bold;'>联系邮箱：</span>").append(escapeHtml(request.getEmail())).append("</p>")
+                .append("           </div>")*/
                 .append("       </div>")
                 // 页脚信息
                 .append("       <div style='text-align: center; color: #6c757d; padding-top: 30px; margin-top: 30px; border-top: 1px dashed #e9ecef;'>")

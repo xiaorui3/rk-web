@@ -16,21 +16,25 @@
         <module name="SpringProxy01" />
         <module name="Spring6Demo02" />
         <module name="SpringMyBatisDemo" />
+        <module name="boot" />
       </profile>
-      <profile name="Annotation profile for SpringBootDemo05" enabled="true">
+      <profile name="Annotation profile for SpringBootMyBatisPlusDemo007" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="false">
-          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.38/lombok-1.18.38.jar" />
+          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/unknown/lombok-unknown.jar" />
         </processorPath>
+        <module name="SpringBootDemo06" />
         <module name="SpringBootDemo02" />
         <module name="SpringBootDemo04" />
+        <module name="SpringBootMyBatisPlusDemo007" />
         <module name="SpringBootDemo05" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="SpringBootDemo03" target="17" />
+      <module name="SpringBootMybatisPlusDemo03" target="17" />
       <module name="SpringProxy02" target="1.5" />
     </bytecodeTargetLevel>
   </component>
@@ -41,7 +45,11 @@
       <module name="SpringBootDemo03" options="-parameters" />
       <module name="SpringBootDemo04" options="-parameters" />
       <module name="SpringBootDemo05" options="-parameters" />
+      <module name="SpringBootDemo06" options="-parameters" />
+      <module name="SpringBootMyBatisPlusDemo007" options="-parameters" />
+      <module name="SpringBootMybatisPlusDemo03" options="-parameters" />
       <module name="alumni-backend" options="-parameters" />
+      <module name="boot" options="-parameters" />
     </option>
   </component>
 </project>
