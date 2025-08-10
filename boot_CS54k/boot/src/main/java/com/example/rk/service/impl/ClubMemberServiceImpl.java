@@ -116,7 +116,7 @@ public class ClubMemberServiceImpl implements ClubMemberService {
         //ArrayList<String> arr=new ArrayList<>();
         //HashMap<String,String> map=new HashMap<>();
         HashMap<String, String> map = superMailSendUserController.getListTFMap();
-        System.out.println(map);
+        System.out.println("数据库里的发送给要求发送人员数据："+map);
         //System.out.println(10/0);
         //map.put("3505469466@qq.com","赵锐");
         //map.put("ruimeilademaye@163.com","韩驰");

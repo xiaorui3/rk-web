@@ -23,6 +23,8 @@ public class EmailConfigProperties {
     private String senderName;
 
 
+已经实现
+不过是使用的读取数据库方式
 
 
 

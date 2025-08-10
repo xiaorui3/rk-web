@@ -32,6 +32,7 @@ public class RkController {
 
     @PostMapping("/join")
     public ResponseEntity<ApiResponse> handleJoinRequest(@RequestBody JoinRequest request) throws MessagingException, UnsupportedEncodingException {
+        System.out.println("===================================================");
         System.out.println("request:   "+request);
         ApiResponse response = clubMemberService.handleJoinRequest(request);
         sendMailPost(request);

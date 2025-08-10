@@ -64,7 +64,7 @@ public class SendMailUtils {
     }
 
     public String sendJoinRequestNotice(JoinRequest request,String name) {
-        System.out.println(request);
+        //System.out.println(request);
 
         // 使用StringBuilder更高效地构建HTML内容
         StringBuilder htmlContent = new StringBuilder();

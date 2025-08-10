@@ -80,20 +80,12 @@ mybatis:
   mapper-locations: classpath:mybatis/mapper/*.xml
 
 
-rk-config:
-  host: ${MAIL_HOST:smtp.163.com}
-  username: ${MAIL_USERNAME:z13039811650@163.com}
-  password: ${MAIL_PASSWORD:VZycv3AHQs7T8dVS}
-  port: ${MAIL_PORT:587}
-  sender-name: ${SENDER_NAME:社团管理系统}  # 可选：发件人名称
-
-
-# 其他自定义配置
 club:
   name: ${CLUB_NAME:软件项目开发社团}
   admin-emails:
-    - ${ADMIN_EMAIL1:3505469466@qq.com}
+    - ${韩驰:3505469466@qq.com}
     - ${ADMIN_EMAIL2:ruimeilademaye@163.com}
     - ${ADMIN_EMAIL3:2148906016@qq.com}
     - ${ADMIN_EMAIL4:lxy521521456@163.com}
     - ${ADMIN_EMAIL5:w87027619332@163.com}
+# 其他自定义配置

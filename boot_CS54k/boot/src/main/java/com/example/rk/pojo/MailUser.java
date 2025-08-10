@@ -10,6 +10,15 @@ import org.apache.ibatis.annotations.Mapper;
 @AllArgsConstructor
 @NoArgsConstructor
 //@Mapper
+
+/***
+ *
+ * 邮件的类型
+ * 邮件号
+ * 邮件文字
+ * 邮件主题
+ * 学生id
+ */
 public class MailUser {
     private String mail;
     private String mess;

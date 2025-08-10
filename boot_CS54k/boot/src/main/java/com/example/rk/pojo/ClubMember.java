@@ -11,7 +11,9 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Data
 /**
-有数据库表
+ *
+ * 输入数据库的类
+ * 有数据库表
  */
 public class ClubMember {
     private Long id;
