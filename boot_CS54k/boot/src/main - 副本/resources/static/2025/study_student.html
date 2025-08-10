@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python新生培训计划 | 软件项目开发社团</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="../css/font-awesome.min.css" rel="stylesheet">
+    <script src="../js/chart.umd.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href=../css/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'tech-dark': '#0F172A',
+                        'tech-blue': '#1E40AF',
+                        'tech-cyan': '#06B6D4',
+                        'tech-purple': '#7C3AED',
+                        'tech-light': '#E0F2FE',
+                    },
+                    fontFamily: {
+                        inter: ['Inter', 'sans-serif'],
+                    },
+                },
+            }
+        }
+    </script>
+
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .text-shadow {
+                text-shadow: 0 0 8px rgba(6, 182, 212, 0.5);
+            }
+            .glow {
+                box-shadow: 0 0 15px rgba(6, 182, 212, 0.5);
+            }
+            .grid-bg {
+                background-image: linear-gradient(rgba(30, 64, 175, 0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(30, 64, 175, 0.1) 1px, transparent 1px);
+                background-size: 20px 20px;
+            }
+            .clip-path-slant {
+                clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
+            }
+            .timeline-line {
+                background: linear-gradient(to bottom, #06B6D4 0%, #7C3AED 100%);
+            }
+        }
+    </style>
+</head>
+
+<body class="bg-tech-dark text-gray-100 font-inter min-h-screen grid-bg">
+<!-- 返回上一级按钮 -->
+<button id="backButton" class="fixed top-6 left-6 z-50 bg-tech-blue/80 hover:bg-tech-blue text-tech-light px-4 py-2 rounded-lg flex items-center transition-all duration-300 backdrop-blur-sm glow">
+    <i class="fa fa-arrow-left mr-2"></i>
+    <a class="nav-link" href="./index_2025.html">返回软开25官网</a></li>
+</button>
+
+<!-- 页面头部 -->
+<header class="relative pt-24 pb-16 md:pt-32 md:pb-24 overflow-hidden clip-path-slant bg-gradient-to-br from-tech-blue to-tech-purple">
+    <div class="absolute inset-0 opacity-20">
+        <div class="absolute inset-0 bg-[url('https://picsum.photos/id/1/1200/800')] bg-cover bg-center"></div>
+    </div>
+    <div class="container mx-auto px-6 relative z-10">
+        <div class="max-w-4xl mx-auto text-center">
+            <div class="inline-block mb-4 px-4 py-1 bg-tech-cyan/20 border border-tech-cyan/40 rounded-full text-tech-cyan text-sm font-medium">
+                软件项目开发社团
+            </div>
+            <h1 class="text-[clamp(2rem,5vw,3.5rem)] font-bold mb-6 leading-tight text-shadow">
+                Python新生培训计划
+            </h1>
+            <p class="text-lg md:text-xl text-gray-200 mb-8 max-w-2xl mx-auto">
+                探索编程世界，奠定计算机基础，开启你的代码之旅
+            </p>
+            <div class="flex flex-wrap justify-center gap-4">
+                <div class="flex items-center bg-tech-dark/50 backdrop-blur-sm px-4 py-2 rounded-lg">
+                    <i class="fa fa-calendar text-tech-cyan mr-2"></i>
+                    <span>8月10日 - 8月18日</span>
+                </div>
+                <div class="flex items-center bg-tech-dark/50 backdrop-blur-sm px-4 py-2 rounded-lg">
+                    <i class="fa fa-users text-tech-cyan mr-2"></i>
+                    <span>新生入门培训</span>
+                </div>
+                <div class="flex items-center bg-tech-dark/50 backdrop-blur-sm px-4 py-2 rounded-lg">
+                    <i class="fa fa-code text-tech-cyan mr-2"></i>
+                    <span>Python基础</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 装饰性元素 -->
+    <div class="absolute -bottom-1 left-0 right-0 h-16 bg-gradient-to-t from-tech-dark to-transparent"></div>
+</header>
+
+<main class="container mx-auto px-6 py-16">
+    <!-- 培训目标 -->
+    <section class="mb-24">
+        <div class="flex items-center mb-8">
+            <div class="w-10 h-10 rounded-full bg-tech-cyan/20 flex items-center justify-center mr-4">
+                <i class="fa fa-bullseye text-tech-cyan"></i>
+            </div>
+            <h2 class="text-2xl md:text-3xl font-bold">培训目标</h2>
+        </div>
+
+        <div class="bg-gradient-to-r from-tech-blue/20 to-tech-purple/20 rounded-2xl p-8 border border-white/5 backdrop-blur-sm hover:border-tech-cyan/30 transition-all duration-500">
+            <p class="text-lg leading-relaxed mb-6">
+                本次新生培训计划，旨在让学院新生了解编程的意义，初步掌握编程的基本思想，培养编程思维，掌握Python基础语法，让新生初步入门计算机领域，降低新生学习计算机的门槛，让学院新生更轻松地进行对计算机的探索与研究。
+            </p>
+
+            <div class="grid md:grid-cols-3 gap-6 mt-10">
+                <div class="bg-tech-dark/60 p-6 rounded-xl border border-white/10 hover:border-tech-cyan/30 transition-all duration-300">
+                    <div class="w-12 h-12 rounded-lg bg-tech-cyan/10 flex items-center justify-center mb-4">
+                        <i class="fa fa-lightbulb-o text-2xl text-tech-cyan"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">培养编程思维</h3>
+                    <p class="text-gray-400">理解计算机解决问题的方式，建立编程思维模式</p>
+                </div>
+
+                <div class="bg-tech-dark/60 p-6 rounded-xl border border-white/10 hover:border-tech-cyan/30 transition-all duration-300">
+                    <div class="w-12 h-12 rounded-lg bg-tech-cyan/10 flex items-center justify-center mb-4">
+                        <i class="fa fa-code text-2xl text-tech-cyan"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">掌握基础语法</h3>
+                    <p class="text-gray-400">熟练运用Python基本语法和数据结构进行编程</p>
+                </div>
+
+                <div class="bg-tech-dark/60 p-6 rounded-xl border border-white/10 hover:border-tech-cyan/30 transition-all duration-300">
+                    <div class="w-12 h-12 rounded-lg bg-tech-cyan/10 flex items-center justify-center mb-4">
+                        <i class="fa fa-rocket text-2xl text-tech-cyan"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">开启探索之旅</h3>
+                    <p class="text-gray-400">降低入门门槛，激发探索计算机领域的兴趣</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 培训内容 -->
+    <section class="mb-24">
+        <div class="flex items-center mb-8">
+            <div class="w-10 h-10 rounded-full bg-tech-cyan/20 flex items-center justify-center mr-4">
+                <i class="fa fa-list-alt text-tech-cyan"></i>
+            </div>
+            <h2 class="text-2xl md:text-3xl font-bold">培训内容</h2>
+        </div>
+
+        <div class="relative">
+            <div class="hidden md:block absolute left-1/2 top-0 bottom-0 w-0.5 timeline-line transform -translate-x-1/2"></div>
+
+            <div class="space-y-16">
+                <!-- 第一步 -->
+                <div class="md:flex items-center">
+                    <div class="md:w-1/2 md:pr-12 md:text-right mb-8 md:mb-0">
+                        <h3 class="text-2xl font-semibold mb-3 text-tech-cyan">第一步</h3>
+                        <p class="text-gray-300">掌握基础的计算机操作，学会自行安装相关开发环境，为后续编程学习做好准备。</p>
+                    </div>
+
+                    <div class="md:w-12 flex justify-center relative">
+                        <div class="w-6 h-6 rounded-full bg-tech-cyan z-10 border-4 border-tech-dark"></div>
+                    </div>
+
+                    <div class="md:w-1/2 md:pl-12">
+                        <div class="bg-tech-dark/60 p-6 rounded-xl border border-white/10">
+                            <ul class="space-y-3">
+                                <li class="flex items-start">
+                                    <i class="fa fa-check-circle text-tech-cyan mt-1 mr-2"></i>
+                                    <span>Windows系统基本操作</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fa fa-check-circle text-tech-cyan mt-1 mr-2"></i>
+                                    <span>Python环境安装与配置</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fa fa-check-circle text-tech-cyan mt-1 mr-2"></i>
+                                    <span>开发工具选择与使用</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 第二步 -->
+                <div class="md:flex items-center">
+                    <div class="md:w-1/2 md:pr-12 md:text-right mb-8 md:mb-0 order-1 md:order-1">
+                        <div class="bg-tech-dark/60 p-6 rounded-xl border border-white/10">
+                            <ul class="space-y-3">
+                                <li class="flex items-start md:justify-end">
+                                    <span class="md:order-2">基本数据类型与变量</span>
+                                    <i class="fa fa-check-circle text-tech-cyan mt-1 ml-2 md:ml-0 md:mr-2 md:order-1"></i>
+                                </li>
+                                <li class="flex items-start md:justify-end">
+                                    <span class="md:order-2">运算符与字符串处理</span>
+                                    <i class="fa fa-check-circle text-tech-cyan mt-1 ml-2 md:ml-0 md:mr-2 md:order-1"></i>
+                                </li>
+                                <li class="flex items-start md:justify-end">
+                                    <span class="md:order-2">条件判断与循环结构</span>
+                                    <i class="fa fa-check-circle text-tech-cyan mt-1 ml-2 md:ml-0 md:mr-2 md:order-1"></i>
+                                </li>
+                                <li class="flex items-start md:justify-end">
+                                    <span class="md:order-2">函数定义与调用</span>
+                                    <i class="fa fa-check-circle text-tech-cyan mt-1 ml-2 md:ml-0 md:mr-2 md:order-1"></i>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="md:w-12 flex justify-center relative order-0 md:order-2">
+                        <div class="w-6 h-6 rounded-full bg-tech-cyan z-10 border-4 border-tech-dark"></div>
+                    </div>
+
+                    <div class="md:w-1/2 md:pl-12 order-2 md:order-3">
+                        <h3 class="text-2xl font-semibold mb-3 text-tech-cyan">第二步</h3>
+                        <p class="text-gray-300">系统学习Python基础语法，同时掌握编程的基本思想，理解代码逻辑和程序执行流程。</p>
+                    </div>
+                </div>
+
+                <!-- 第三步 -->
+                <div class="md:flex items-center">
+                    <div class="md:w-1/2 md:pr-12 md:text-right mb-8 md:mb-0">
+                        <h3 class="text-2xl font-semibold mb-3 text-tech-cyan">第三步</h3>
+                        <p class="text-gray-300">通过小项目考核验证培训效果，确认新生的具体弱点，并有针对性地帮助新生逐个击破。</p>
+                    </div>
+
+                    <div class="md:w-12 flex justify-center relative">
+                        <div class="w-6 h-6 rounded-full bg-tech-cyan z-10 border-4 border-tech-dark"></div>
+                    </div>
+
+                    <div class="md:w-1/2 md:pl-12">
+                        <div class="bg-tech-dark/60 p-6 rounded-xl border border-white/10">
+                            <ul class="space-y-3">
+                                <li class="flex items-start">
+                                    <i class="fa fa-check-circle text-tech-cyan mt-1 mr-2"></i>
+                                    <span>综合小项目实践</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fa fa-check-circle text-tech-cyan mt-1 mr-2"></i>
+                                    <span>代码评审与反馈</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fa fa-check-circle text-tech-cyan mt-1 mr-2"></i>
+                                    <span>针对性问题解答</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fa fa-check-circle text-tech-cyan mt-1 mr-2"></i>
+                                    <span>学习路径规划建议</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 培训安排 -->
+    <section class="mb-24">
+        <div class="flex items-center mb-8">
+            <div class="w-10 h-10 rounded-full bg-tech-cyan/20 flex items-center justify-center mr-4">
+                <i class="fa fa-calendar-check-o text-tech-cyan"></i>
+            </div>
+            <h2 class="text-2xl md:text-3xl font-bold">培训安排</h2>
+        </div>
+
+        <div class="overflow-x-auto">
+            <table class="w-full min-w-[768px] border-collapse">
+                <thead>
+                <tr class="border-b border-tech-cyan/30">
+                    <th class="py-4 px-6 text-left text-tech-cyan">日期</th>
+                    <th class="py-4 px-6 text-left text-tech-cyan">内容</th>
+                    <th class="py-4 px-6 text-left text-tech-cyan">授课人</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr class="border-b border-white/5 hover:bg-tech-blue/10 transition-colors">
+                    <td class="py-4 px-6 font-medium">8.10--8.11</td>
+                    <td class="py-4 px-6">windows系统的基本操作、python环境的安装、helloworld</td>
+                    <td class="py-4 px-6">-</td>
+                </tr>
+                <tr class="border-b border-white/5 hover:bg-tech-blue/10 transition-colors">
+                    <td class="py-4 px-6 font-medium">8.12</td>
+                    <td class="py-4 px-6">注释、基本数据类型与变量</td>
+                    <td class="py-4 px-6">
+                <span class="inline-flex items-center px-2 py-1 bg-tech-purple/20 rounded-full text-sm">
+                  <i class="fa fa-user-circle mr-1"></i>马同学
+                </span>
+                    </td>
+                </tr>
+                <tr class="border-b border-white/5 hover:bg-tech-blue/10 transition-colors">
+                    <td class="py-4 px-6 font-medium">8.13</td>
+                    <td class="py-4 px-6">运算符与字符串</td>
+                    <td class="py-4 px-6">-</td>
+                </tr>
+                <tr class="border-b border-white/5 hover:bg-tech-blue/10 transition-colors">
+                    <td class="py-4 px-6 font-medium">8.14--8.16</td>
+                    <td class="py-4 px-6">列表、元祖、字典</td>
+                    <td class="py-4 px-6">-</td>
+                </tr>
+                <tr class="border-b border-white/5 hover:bg-tech-blue/10 transition-colors">
+                    <td class="py-4 px-6 font-medium">8.15</td>
+                    <td class="py-4 px-6">条件判断</td>
+                    <td class="py-4 px-6">-</td>
+                </tr>
+                <tr class="border-b border-white/5 hover:bg-tech-blue/10 transition-colors">
+                    <td class="py-4 px-6 font-medium">8.16</td>
+                    <td class="py-4 px-6">循环语句</td>
+                    <td class="py-4 px-6">
+                <span class="inline-flex items-center px-2 py-1 bg-tech-purple/20 rounded-full text-sm">
+                  <i class="fa fa-user-circle mr-1"></i>刘同学
+                </span>
+                    </td>
+                </tr>
+                <tr class="border-b border-white/5 hover:bg-tech-blue/10 transition-colors">
+                    <td class="py-4 px-6 font-medium">8.17</td>
+                    <td class="py-4 px-6">函数</td>
+                    <td class="py-4 px-6">-</td>
+                </tr>
+                <tr class="hover:bg-tech-blue/10 transition-colors">
+                    <td class="py-4 px-6 font-medium">8.18</td>
+                    <td class="py-4 px-6">考核与综合答疑</td>
+                    <td class="py-4 px-6">
+                <span class="inline-flex items-center px-2 py-1 bg-tech-purple/20 rounded-full text-sm">
+                  <i class="fa fa-user-circle mr-1"></i>牟同学 (视频课)
+                </span>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- 培训进度可视化 -->
+        <div class="mt-12 bg-tech-dark/60 p-6 rounded-xl border border-white/10">
+            <h3 class="text-xl font-semibold mb-6">培训进度概览</h3>
+            <div class="h-64">
+                <canvas id="trainingChart"></canvas>
+            </div>
+        </div>
+    </section>
+
+    <!-- 预期成效 -->
+    <section class="mb-16">
+        <div class="flex items-center mb-8">
+            <div class="w-10 h-10 rounded-full bg-tech-cyan/20 flex items-center justify-center mr-4">
+                <i class="fa fa-trophy text-tech-cyan"></i>
+            </div>
+            <h2 class="text-2xl md:text-3xl font-bold">预期成效</h2>
+        </div>
+
+        <div class="bg-gradient-to-br from-tech-purple/20 to-tech-blue/20 rounded-2xl p-8 border border-white/5">
+            <p class="text-lg leading-relaxed mb-8">
+                新生普遍学会编程思想、掌握Python基础语法，能独立编写常见小项目。编程兴趣被激发，愿意参加到学院的大家庭与社团中共同探索学习计算机知识。
+            </p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="flex items-start">
+                    <div class="w-10 h-10 rounded-full bg-tech-cyan/20 flex items-center justify-center mt-1 mr-4 flex-shrink-0">
+                        <i class="fa fa-check text-tech-cyan"></i>
+                    </div>
+                    <div>
+                        <h4 class="text-xl font-medium mb-2">掌握核心技能</h4>
+                        <p class="text-gray-400">理解并能运用Python基础语法，包括变量、数据类型、函数、条件判断和循环结构</p>
+                    </div>
+                </div>
+
+                <div class="flex items-start">
+                    <div class="w-10 h-10 rounded-full bg-tech-cyan/20 flex items-center justify-center mt-1 mr-4 flex-shrink-0">
+                        <i class="fa fa-check text-tech-cyan"></i>
+                    </div>
+                    <div>
+                        <h4 class="text-xl font-medium mb-2">培养编程思维</h4>
+                        <p class="text-gray-400">学会用计算机思维分析和解决问题，理解程序执行逻辑</p>
+                    </div>
+                </div>
+
+                <div class="flex items-start">
+                    <div class="w-10 h-10 rounded-full bg-tech-cyan/20 flex items-center justify-center mt-1 mr-4 flex-shrink-0">
+                        <i class="fa fa-check text-tech-cyan"></i>
+                    </div>
+                    <div>
+                        <h4 class="text-xl font-medium mb-2">独立完成项目</h4>
+                        <p class="text-gray-400">能够独立编写简单的Python程序，完成基础功能开发</p>
+                    </div>
+                </div>
+
+                <div class="flex items-start">
+                    <div class="w-10 h-10 rounded-full bg-tech-cyan/20 flex items-center justify-center mt-1 mr-4 flex-shrink-0">
+                        <i class="fa fa-check text-tech-cyan"></i>
+                    </div>
+                    <div>
+                        <h4 class="text-xl font-medium mb-2">融入学习社区</h4>
+                        <p class="text-gray-400">积极参与社团活动，与其他成员交流学习，共同进步</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<footer class="bg-tech-dark border-t border-white/10 py-12">
+    <div class="container mx-auto px-6">
+        <div class="flex flex-col md:flex-row justify-between items-center">
+            <div class="mb-6 md:mb-0">
+                <div class="text-tech-cyan font-bold text-xl mb-2">软件项目开发社团</div>
+                <p class="text-gray-400">探索科技，共创未来</p>
+            </div>
+
+            <div class="flex space-x-6">
+                <a href="#" class="text-gray-400 hover:text-tech-cyan transition-colors">
+                    <i class="fa fa-github text-2xl"></i>
+                </a>
+                <a href="#" class="text-gray-400 hover:text-tech-cyan transition-colors">
+                    <i class="fa fa-weixin text-2xl"></i>
+                </a>
+                <a href="#" class="text-gray-400 hover:text-tech-cyan transition-colors">
+                    <i class="fa fa-envelope text-2xl"></i>
+                </a>
+            </div>
+        </div>
+
+        <div class="mt-8 pt-8 border-t border-white/10 text-center text-gray-500 text-sm">
+            &copy; 2025 软件项目开发社团 | Python新生培训计划
+        </div>
+    </div>
+</footer>
+
+<script>
+    // 返回上一级按钮功能
+    document.getElementById('backButton').addEventListener('click', function() {
+        window.history.back();
+    });
+
+    // 平滑滚动
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            document.querySelector(this.getAttribute('href')).scrollIntoView({
+                behavior: 'smooth'
+            });
+        });
+    });
+
+    // 培训进度图表
+    const ctx = document.getElementById('trainingChart').getContext('2d');
+    const trainingChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: ['8.10', '8.11', '8.12', '8.13', '8.14', '8.15', '8.16', '8.17', '8.18'],
+            datasets: [{
+                label: '学习进度',
+                data: [10, 20, 30, 40, 55, 65, 75, 85, 100],
+                borderColor: '#06B6D4',
+                backgroundColor: 'rgba(6, 182, 212, 0.1)',
+                tension: 0.4,
+                fill: true,
+                pointBackgroundColor: '#06B6D4',
+                pointBorderColor: '#0F172A',
+                pointBorderWidth: 2,
+                pointRadius: 5,
+                pointHoverRadius: 7
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    display: false
+                },
+                tooltip: {
+                    backgroundColor: 'rgba(15, 23, 42, 0.8)',
+                    titleColor: '#E0F2FE',
+                    bodyColor: '#E0F2FE',
+                    borderColor: 'rgba(6, 182, 212, 0.5)',
+                    borderWidth: 1,
+                    padding: 10,
+                    displayColors: false
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    max: 100,
+                    grid: {
+                        color: 'rgba(255, 255, 255, 0.05)'
+                    },
+                    ticks: {
+                        color: 'rgba(255, 255, 255, 0.7)',
+                        callback: function(value) {
+                            return value + '%';
+                        }
+                    }
+                },
+                x: {
+                    grid: {
+                        color: 'rgba(255, 255, 255, 0.05)'
+                    },
+                    ticks: {
+                        color: 'rgba(255, 255, 255, 0.7)'
+                    }
+                }
+            }
+        }
+    });
+
+    // 添加滚动动画效果
+    window.addEventListener('scroll', function() {
+        const sections = document.querySelectorAll('section');
+        sections.forEach(section => {
+            const sectionTop = section.getBoundingClientRect().top;
+            const windowHeight = window.innerHeight;
+
+            if (sectionTop < windowHeight * 0.75) {
+                section.classList.add('opacity-100');
+                section.classList.remove('opacity-0', 'translate-y-8');
+            }
+        });
+    });
+
+    // 初始化元素状态
+    document.querySelectorAll('section').forEach(section => {
+        section.classList.add('transition-all', 'duration-1000', 'opacity-0', 'translate-y-8');
+    });
+
+    // 触发初始滚动检查
+    setTimeout(() => {
+        window.dispatchEvent(new Event('scroll'));
+    }, 100);
+</script>
+</body>
+</html>

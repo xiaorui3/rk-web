@@ -1,0 +1,1342 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2025届新生招募 | 黑河学院软件项目开发社团</title>
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/css2?family=Orbitron:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/animate.min.css">
+    <style>
+        :root {
+            --primary-color: #2a5ca8;
+            --secondary-color: #6c757d;
+            --bg-color: #0a0a12;
+            --text-color: #e0e0e0;
+            --card-bg: #1a1a2a;
+            --header-bg: linear-gradient(135deg, #0a192f 0%, #0f0c29 100%);
+            --hero-overlay: rgba(0, 0, 0, 0.8);
+            --border-glow: 0 0 15px rgba(0, 240, 255, 0.7);
+            --text-glow: 0 0 12px rgba(0, 240, 255, 0.9);
+            --sci-fi-accent: #00f0ff;
+            --grid-color: rgba(0, 240, 255, 0.1);
+            --hologram-color: rgba(0, 240, 255, 0.25);
+        }
+
+        /* 浅色模式变量 */
+        [data-theme="light"] {
+            --bg-color: #f8f9fa;
+            --text-color: #212529;
+            --card-bg: #ffffff;
+            --header-bg: linear-gradient(135deg, #2a5ca8 0%, #1a3a6a 100%);
+            --hero-overlay: rgba(0, 0, 0, 0.5);
+            --border-glow: none;
+            --text-glow: none;
+            --sci-fi-accent: #00f0ff;
+            --grid-color: rgba(0, 240, 255, 0.05);
+            --hologram-color: rgba(0, 240, 255, 0.15);
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            transition: all 0.5s ease;
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* 科幻网格背景 */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background:
+                    linear-gradient(90deg, var(--grid-color) 1px, transparent 1px),
+                    linear-gradient(var(--grid-color) 1px, transparent 1px);
+            background-size: 30px 30px;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        /* 二进制数字雨效果容器 */
+        #matrixRain {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.25;
+            pointer-events: none;
+        }
+
+        /* 悬浮粒子效果 */
+        #particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* 全息投影效果 */
+        .hologram-effect {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hologram-effect::before {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                    to bottom right,
+                    transparent,
+                    transparent,
+                    var(--hologram-color),
+                    transparent,
+                    transparent
+            );
+            transform: rotate(30deg);
+            animation: hologram 6s linear infinite;
+            pointer-events: none;
+        }
+
+        @keyframes hologram {
+            0% { transform: rotate(30deg) translate(-30%, -30%); }
+            100% { transform: rotate(30deg) translate(30%, 30%); }
+        }
+
+        /* 科幻风格元素 */
+        .sci-fi-border {
+            position: relative;
+            border: 1px solid var(--sci-fi-accent);
+            box-shadow: var(--border-glow);
+        }
+
+        .sci-fi-border::before {
+            content: "";
+            position: absolute;
+            top: -5px;
+            left: -5px;
+            right: -5px;
+            bottom: -5px;
+            border: 2px solid transparent;
+            border-image: linear-gradient(45deg, var(--sci-fi-accent), transparent);
+            border-image-slice: 1;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .sci-fi-text {
+            text-shadow: var(--text-glow);
+            color: var(--sci-fi-accent);
+        }
+
+        .hero-section {
+            background: url('https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80') no-repeat center/cover;
+            height: 60vh;
+            position: relative;
+            margin-bottom: 3rem;
+            overflow: hidden;
+        }
+
+        .hero-section::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg,
+            rgba(0, 240, 255, 0.1) 1px,
+            transparent 1px),
+            linear-gradient(rgba(0, 240, 255, 0.1) 1px,
+                    transparent 1px);
+            background-size: 20px 20px;
+            pointer-events: none;
+        }
+
+        .hero-overlay {
+            background: var(--hero-overlay);
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .main-title {
+            font-family: 'Orbitron', 'Microsoft YaHei', sans-serif;
+            font-size: 3.5rem;
+            text-shadow: 0 0 15px var(--sci-fi-accent), 2px 2px 4px rgba(0, 0, 0, 0.5);
+            color: white;
+            letter-spacing: 3px;
+            position: relative;
+            animation: pulse 2s infinite alternate;
+        }
+
+        @keyframes pulse {
+            from { text-shadow: 0 0 10px var(--sci-fi-accent), 2px 2px 4px rgba(0, 0, 0, 0.5); }
+            to { text-shadow: 0 0 20px var(--sci-fi-accent), 0 0 30px var(--sci-fi-accent), 2px 2px 4px rgba(0, 0, 0, 0.5); }
+        }
+
+        .main-title::after {
+            content: "";
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50%;
+            height: 3px;
+            background: var(--sci-fi-accent);
+            box-shadow: 0 0 15px var(--sci-fi-accent);
+        }
+
+        /* 全息投影内容区 */
+        .hologram-panel {
+            background: rgba(10, 20, 40, 0.7);
+            border-radius: 15px;
+            border: 1px solid var(--sci-fi-accent);
+            box-shadow: 0 0 30px rgba(0, 240, 255, 0.3), var(--border-glow);
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(5px);
+        }
+
+        .hologram-panel::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                    135deg,
+                    transparent,
+                    rgba(0, 240, 255, 0.1),
+                    transparent
+            );
+            pointer-events: none;
+        }
+
+        .ai-frame-container {
+            background: var(--card-bg);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1), var(--border-glow);
+            padding: 20px;
+            margin: 2rem 0;
+            border: 1px solid rgba(0, 240, 255, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .ai-frame-container::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--sci-fi-accent), transparent);
+            animation: scanline 3s linear infinite;
+        }
+
+        @keyframes scanline {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(600px); }
+        }
+
+        .feature-card {
+            transition: all 0.3s ease;
+            border: none;
+            border-radius: 12px;
+            background-color: var(--card-bg);
+            color: var(--text-color);
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(0, 240, 255, 0.2);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 15px 30px rgba(0, 240, 255, 0.3);
+            border-color: var(--sci-fi-accent);
+        }
+
+        .feature-card h3 {
+            color: var(--sci-fi-accent);
+            font-family: 'Orbitron', sans-serif;
+            letter-spacing: 1px;
+        }
+
+        .feature-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(0, 240, 255, 0.05) 0%, transparent 100%);
+            pointer-events: none;
+        }
+
+        .feature-card::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--sci-fi-accent);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover::after {
+            transform: scaleX(1);
+        }
+
+        /* 励志语样式 */
+        .inspiration-quote {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--sci-fi-accent);
+            text-align: center;
+            margin-top: 1.5rem;
+            padding: 1rem;
+            border-top: 1px dashed rgba(0, 240, 255, 0.5);
+            position: relative;
+            font-size: 1.1rem;
+            letter-spacing: 1px;
+        }
+
+        .inspiration-quote::before,
+        .inspiration-quote::after {
+            content: '"';
+            color: var(--sci-fi-accent);
+            font-size: 1.5rem;
+            position: absolute;
+            opacity: 0.7;
+        }
+
+        .inspiration-quote::before {
+            top: 0;
+            left: 0;
+        }
+
+        .inspiration-quote::after {
+            bottom: 0;
+            right: 0;
+        }
+
+        /* 科幻数据面板 */
+        .data-panel {
+            height: 120px;
+            background: rgba(0, 10, 20, 0.5);
+            border: 1px solid var(--sci-fi-accent);
+            border-radius: 8px;
+            margin-top: 1rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .data-panel::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background:
+                    linear-gradient(90deg, rgba(0, 240, 255, 0.1) 1px, transparent 1px),
+                    linear-gradient(rgba(0, 240, 255, 0.1) 1px, transparent 1px);
+            background-size: 20px 20px;
+            opacity: 0.5;
+        }
+
+        .data-line {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--sci-fi-accent);
+            box-shadow: 0 0 10px var(--sci-fi-accent);
+            animation: dataFlow 3s infinite linear;
+        }
+
+        @keyframes dataFlow {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        /* 悬浮科技图标 */
+        .tech-icon {
+            position: absolute;
+            font-size: 1.5rem;
+            color: var(--sci-fi-accent);
+            opacity: 0.6;
+            z-index: -1;
+            animation: float 6s infinite ease-in-out;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
+        }
+
+        /* 模式切换按钮 */
+        .theme-toggle {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 1000;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: var(--card-bg);
+            border: 1px solid var(--sci-fi-accent);
+            box-shadow: 0 0 20px rgba(0, 240, 255, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .theme-toggle:hover {
+            transform: scale(1.1) rotate(30deg);
+            box-shadow: 0 0 30px var(--sci-fi-accent);
+        }
+
+        .theme-toggle i {
+            font-size: 1.5rem;
+            color: var(--sci-fi-accent);
+        }
+
+        /* 导航栏样式 */
+        .navbar {
+            background: var(--header-bg) !important;
+            border-bottom: 1px solid var(--sci-fi-accent);
+            box-shadow: 0 0 30px rgba(0, 240, 255, 0.3);
+            padding: 0.5rem 1rem;
+        }
+
+        .navbar-brand {
+            font-family: 'Orbitron', sans-serif;
+            letter-spacing: 1px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .navbar-brand img {
+            filter: drop-shadow(0 0 5px var(--sci-fi-accent));
+        }
+
+        .nav-link {
+            position: relative;
+            padding: 0.5rem 1.2rem !important;
+            margin: 0 0.3rem !important;
+            font-family: 'Orbitron', sans-serif;
+            letter-spacing: 1px;
+            color: white !important;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+        }
+
+        .nav-link::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 2px;
+            background: var(--sci-fi-accent);
+            transition: width 0.3s ease;
+            box-shadow: 0 0 10px var(--sci-fi-accent);
+        }
+
+        .nav-link:hover::after {
+            width: 80%;
+        }
+
+        /* 轮播图样式 */
+        .carousel {
+            border: 1px solid var(--sci-fi-accent);
+            box-shadow: var(--border-glow);
+            border-radius: 8px;
+            overflow: hidden;
+            background: rgba(0,0,0,0.3);
+        }
+
+        .carousel-control-prev,
+        .carousel-control-next {
+            width: 5%;
+        }
+
+        .carousel-control-prev-icon,
+        .carousel-control-next-icon {
+            background-color: rgba(0, 240, 255, 0.7);
+            border-radius: 50%;
+            padding: 15px;
+            box-shadow: 0 0 15px var(--sci-fi-accent);
+        }
+
+        /* 页脚样式 */
+        footer {
+            background: rgba(10, 20, 40, 0.7) !important;
+            border-top: 1px solid var(--sci-fi-accent);
+            position: relative;
+            margin-top: 5rem;
+            padding: 2rem 0 !important;
+            backdrop-filter: blur(5px);
+        }
+
+        footer::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--sci-fi-accent), transparent);
+        }
+
+        footer p {
+            font-family: 'Orbitron', sans-serif;
+            letter-spacing: 1px;
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        /* 响应式调整 */
+        @media (max-width: 768px) {
+            .main-title {
+                font-size: 2.5rem;
+            }
+
+            .hero-section {
+                height: 40vh;
+            }
+
+            .nav-link {
+                padding: 0.5rem !important;
+                margin: 0 !important;
+                font-size: 0.8rem;
+            }
+
+            .inspiration-quote {
+                font-size: 1rem;
+                padding: 0.8rem;
+            }
+        }
+
+        /* 社团特色样式 */
+        .team-section {
+            position: relative;
+            padding: 4rem 0;
+            overflow: hidden;
+        }
+
+        .team-section::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                    to bottom,
+                    transparent,
+                    rgba(0, 240, 255, 0.05),
+                    transparent
+            );
+            pointer-events: none;
+        }
+
+        .team-card {
+            background: rgba(20, 30, 50, 0.7);
+            border: 1px solid var(--sci-fi-accent);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .team-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 240, 255, 0.3);
+        }
+
+        .team-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                    135deg,
+                    transparent,
+                    rgba(0, 240, 255, 0.05),
+                    transparent
+            );
+            pointer-events: none;
+        }
+
+        .team-card h3 {
+            color: var(--sci-fi-accent);
+            font-family: 'Orbitron', sans-serif;
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        .team-card h3::after {
+            content: "";
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 50px;
+            height: 2px;
+            background: var(--sci-fi-accent);
+            box-shadow: 0 0 10px var(--sci-fi-accent);
+        }
+
+        /* 成果展示样式 */
+        .achievement-card {
+            background: rgba(15, 25, 45, 0.7);
+            border: 1px solid var(--sci-fi-accent);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .achievement-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 240, 255, 0.3);
+        }
+
+        .achievement-card h4 {
+            color: var(--sci-fi-accent);
+            font-family: 'Orbitron', sans-serif;
+            margin-bottom: 1rem;
+        }
+
+        .achievement-card .date-badge {
+            background: rgba(0, 240, 255, 0.2);
+            color: var(--sci-fi-accent);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            display: inline-block;
+            margin-bottom: 1rem;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        /* 时间线样式 */
+        .timeline {
+            position: relative;
+            padding-left: 3rem;
+            margin: 3rem 0;
+        }
+
+        .timeline::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 1.5rem;
+            width: 2px;
+            height: 100%;
+            background: var(--sci-fi-accent);
+            box-shadow: 0 0 10px var(--sci-fi-accent);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 2rem;
+            padding-left: 2rem;
+        }
+
+        .timeline-item::before {
+            content: "";
+            position: absolute;
+            top: 5px;
+            left: -1.5rem;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--sci-fi-accent);
+            box-shadow: 0 0 10px var(--sci-fi-accent);
+        }
+
+        .timeline-date {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--sci-fi-accent);
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-content {
+            background: rgba(20, 30, 50, 0.5);
+            border: 1px solid rgba(0, 240, 255, 0.3);
+            border-radius: 8px;
+            padding: 1rem;
+            position: relative;
+        }
+
+        .timeline-content::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                    135deg,
+                    transparent,
+                    rgba(0, 240, 255, 0.05),
+                    transparent
+            );
+            pointer-events: none;
+        }
+
+        /* 招募表单样式 */
+        .recruit-form {
+            background: rgba(20, 30, 50, 0.7);
+            border: 1px solid var(--sci-fi-accent);
+            border-radius: 15px;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 20px rgba(0, 240, 255, 0.2);
+            margin-top: -50px;
+            z-index: 10;
+        }
+
+        .recruit-form:hover {
+            box-shadow: 0 0 30px rgba(0, 240, 255, 0.4);
+        }
+
+        .recruit-form h3 {
+            color: var(--sci-fi-accent);
+            font-family: 'Orbitron', sans-serif;
+            text-align: center;
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        .recruit-form h3::after {
+            content: "";
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 2px;
+            background: var(--sci-fi-accent);
+            box-shadow: 0 0 10px var(--sci-fi-accent);
+        }
+
+        .form-label {
+            color: var(--sci-fi-accent);
+            font-weight: 500;
+        }
+
+        .form-control {
+            background: rgba(10, 15, 25, 0.5);
+            border: 1px solid rgba(0, 240, 255, 0.3);
+            color: var(--text-color);
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            background: rgba(10, 15, 25, 0.8);
+            border: 1px solid var(--sci-fi-accent);
+            box-shadow: 0 0 15px rgba(0, 240, 255, 0.3);
+            color: white;
+        }
+
+        .submit-btn {
+            background: transparent;
+            border: 2px solid var(--sci-fi-accent);
+            color: var(--sci-fi-accent);
+            padding: 0.5rem 2rem;
+            border-radius: 30px;
+            font-family: 'Orbitron', sans-serif;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            width: 100%;
+            margin-top: 1rem;
+            box-shadow: 0 0 15px rgba(0, 240, 255, 0.3);
+        }
+
+        .submit-btn:hover {
+            background: rgba(0, 240, 255, 0.2);
+            transform: translateY(-3px);
+            box-shadow: 0 0 25px var(--sci-fi-accent);
+        }
+
+        /* 招募流程时间线 */
+        .recruit-process {
+            margin: 3rem 0;
+        }
+
+        .process-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        .process-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: rgba(0, 240, 255, 0.2);
+            border: 2px solid var(--sci-fi-accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1.5rem;
+            flex-shrink: 0;
+            box-shadow: 0 0 15px rgba(0, 240, 255, 0.3);
+            position: relative;
+            z-index: 1;
+        }
+
+        .process-icon i {
+            color: var(--sci-fi-accent);
+            font-size: 1.5rem;
+        }
+
+        .process-content {
+            background: rgba(20, 30, 50, 0.5);
+            border: 1px solid rgba(0, 240, 255, 0.3);
+            border-radius: 12px;
+            padding: 1.5rem;
+            flex-grow: 1;
+            position: relative;
+        }
+
+        .process-content h4 {
+            color: var(--sci-fi-accent);
+            font-family: 'Orbitron', sans-serif;
+            margin-bottom: 0.5rem;
+        }
+
+        .process-content::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                    135deg,
+                    transparent,
+                    rgba(0, 240, 255, 0.05),
+                    transparent
+            );
+            pointer-events: none;
+        }
+
+        /* 特色卡片 */
+        .benefit-card {
+            height: 100%;
+            transition: all 0.3s ease;
+        }
+
+        /* 表单浮动效果 */
+        .floating-form {
+            animation: floatForm 6s ease-in-out infinite;
+        }
+
+        @keyframes floatForm {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+    </style>
+</head>
+<body>
+<!-- 二进制数字雨效果 -->
+<canvas id="matrixRain"></canvas>
+
+<!-- 悬浮粒子效果 -->
+<canvas id="particles"></canvas>
+
+<!-- 悬浮科技图标 -->
+<div class="tech-icon" style="top: 20%; left: 10%;"><i class="fas fa-atom"></i></div>
+<div class="tech-icon" style="top: 70%; left: 85%;"><i class="fas fa-microchip"></i></div>
+<div class="tech-icon" style="top: 40%; left: 90%;"><i class="fas fa-robot"></i></div>
+<div class="tech-icon" style="top: 80%; left: 15%;"><i class="fas fa-rocket"></i></div>
+
+<!-- 导航栏 -->
+<nav class="navbar navbar-expand-lg navbar-dark py-3">
+    <div class="container">
+        <a class="navbar-brand" href="../index.html">
+            <img src="../logo.png" alt="Logo" width="30" height="30" class="me-2">
+            黑河学院中俄大模型项目研究中心
+            <img src="../黑河学院软件项目开发社团.png" alt="黑河学院软件项目开发社团" width="70" height="40" class="me-2">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item"><a class="nav-link" href="./study_student.html">新生培训计划</a></li>
+                <li class="nav-item"><a class="nav-link" href="../index.html">软开社团</a></li>
+                <li class="nav-item"><a class="nav-link active" href="./index_2025.html">2025届招募</a></li>
+                <li class="nav-item"><a class="nav-link" href="../competition.html">软开比赛集结</a></li>
+                <li class="nav-item"><a class="nav-link" href="../works.html">作品展示</a></li>
+                <li class="nav-item"><a class="nav-link" href="../contact.html">联系我们</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- 主视觉区 -->
+<header class="hero-section">
+    <div class="hero-overlay">
+        <div class="text-center">
+            <h1 class="main-title animate__animated animate__fadeInDown">2025届新生招募</h1>
+            <p class="lead text-white mt-3 animate__animated animate__fadeInUp">加入我们，用代码创造未来！</p>
+        </div>
+    </div>
+</header>
+
+<!-- 招募表单 - 放在页面顶部 -->
+<section id="recruit-form" class="container">
+    <div class="row">
+        <div class="col-lg-8 mx-auto">
+            <div class="recruit-form floating-form">
+                <h3><i class="fas fa-user-astronaut me-2"></i>2025届新生申请表</h3>
+                <form id="recruitForm">
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="name" class="form-label">姓名</label>
+                            <input type="text" class="form-control" id="name" name="name" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="studentId" class="form-label">学号</label>
+                            <input type="text" class="form-control" id="studentId" name="studentId" required>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="major" class="form-label">专业</label>
+                            <input type="text" class="form-control" id="major" name="major" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="phone" class="form-label">电话</label>
+                            <input type="tel" class="form-control" id="phone" name="phone" required>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="email" class="form-label">邮箱</label>
+                            <input type="email" class="form-control" id="email" name="email" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="interest" class="form-label">感兴趣的方向</label>
+                            <select class="form-select" id="interest" name="interest" required>
+                                <option value="">请选择</option>
+                                <option value="全栈开发">全栈开发</option>
+                                <option value="人工智能">人工智能</option>
+                                <option value="UI/交互设计">UI/交互设计</option>
+                                <option value="无人机及摄影">无人机及摄影</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="experience" class="form-label">相关经验</label>
+                        <textarea class="form-control" id="experience" name="experience" rows="3" placeholder="请描述你的编程经验、项目经历或相关技能"></textarea>
+                    </div>
+
+                    <div class="mb-3 form-check">
+                        <input type="checkbox" class="form-check-input" id="agreement" required>
+                        <label class="form-check-label" for="agreement">我同意社团使用我的个人信息用于招募评估</label>
+                    </div>
+
+                    <button type="submit" class="submit-btn">提交申请 <i class="fas fa-paper-plane ms-2"></i></button>
+                </form>
+
+                <div id="successMessage" class="alert alert-success mt-3 text-center" style="display: none;">
+                    <i class="fas fa-check-circle me-2"></i> 申请提交成功！我们将尽快与您联系。
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 招募简介 -->
+<section id="about" class="container my-5">
+    <div class="hologram-panel p-5 text-center">
+        <h2 class="sci-fi-text mb-4">加入软开社团，开启科技之旅</h2>
+        <div class="row">
+            <div class="col-md-8 mx-auto">
+                <div class="team-card">
+                    <p>黑河学院软件项目开发社团成立于2021年，是一个致力于软件开发与人工智能研究的学术科技类社团。</p>
+                    <p>我们拥有高性能计算资源、专业导师团队和丰富的项目经验，为成员提供技术成长和实践平台。</p>
+                    <p>2025届招募计划：扩招200名新成员，重点发展人工智能与全栈开发方向。</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 招募流程 -->
+<section id="process" class="container my-5">
+    <div class="hologram-panel p-5">
+        <h2 class="text-center sci-fi-text mb-5">招募流程</h2>
+
+        <div class="recruit-process">
+            <div class="process-item">
+                <div class="process-icon">
+                    <i class="fas fa-file-alt"></i>
+                </div>
+                <div class="process-content">
+                    <h4>在线申请</h4>
+                    <p>填写上方申请表，提交个人基本信息及技术兴趣方向</p>
+                    <p class="mb-0"><strong>截止日期：2025年9月30日</strong></p>
+                </div>
+            </div>
+
+            <div class="process-item">
+                <div class="process-icon">
+                    <i class="fas fa-laptop-code"></i>
+                </div>
+                <div class="process-content">
+                    <h4>技术测试(有可能)</h4>
+                    <p>基础编程能力测试（可选Python/Java/JavaScript）</p>
+                    <p>逻辑思维与问题解决能力评估</p>
+                </div>
+            </div>
+
+            <div class="process-item">
+                <div class="process-icon">
+                    <i class="fas fa-comments"></i>
+                </div>
+                <div class="process-content">
+                    <h4>面试环节(有可能)</h4>
+                    <p>技术方向：项目经验与技术理解</p>
+                    <p>非技术方向：沟通能力与团队协作</p>
+                </div>
+            </div>
+
+            <div class="process-item">
+                <div class="process-icon">
+                    <i class="fas fa-trophy"></i>
+                </div>
+                <div class="process-content">
+                    <h4>录取通知</h4>
+                    <p>通过所有环节的候选人将收到正式录取通知</p>
+                    <p>新成员欢迎会与技术培训将在10月中旬举行</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 加入优势 -->
+<section id="benefits" class="container my-5">
+    <div class="hologram-panel p-5">
+        <h2 class="text-center sci-fi-text mb-5">加入我们的优势</h2>
+
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="feature-card card h-100 p-4 benefit-card">
+                    <h3><i class="fas fa-server me-2"></i>强大技术资源</h3>
+                    <p>访问高性能GPU服务器集群</p>
+                    <p>共享社团历史数据库与代码库</p>
+                    <p>专业级开发工具与软件授权</p>
+                    <div class="inspiration-quote">
+                        算力即未来，资源任你掌控！
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="feature-card card h-100 p-4 benefit-card">
+                    <h3><i class="fas fa-project-diagram me-2"></i>实战项目机会</h3>
+                    <p>参与边疆智能计算等前沿项目</p>
+                    <p>承接校内外实际开发需求</p>
+                    <p>积累真实项目经验与作品集</p>
+                    <div class="inspiration-quote">
+                        从理论到实践，代码改变世界！
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="feature-card card h-100 p-4 benefit-card">
+                    <h3><i class="fas fa-graduation-cap me-2"></i>专业成长路径</h3>
+                    <p>资深导师一对一指导</p>
+                    <p>定期技术培训与分享会</p>
+                    <p>清晰的技术晋升体系</p>
+                    <div class="inspiration-quote">
+                        站在巨人肩上，加速成长！
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 页脚 -->
+<footer class="text-white py-5">
+    <div class="container text-center">
+        <p class="mb-1">黑河学院软件项目开发社团</p>
+        <p class="mb-0">指导老师：杨文君、李伦彬 | 成立时间：2021年</p>
+        <p class="mt-3">© 2025 黑河学院计算机与信息工程学院</p>
+    </div>
+</footer>
+
+<!-- 模式切换按钮 -->
+<div class="theme-toggle animate__animated animate__fadeInRight" id="themeToggle">
+    <i class="fas fa-sun"></i>
+</div>
+
+<script src="../js/bootstrap.bundle.min.js"></script>
+<script src="../js/all.min.js"></script>
+<script>
+    // 模式切换功能
+    const themeToggle = document.getElementById('themeToggle');
+
+    // 设置初始主题为暗色模式
+    document.documentElement.setAttribute('data-theme', 'dark');
+    localStorage.setItem('theme', 'dark');
+    updateToggleIcon();
+
+    themeToggle.addEventListener('click', function() {
+        let theme = document.documentElement.getAttribute('data-theme');
+        if (theme === 'light') {
+            document.documentElement.setAttribute('data-theme', 'dark');
+            localStorage.setItem('theme', 'dark');
+        } else {
+            document.documentElement.setAttribute('data-theme', 'light');
+            localStorage.setItem('theme', 'light');
+        }
+        updateToggleIcon();
+    });
+
+    function updateToggleIcon() {
+        const theme = document.documentElement.getAttribute('data-theme');
+        const icon = themeToggle.querySelector('i');
+        if (theme === 'light') {
+            icon.classList.remove('fa-sun');
+            icon.classList.add('fa-moon');
+        } else {
+            icon.classList.remove('fa-moon');
+            icon.classList.add('fa-sun');
+        }
+    }
+
+    // 二进制数字雨效果
+    document.addEventListener('DOMContentLoaded', function() {
+        const canvas = document.getElementById('matrixRain');
+        const ctx = canvas.getContext('2d');
+
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        // 只使用0和1
+        const binary = '01';
+
+        const fontSize = 18;
+        const columns = canvas.width / fontSize;
+
+        const rainDrops = [];
+
+        for (let x = 0; x < columns; x++) {
+            rainDrops[x] = Math.random() * -100;
+        }
+
+        const draw = () => {
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.06)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            ctx.font = `bold ${fontSize}px monospace`;
+
+            for (let i = 0; i < rainDrops.length; i++) {
+                const text = Math.random() > 0.5 ? '0' : '1';
+                const opacity = Math.random() * 0.7 + 0.3;
+                ctx.fillStyle = `rgba(0, 240, 255, ${opacity})`;
+                ctx.fillText(text, i * fontSize, rainDrops[i] * fontSize);
+
+                if (rainDrops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                    rainDrops[i] = 0;
+                }
+                rainDrops[i]++;
+            }
+        };
+
+        setInterval(draw, 50);
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+
+        // 悬浮粒子效果
+        const particlesCanvas = document.getElementById('particles');
+        const particlesCtx = particlesCanvas.getContext('2d');
+
+        particlesCanvas.width = window.innerWidth;
+        particlesCanvas.height = window.innerHeight;
+
+        const particles = [];
+        const particleCount = window.innerWidth / 5;
+
+        for (let i = 0; i < particleCount; i++) {
+            particles.push({
+                x: Math.random() * particlesCanvas.width,
+                y: Math.random() * particlesCanvas.height,
+                size: Math.random() * 3 + 1,
+                speedX: Math.random() - 0.5,
+                speedY: Math.random() - 0.5,
+                color: `rgba(0, 240, 255, ${Math.random() * 0.5 + 0.1})`
+            });
+        }
+
+        function drawParticles() {
+            particlesCtx.clearRect(0, 0, particlesCanvas.width, particlesCanvas.height);
+
+            for (let i = 0; i < particles.length; i++) {
+                const p = particles[i];
+
+                particlesCtx.beginPath();
+                particlesCtx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                particlesCtx.fillStyle = p.color;
+                particlesCtx.fill();
+
+                p.x += p.speedX;
+                p.y += p.speedY;
+
+                if (p.x < 0 || p.x > particlesCanvas.width) p.speedX *= -1;
+                if (p.y < 0 || p.y > particlesCanvas.height) p.speedY *= -1;
+            }
+
+            requestAnimationFrame(drawParticles);
+        }
+
+        drawParticles();
+
+        window.addEventListener('resize', () => {
+            particlesCanvas.width = window.innerWidth;
+            particlesCanvas.height = window.innerHeight;
+        });
+
+        // 表单提交处理 - 与原index.html保持一致
+        document.getElementById('recruitForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const formData = {
+                name: document.getElementById('name').value,
+                studentId: document.getElementById('studentId').value,
+                major: document.getElementById('major').value,
+                phone: document.getElementById('phone').value,
+                email: document.getElementById('email').value,
+                interest: document.getElementById('interest').value,
+                experience: document.getElementById('experience').value
+            };
+            const successMessage = document.getElementById('successMessage');
+            successMessage.style.display = 'block';
+            // 可以添加一个加载中的样式（如果需要）
+            successMessage.classList.remove('alert-success', 'alert-danger');
+            successMessage.classList.add('alert-info');
+
+            successMessage.textContent = "正在提交并提醒软开相关负责人........请不要重复点击"
+
+            // 发送到后端API
+            fetch('/api/join', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData)
+
+            })
+                .then(response => response.json())
+                .then(data => {
+
+                    if (data.success) {
+                        successMessage.style.display = 'block';
+                        document.getElementById('recruitForm').reset();
+                        setTimeout(() => {
+                            successMessage.style.display = 'none';
+                        }, 5000);
+                        successMessage.textContent = data.message;
+                        /*fetch('/api/sendMail', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify(formData)
+                        })
+                            .then(response => response.json())
+                            .then(data=>{
+                                if (data.success) {
+                                    successMessage.style.display = 'block';
+                                    document.getElementById('recruitForm').reset();
+                                    setTimeout(() => {
+                                        successMessage.style.display = 'none';
+                                    }, 5000);
+                                    successMessage.textContent = data.message;
+                                }
+                            })*/
+                    } else {
+
+                        //successMessage.textContent = '提交失败: ' + +data;
+                        successMessage.textContent = '提交失败: ' + data.message;
+                        //successMessage.textContent = '提交失败: ' + +data.success;
+                        //successMessage.textContent = '提交失败: ' + +data.data;
+
+                        successMessage.classList.remove('alert-success');
+                        successMessage.classList.add('alert-danger');
+                        successMessage.style.display = 'block';
+                        setTimeout(() => {
+                            successMessage.style.display = 'none';
+                            successMessage.classList.remove('alert-danger');
+                            successMessage.classList.add('alert-success');
+                        }, 5000);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    const successMessage = document.getElementById('successMessage');
+                    successMessage.textContent = '提交过程中发生错误';
+                    successMessage.classList.remove('alert-success');
+                    successMessage.classList.add('alert-danger');
+                    successMessage.style.display = 'block';
+                    setTimeout(() => {
+                        successMessage.style.display = 'none';
+                        successMessage.classList.remove('alert-danger');
+                        successMessage.classList.add('alert-success');
+                    }, 5000);
+                });
+        });
+    });
+</script>
+</body>
+</html>

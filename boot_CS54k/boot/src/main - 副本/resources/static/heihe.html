@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>投票结果 - 黑河市投票平台</title>
+    <!-- 同样的CSS和JS引用 -->
+</head>
+<body>
+<!-- 同样的背景效果和导航栏 -->
+
+<!-- 主视觉区 -->
+<header class="hero-section">
+    <div class="hero-overlay">
+        <div class="text-center">
+            <h1 class="main-title animate__animated animate__fadeInDown">投票结果</h1>
+            <p class="lead text-white mt-3 animate__animated animate__fadeInUp">实时统计 · 公正透明</p>
+        </div>
+    </div>
+</header>
+
+<!-- 投票结果列表 -->
+<section id="vote-results" class="container my-5">
+    <div class="hologram-panel p-5">
+        <h2 class="text-center sci-fi-text mb-5">历史投票结果</h2>
+
+        <div class="row mb-4">
+            <div class="col-md-4">
+                <div class="result-card text-center">
+                    <div class="stats-number" id="totalTopics">0</div>
+                    <div class="stats-label">总投票主题</div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="result-card text-center">
+                    <div class="stats-number" id="totalVotesAll">0</div>
+                    <div class="stats-label">总投票数</div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="result-card text-center">
+                    <div class="stats-number" id="totalViewsAll">0</div>
+                    <div class="stats-label">总访问量</div>
+                </div>
+            </div>
+        </div>
+
+        <div id="results-container" class="row">
+            <!-- 结果将通过JS动态加载 -->
+            <div class="col-12 text-center">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">加载中...</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 同样的页脚和模式切换按钮 -->
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // 加载所有投票结果
+        loadAllResults();
+
+        function loadAllResults() {
+            fetch('api.php?action=get_active_topics')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        // 计算总统计
+                        let totalVotes = 0;
+                        let totalViews = 0;
+
+                        data.data.forEach(topic => {
+                            totalVotes += topic.stats.vote_count;
+                            totalViews += topic.stats.view_count;
+                        });
+
+                        document.getElementById('totalTopics').textContent = data.data.length;
+                        document.getElementById('totalVotesAll').textContent = totalVotes;
+                        document.getElementById('totalViewsAll').textContent = totalViews;
+
+                        // 渲染每个主题的结果
+                        const container = document.getElementById('results-container');
+                        container.innerHTML = '';
+
+                        if (data.data.length === 0) {
+                            container.innerHTML = `
+                                <div class="col-12 text-center">
+                                    <p>暂无投票结果</p>
+                                </div>
+                            `;
+                            return;
+                        }
+
+                        data.data.forEach(topic => {
+                            const topicElement = document.createElement('div');
+                            topicElement.className = 'col-md-6 mb-4';
+                            topicElement.innerHTML = `
+                                <div class="result-card">
+                                    <h3 class="sci-fi-text">${topic.title}</h3>
+                                    <p>${topic.description || '暂无描述'}</p>
+                                    <div class="row mt-3">
+                                        <div class="col-6">
+                                            <div class="stats-number">${topic.stats.vote_count}</div>
+                                            <div class="stats-label">总票数</div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="stats-number">${topic.stats.view_count}</div>
+                                            <div class="stats-label">访问量</div>
+                                        </div>
+                                    </div>
+                                    <button class="btn btn-outline-info sci-fi-text btn-sm mt-3 view-details-btn"
+                                            data-topic-id="${topic.id}">
+                                        <i class="fas fa-chart-pie me-2"></i>查看详细结果
+                                    </button>
+                                    <div id="chart-${topic.id}" class="mt-3" style="height: 200px;"></div>
+                                </div>
+                            `;
+
+                            container.appendChild(topicElement);
+
+                            // 加载详细结果并渲染图表
+                            loadTopicResults(topic.id);
+                        });
+
+                        // 添加查看详细按钮事件
+                        document.querySelectorAll('.view-details-btn').forEach(btn => {
+                            btn.addEventListener('click', function() {
+                                const topicId = this.getAttribute('data-topic-id');
+                                window.location.href = `result-details.html?topic_id=${topicId}`;
+                            });
+                        });
+                    }
+                });
+        }
+
+        function loadTopicResults(topicId) {
+            fetch(`api.php?action=get_results&topic_id=${topicId}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        const options = data.data.options;
+                        const ctx = document.getElementById(`chart-${topicId}`);
+
+                        if (options.length > 0) {
+                            new Chart(ctx, {
+                                type: 'doughnut',
+                                data: {
+                                    labels: options.map(opt => opt.option_text),
+                                    datasets: [{
+                                        data: options.map(opt => opt.vote_count),
+                                        backgroundColor: [
+                                            'rgba(0, 240, 255, 0.7)',
+                                            'rgba(0, 150, 255, 0.7)',
+                                            'rgba(0, 100, 255, 0.7)',
+                                            'rgba(0, 50, 255, 0.7)',
+                                            'rgba(0, 0, 255, 0.7)'
+                                        ],
+                                        borderColor: [
+                                            'rgba(0, 240, 255, 1)',
+                                            'rgba(0, 150, 255, 1)',
+                                            'rgba(0, 100, 255, 1)',
+                                            'rgba(0, 50, 255, 1)',
+                                            'rgba(0, 0, 255, 1)'
+                                        ],
+                                        borderWidth: 1
+                                    }]
+                                },
+                                options: {
+                                    responsive: true,
+                                    plugins: {
+                                        legend: {
+                                            position: 'bottom',
+                                            labels: {
+                                                color: 'white'
+                                            }
+                                        }
+                                    }
+                                }
+                            });
+                        }
+                    }
+                });
+        }
+    });
+</script>
+</body>
+</html>

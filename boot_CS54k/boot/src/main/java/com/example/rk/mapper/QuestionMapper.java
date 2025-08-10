@@ -1,8 +1,8 @@
 package com.example.rk.mapper;
 
 
-import com.example.rk.util.HashMapTypeHandler;
-import com.example.rk.util.ListTypeHandler;
+import com.example.handler.HashMapTypeHandler;
+import com.example.handler.ListTypeHandler;
 import com.example.rk.pojo.Question;
 import org.apache.ibatis.annotations.*;
 

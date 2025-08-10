@@ -1,0 +1,1185 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>社团历史 - 黑河学院中俄大模型项目研究中心</title>
+    <link href="./css/bootstrap.min.css" rel="stylesheet">
+    <link href="./css/all.min.css" rel="stylesheet">
+    <link href="./css/css2?family=Orbitron:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./css/animate.min.css">
+    <style>
+        :root {
+            --primary-color: #2a5ca8;
+            --secondary-color: #6c757d;
+            --bg-color: #0a0a12;
+            --text-color: #e0e0e0;
+            --card-bg: #1a1a2a;
+            --header-bg: linear-gradient(135deg, #0a192f 0%, #0f0c29 100%);
+            --hero-overlay: rgba(0, 0, 0, 0.8);
+            --border-glow: 0 0 15px rgba(0, 240, 255, 0.7);
+            --text-glow: 0 0 12px rgba(0, 240, 255, 0.9);
+            --sci-fi-accent: #00f0ff;
+            --grid-color: rgba(0, 240, 255, 0.1);
+            --hologram-color: rgba(0, 240, 255, 0.25);
+        }
+
+        [data-theme="light"] {
+            --bg-color: #f8f9fa;
+            --text-color: #212529;
+            --card-bg: #ffffff;
+            --header-bg: linear-gradient(135deg, #2a5ca8 0%, #1a3a6a 100%);
+            --hero-overlay: rgba(0, 0, 0, 0.5);
+            --border-glow: none;
+            --text-glow: none;
+            --sci-fi-accent: #00f0ff;
+            --grid-color: rgba(0, 240, 255, 0.05);
+            --hologram-color: rgba(0, 240, 255, 0.15);
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            transition: all 0.5s ease;
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background:
+                    linear-gradient(90deg, var(--grid-color) 1px, transparent 1px),
+                    linear-gradient(var(--grid-color) 1px, transparent 1px);
+            background-size: 30px 30px;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        #matrixRain {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.25;
+            pointer-events: none;
+        }
+
+        #particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* 主标题样式 */
+        .main-title {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--sci-fi-accent);
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+            font-size: 2.5rem;
+            letter-spacing: 2px;
+            text-shadow: var(--text-glow);
+        }
+
+        .main-title::after {
+            content: "";
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: var(--sci-fi-accent);
+            box-shadow: 0 0 15px var(--sci-fi-accent);
+        }
+
+        /* 全息面板样式 */
+        .hologram-panel {
+            background: rgba(10, 20, 40, 0.7);
+            border-radius: 15px;
+            border: 1px solid var(--sci-fi-accent);
+            box-shadow: 0 0 30px rgba(0, 240, 255, 0.3), var(--border-glow);
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(5px);
+            padding: 2rem;
+        }
+
+        /* 时间线样式 */
+        .timeline {
+            position: relative;
+            padding-left: 3rem;
+            margin: 3rem 0;
+        }
+
+        .timeline::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 1.5rem;
+            width: 2px;
+            height: 100%;
+            background: var(--sci-fi-accent);
+            box-shadow: 0 0 10px var(--sci-fi-accent);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 2.5rem;
+            padding-left: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .timeline-item:hover {
+            transform: translateX(5px);
+        }
+
+        .timeline-item::before {
+            content: "";
+            position: absolute;
+            top: 5px;
+            left: -1.5rem;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--sci-fi-accent);
+            box-shadow: 0 0 10px var(--sci-fi-accent);
+            transition: all 0.3s ease;
+        }
+
+        .timeline-item:hover::before {
+            transform: scale(1.3);
+        }
+
+        .timeline-date {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--sci-fi-accent);
+            margin-bottom: 0.8rem;
+            font-size: 1.1rem;
+            text-shadow: var(--text-glow);
+        }
+
+        .timeline-content {
+            background: rgba(20, 30, 50, 0.5);
+            border: 1px solid rgba(0, 240, 255, 0.3);
+            border-radius: 8px;
+            padding: 1.5rem;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .timeline-content:hover {
+            background: rgba(20, 30, 50, 0.7);
+            box-shadow: 0 5px 15px rgba(0, 240, 255, 0.3);
+        }
+
+        .timeline-content h5 {
+            color: var(--sci-fi-accent);
+            font-family: 'Orbitron', sans-serif;
+            margin-bottom: 1rem;
+            position: relative;
+        }
+
+        .timeline-content h5::after {
+            content: "";
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 50px;
+            height: 2px;
+            background: var(--sci-fi-accent);
+            box-shadow: 0 0 10px var(--sci-fi-accent);
+        }
+
+        /* 导航栏样式 */
+        .navbar {
+            background: var(--header-bg) !important;
+            border-bottom: 1px solid var(--sci-fi-accent);
+            box-shadow: 0 0 30px rgba(0, 240, 255, 0.3);
+            padding: 0.5rem 1rem;
+        }
+
+        .navbar-brand {
+            font-family: 'Orbitron', sans-serif;
+            letter-spacing: 1px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .navbar-brand img {
+            filter: drop-shadow(0 0 5px var(--sci-fi-accent));
+        }
+
+        .nav-link {
+            position: relative;
+            padding: 0.5rem 1.2rem !important;
+            margin: 0 0.3rem !important;
+            font-family: 'Orbitron', sans-serif;
+            letter-spacing: 1px;
+            color: white !important;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+        }
+
+        .nav-link::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 2px;
+            background: var(--sci-fi-accent);
+            transition: width 0.3s ease;
+            box-shadow: 0 0 10px var(--sci-fi-accent);
+        }
+
+        .nav-link:hover::after {
+            width: 80%;
+        }
+
+        /* 二级导航栏样式 */
+        .sub-navbar {
+            background: rgba(10, 20, 40, 0.9);
+            border-bottom: 1px solid var(--sci-fi-accent);
+            box-shadow: 0 5px 15px rgba(0, 240, 255, 0.2);
+        }
+
+        .sub-navbar .nav-link {
+            color: var(--text-color) !important;
+            font-size: 0.85rem;
+            padding: 0.5rem 1rem !important;
+            margin: 0 0.2rem !important;
+        }
+
+        .sub-navbar .nav-link.active {
+            color: var(--sci-fi-accent) !important;
+            font-weight: bold;
+        }
+
+        /* 成员卡片样式 */
+        .member-card {
+            background: var(--card-bg);
+            border: 1px solid rgba(0, 240, 255, 0.3);
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .member-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 240, 255, 0.2);
+            border-color: var(--sci-fi-accent);
+        }
+
+        .member-card h5 {
+            color: var(--sci-fi-accent);
+            font-family: 'Orbitron', sans-serif;
+            margin-bottom: 1rem;
+            position: relative;
+        }
+
+        .member-card h5::after {
+            content: "";
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 30px;
+            height: 2px;
+            background: var(--sci-fi-accent);
+            box-shadow: 0 0 8px var(--sci-fi-accent);
+        }
+
+        .member-position {
+            display: inline-block;
+            background: rgba(0, 240, 255, 0.2);
+            color: var(--sci-fi-accent);
+            padding: 0.2rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            margin-bottom: 1rem;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .member-info {
+            margin-bottom: 0.5rem;
+        }
+
+        .member-info strong {
+            color: var(--sci-fi-accent);
+        }
+
+        .member-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .member-badge {
+            display: inline-block;
+            background: rgba(0, 240, 255, 0.1);
+            color: var(--sci-fi-accent);
+            padding: 0.2rem 0.6rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        /* 部门分组样式 */
+        .department-group {
+            margin-bottom: 2rem;
+        }
+
+        .department-title {
+            color: var(--sci-fi-accent);
+            font-family: 'Orbitron', sans-serif;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid rgba(0, 240, 255, 0.3);
+        }
+
+        /* 页脚样式 */
+        footer {
+            background: rgba(10, 20, 40, 0.7) !important;
+            border-top: 1px solid var(--sci-fi-accent);
+            position: relative;
+            margin-top: 5rem;
+            padding: 2rem 0 !important;
+            backdrop-filter: blur(5px);
+        }
+
+        footer::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--sci-fi-accent), transparent);
+        }
+
+        footer p {
+            font-family: 'Orbitron', sans-serif;
+            letter-spacing: 1px;
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        /* 模式切换按钮 */
+        .theme-toggle {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 1000;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: var(--card-bg);
+            border: 1px solid var(--sci-fi-accent);
+            box-shadow: 0 0 20px rgba(0, 240, 255, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .theme-toggle:hover {
+            transform: scale(1.1) rotate(30deg);
+            box-shadow: 0 0 30px var(--sci-fi-accent);
+        }
+
+        .theme-toggle i {
+            font-size: 1.5rem;
+            color: var(--sci-fi-accent);
+        }
+
+        /* 悬浮科技图标 */
+        .tech-icon {
+            position: absolute;
+            font-size: 1.5rem;
+            color: var(--sci-fi-accent);
+            opacity: 0.6;
+            z-index: -1;
+            animation: float 6s infinite ease-in-out;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
+        }
+
+        /* 响应式调整 */
+        @media (max-width: 768px) {
+            .main-title {
+                font-size: 2rem;
+            }
+
+            .hologram-panel {
+                padding: 1.5rem;
+            }
+
+            .timeline {
+                padding-left: 2rem;
+            }
+
+            .timeline-item {
+                padding-left: 1.5rem;
+            }
+
+            .timeline-content {
+                padding: 1rem;
+            }
+
+            .member-list {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+<!-- 二进制数字雨效果 -->
+<canvas id="matrixRain"></canvas>
+
+<!-- 悬浮粒子效果 -->
+<canvas id="particles"></canvas>
+
+<!-- 悬浮科技图标 -->
+<div class="tech-icon" style="top: 20%; left: 10%;"><i class="fas fa-history"></i></div>
+<div class="tech-icon" style="top: 70%; left: 85%;"><i class="fas fa-users"></i></div>
+<div class="tech-icon" style="top: 40%; left: 90%;"><i class="fas fa-landmark"></i></div>
+<div class="tech-icon" style="top: 80%; left: 15%;"><i class="fas fa-trophy"></i></div>
+
+<!-- 导航栏 -->
+<nav class="navbar navbar-expand-lg navbar-dark py-3">
+    <div class="container">
+        <a class="navbar-brand" href="index.html">
+            <img src="logo.png" alt="Logo" width="30" height="30" class="me-2">
+            黑河学院中俄大模型项目研究中心
+            <img src="黑河学院软件项目开发社团.png" alt="黑河学院软件项目开发社团" width="70" height="40" class="me-2">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item"><a class="nav-link" href="index.html" id="nav-index">软开社团</a></li>
+                <li class="nav-item"><a class="nav-link" href="competition.html" id="nav-competition">软开比赛集结</a></li>
+                <li class="nav-item"><a class="nav-link" href="works.html" id="nav-works">各项比赛作品展示</a></li>
+                <li class="nav-item"><a class="nav-link active" href="history.html" id="nav-history">社团历史</a></li>
+                <li class="nav-item"><a class="nav-link" href="contact.html" id="nav-contact">联系我们</a></li>
+                <li class="nav-item"><a class="nav-link" href="http://hhxyrk.icu/" id="nav-contact-lt">软开论坛(Bata)</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- 二级导航栏 -->
+<nav class="navbar navbar-expand-lg sub-navbar py-2">
+    <div class="container">
+        <ul class="navbar-nav mx-auto">
+            <li class="nav-item"><a class="nav-link active" href="#history-section">发展历程</a></li>
+            <li class="nav-item"><a class="nav-link" href="#members-2019">2021届成员</a></li>
+            <li class="nav-item"><a class="nav-link" href="#members-2020">2022届成员</a></li>
+            <li class="nav-item"><a class="nav-link" href="#members-2021">2023届成员</a></li>
+            <li class="nav-item"><a class="nav-link" href="#members-2022">2024届成员</a></li>
+        </ul>
+    </div>
+</nav>
+
+<!-- 主内容区 -->
+<main class="container my-5">
+    <!-- 发展历程部分 -->
+    <section id="history-section" class="hologram-panel animate__animated animate__fadeIn">
+        <h2 class="main-title animate__animated animate__fadeInDown">社团发展历程</h2>
+
+        <div class="timeline">
+            <!-- 2019年 -->
+            <div class="timeline-item animate__animated animate__fadeInUp">
+                <div class="timeline-date">2021年</div>
+                <div class="timeline-content">
+                    <h5>社团初创</h5>
+                    <p>黑河学院软件项目社团正式成立，由杨文君老师指导，最初由一群计算机爱好者组成。我们以"奉献、友爱、互助、进步"为宗旨，进行电脑知识学习与实践。</p>
+                    <div class="d-flex flex-wrap">
+                        <span class="badge bg-primary me-2 mb-2">初创阶段</span>
+                        <span class="badge bg-secondary me-2 mb-2">计算机基础</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2020年 -->
+            <div class="timeline-item animate__animated animate__fadeInUp" style="animation-delay: 0.1s;">
+                <div class="timeline-date">2022年</div>
+                <div class="timeline-content">
+                    <h5>组织架构完善</h5>
+                    <p>社团组织结构进一步完善，设立了外联部、前端开发部、后端开发部、项目测试部等部门，为后续发展奠定基础。</p>
+                    <div class="d-flex flex-wrap">
+                        <span class="badge bg-success me-2 mb-2">组织建设</span>
+                        <span class="badge bg-info me-2 mb-2">部门分工</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2021年 -->
+            <div class="timeline-item animate__animated animate__fadeInUp" style="animation-delay: 0.2s;">
+                <div class="timeline-date">2023年</div>
+                <div class="timeline-content">
+                    <h5>首次参赛与技术突破</h5>
+                    <p>社团首次参加省级软件设计大赛，获得优秀奖，开启了社团参赛历程。同时，我们建立了第一个服务器基础设施。</p>
+                    <div class="d-flex flex-wrap">
+                        <span class="badge bg-warning me-2 mb-2">首次参赛</span>
+                        <span class="badge bg-danger me-2 mb-2">服务器建设</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2022年 -->
+            <div class="timeline-item animate__animated animate__fadeInUp" style="animation-delay: 0.3s;">
+                <div class="timeline-date">2023年</div>
+                <div class="timeline-content">
+                    <h5>人工智能方向确立</h5>
+                    <p>成立人工智能研究部，开始专注于大语言模型和计算机视觉研究。为黑河市花园街道搭建人工智能公务员"智慧小花"，并完成黑河学院3D数字校园项目。</p>
+                    <div class="d-flex flex-wrap">
+                        <span class="badge bg-primary me-2 mb-2">AI研究</span>
+                        <span class="badge bg-success me-2 mb-2">3D建模</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2023年 -->
+            <div class="timeline-item animate__animated animate__fadeInUp" style="animation-delay: 0.4s;">
+                <div class="timeline-date">2023年</div>
+                <div class="timeline-content">
+                    <h5>重大科研突破</h5>
+                    <p>自主研发PFAI(蛋白质功能分析工具)，获得CNCC中国计算机大会资助。东北地区受资助名单中，黑龙江省仅八个人获得资助，我社团获得三个资助名额。</p>
+                    <div class="d-flex flex-wrap">
+                        <span class="badge bg-info me-2 mb-2">PFAI</span>
+                        <span class="badge bg-warning me-2 mb-2">CNCC资助</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2024年 -->
+            <div class="timeline-item animate__animated animate__fadeInUp" style="animation-delay: 0.5s;">
+                <div class="timeline-date">2024年</div>
+                <div class="timeline-content">
+                    <h5>国际合作与平台建设</h5>
+                    <p>与俄罗斯高校建立合作关系，共同开展大模型研究项目。为黑河学院部署DeepSeek人工智能平台，获得了从校长到学生的广泛支持。</p>
+                    <div class="d-flex flex-wrap">
+                        <span class="badge bg-danger me-2 mb-2">中俄合作</span>
+                        <span class="badge bg-primary me-2 mb-2">DeepSeek</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 未来展望 -->
+            <div class="timeline-item animate__animated animate__fadeInUp" style="animation-delay: 0.6s;">
+                <div class="timeline-date">未来规划</div>
+                <div class="timeline-content">
+                    <h5>边疆人工智能中心</h5>
+                    <p>两年计划：以软开为基础，组建黑河学院人工智能服务器中心。三年计划：组建边疆人工智能中心，推动区域人工智能技术发展。</p>
+                    <div class="d-flex flex-wrap">
+                        <span class="badge bg-success me-2 mb-2">两年计划</span>
+                        <span class="badge bg-info me-2 mb-2">三年计划</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 2021届成员 -->
+    <section id="members-2019" class="hologram-panel mt-5 animate__animated animate__fadeIn">
+        <h2 class="main-title">2021届社团成员</h2>
+        <div class="member-list">
+            <!-- 社长 -->
+            <div class="member-card">
+                <h5>任赛超</h5>
+                <span class="member-position">社长</span>
+                <div class="member-info"><strong>年级班级：</strong>19级网络工程</div>
+                <div class="member-info"><strong>擅长技术：</strong>前后端开发</div>
+                <div class="member-info"><strong>工作单位：</strong>北京中大利人</div>
+                <div class="member-info"><strong>工作内容：</strong>Java开发</div>
+                <div class="member-info"><strong>建议：</strong>在大学期间充分利用课余时间，多学习技术，夯实计算机网络，数据结构等基础课程，多练习并熟练掌握linux命令。以项目为驱动去学习技术，在社团里要把握同学之间技术分享的机会，相互之间形成督促的关系，大家能够共同进步，毕业后找到自己喜欢的方向并深耕于自己的事业中。</div>
+            </div>
+
+            <!-- 副社长 -->
+            <div class="member-card">
+                <h5>房玉莹</h5>
+                <span class="member-position">副社长</span>
+                <div class="member-info"><strong>年级班级：</strong>19级网络工程</div>
+                <div class="member-info"><strong>擅长技术：</strong>前后端开发</div>
+            </div>
+
+            <!-- 外联部部长 -->
+            <div class="member-card">
+                <h5>刘明亮</h5>
+                <span class="member-position">外联部部长</span>
+                <div class="member-info"><strong>年级班级：</strong>19级网络工程</div>
+                <div class="member-info"><strong>擅长技术：</strong>前后端开发</div>
+            </div>
+
+            <!-- 前端开发部部长 -->
+            <div class="member-card">
+                <h5>贺春雨</h5>
+                <span class="member-position">前端开发部部长</span>
+                <div class="member-info"><strong>年级班级：</strong>19级网络工程</div>
+                <div class="member-info"><strong>擅长技术：</strong>前后端开发</div>
+            </div>
+
+            <!-- 后端开发部部长 -->
+            <div class="member-card">
+                <h5>王雪枫</h5>
+                <span class="member-position">后端开发部部长</span>
+                <div class="member-info"><strong>年级班级：</strong>19级网络工程</div>
+                <div class="member-info"><strong>擅长技术：</strong>前后端开发</div>
+            </div>
+
+            <!-- 项目测试部部长 -->
+            <div class="member-card">
+                <h5>王鹏程</h5>
+                <span class="member-position">项目测试部部长</span>
+                <div class="member-info"><strong>年级班级：</strong>19级科技一般</div>
+                <div class="member-info"><strong>擅长技术：</strong>前后端开发</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 2022届成员 -->
+    <section id="members-2020" class="hologram-panel mt-5 animate__animated animate__fadeIn">
+        <h2 class="main-title">2022届社团成员</h2>
+        <div class="member-list">
+            <!-- 社长 -->
+            <div class="member-card">
+                <h5>王泽鸿</h5>
+                <span class="member-position">社长</span>
+                <div class="member-info"><strong>年级班级：</strong>2020级科技三班</div>
+                <div class="member-info"><strong>擅长技术：</strong>前后端开发</div>
+                <div class="member-info"><strong>荣誉证书：</strong>互联网+省二，计算机网络挑战大赛省二</div>
+                <div class="member-info"><strong>工作单位：</strong>长春工业大学</div>
+                <div class="member-info"><strong>备注：</strong>研究生</div>
+            </div>
+
+            <!-- 外联部部长 -->
+            <div class="member-card">
+                <h5>祖靖博</h5>
+                <span class="member-position">外联部部长</span>
+                <div class="member-info"><strong>年级班级：</strong>2020级科技三班</div>
+                <div class="member-info"><strong>其他职位：</strong>艺术团</div>
+                <div class="member-info"><strong>擅长技术：</strong>前后端开发</div>
+                <div class="member-info"><strong>工作城市：</strong>哈尔滨</div>
+                <div class="member-info"><strong>备注：</strong>公务员</div>
+            </div>
+
+            <!-- 前端开发部部长 -->
+            <div class="member-card">
+                <h5>张皓然</h5>
+                <span class="member-position">前端开发部部长</span>
+                <div class="member-info"><strong>年级班级：</strong>2021级物联网一班</div>
+                <div class="member-info"><strong>擅长技术：</strong>前后端开发</div>
+            </div>
+
+            <!-- 后端开发部部长 -->
+            <div class="member-card">
+                <h5>李壮男</h5>
+                <span class="member-position">后端开发部部长</span>
+                <div class="member-info"><strong>年级班级：</strong>2020级科技三班</div>
+                <div class="member-info"><strong>擅长技术：</strong>前后端开发</div>
+                <div class="member-info"><strong>荣誉证书：</strong>互联网+省二，计算机网络挑战大赛省二</div>
+                <div class="member-info"><strong>备注：</strong>研究生</div>
+            </div>
+
+            <!-- 项目测试部部长 -->
+            <div class="member-card">
+                <h5>王行健</h5>
+                <span class="member-position">项目测试部部长</span>
+                <div class="member-info"><strong>年级班级：</strong>2020级科技三班</div>
+                <div class="member-info"><strong>擅长技术：</strong>前后端开发</div>
+                <div class="member-info"><strong>荣誉证书：</strong>互联网+省二，计算机网络挑战大赛省二</div>
+                <div class="member-info"><strong>工作城市：</strong>齐齐哈尔</div>
+                <div class="member-info"><strong>备注：</strong>选调生</div>
+            </div>
+
+            <!-- 其他成员 -->
+            <div class="member-card">
+                <h5>核心成员</h5>
+                <span class="member-position">部员</span>
+                <div class="member-info"><strong>成员名单：</strong></div>
+                <div class="d-flex flex-wrap">
+                    <span class="member-badge">张明远</span>
+                    <span class="member-badge">乔美焕</span>
+                    <span class="member-badge">杨伟新</span>
+                    <span class="member-badge">赵艺婷</span>
+                    <span class="member-badge">许贝贝</span>
+                    <span class="member-badge">王艳超</span>
+                    <span class="member-badge">杜鸿博</span>
+                    <span class="member-badge">闫晓华</span>
+                    <span class="member-badge">杨尚博</span>
+                    <span class="member-badge">耿霈尧</span>
+                    <span class="member-badge">祝梓鹤</span>
+                    <span class="member-badge">徐博文</span>
+                    <span class="member-badge">胡靖林</span>
+                    <span class="member-badge">谢云飞</span>
+                    <span class="member-badge">杨超</span>
+                    <span class="member-badge">徐建男</span>
+                    <span class="member-badge">翟佳铭</span>
+                    <span class="member-badge">姜超</span>
+                    <span class="member-badge">韩馨航</span>
+                    <span class="member-badge">高迈</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 2023届成员 -->
+    <section id="members-2021" class="hologram-panel mt-5 animate__animated animate__fadeIn">
+        <h2 class="main-title">2023届社团成员</h2>
+        <div class="member-list">
+            <!-- 社长 -->
+            <div class="member-card">
+                <h5>张明远</h5>
+                <span class="member-position">社长</span>
+                <div class="member-info"><strong>年级班级：</strong>2021级计算机科学与技术</div>
+                <div class="member-info"><strong>擅长技术：</strong>Vue，Java</div>
+                <div class="member-info"><strong>荣誉证书：</strong>挑战杯省一，蓝桥省三，互联网+铜奖，机器人格斗二等奖</div>
+                <div class="member-info"><strong>备注：</strong>考研中</div>
+            </div>
+
+            <!-- 测试部部长 -->
+            <div class="member-card">
+                <h5>徐阳</h5>
+                <span class="member-position">测试部部长</span>
+                <div class="member-info"><strong>年级班级：</strong>2021级物联网工程</div>
+                <div class="member-info"><strong>其他职位：</strong>大学生网络技术协会副社长，AIR人工智能机器人组长</div>
+                <div class="member-info"><strong>擅长技术：</strong>CRUD业务层功能开发，微服务架构运维，自动化测试，嵌入式软件开发</div>
+                <div class="member-info"><strong>荣誉证书：</strong>2023年中国大学生创新能力大赛省一，计算机设计大赛省三，第五届国际青年人工智能大赛国三，2023年中国大学生工程能力实践大赛省一，第二十五届中国机器人及人工智能大赛省三</div>
+                <div class="member-info"><strong>工作单位：</strong>北京星宇石科技有限公司</div>
+                <div class="member-info"><strong>工作内容：</strong>自动化测试，微服务架构下网关与用户权限服务开发，不同PaaS平台下的微服务架构项目迁移，DevOps流水线集成</div>
+            </div>
+
+            <!-- 生活部部长 -->
+            <div class="member-card">
+                <h5>许贝贝</h5>
+                <span class="member-position">生活部部长</span>
+                <div class="member-info"><strong>年级班级：</strong>2021级计算机科学与技术</div>
+                <div class="member-info"><strong>其他职位：</strong>班级创新学分记录员</div>
+                <div class="member-info"><strong>荣誉证书：</strong>黑龙江省三好学生 国家励志奖学金</div>
+            </div>
+
+            <!-- 前端部长 -->
+            <div class="member-card">
+                <h5>李响</h5>
+                <span class="member-position">前端部长</span>
+                <div class="member-info"><strong>年级班级：</strong>2021级网络2班</div>
+                <div class="member-info"><strong>擅长技术：</strong>Vue React Uniapp Flutter</div>
+                <div class="member-info"><strong>荣誉证书：</strong>大唐杯省一，大唐杯省二，挑战杯省二</div>
+                <div class="member-info"><strong>工作城市：</strong>上海</div>
+                <div class="member-info"><strong>工作单位：</strong>DXC</div>
+                <div class="member-info"><strong>工作内容：</strong>前端开发</div>
+            </div>
+
+            <!-- 后端部部长 -->
+            <div class="member-card">
+                <h5>王思琦</h5>
+                <span class="member-position">后端部部长</span>
+                <div class="member-info"><strong>年级班级：</strong>2021级网络2班</div>
+                <div class="member-info"><strong>擅长技术：</strong>Java</div>
+                <div class="member-info"><strong>荣誉证书：</strong>校二等奖学金</div>
+                <div class="member-info"><strong>工作城市：</strong>黑河</div>
+                <div class="member-info"><strong>工作单位：</strong>中国电信</div>
+            </div>
+
+            <!-- 后端部部员 -->
+            <div class="member-card">
+                <h5>后端部部员</h5>
+                <span class="member-position">部员</span>
+                <div class="d-flex flex-wrap">
+                    <span class="member-badge">李佳瑶</span>
+                    <span class="member-badge">纪宇煊</span>
+                    <span class="member-badge">朱雨欢</span>
+                    <span class="member-badge">宫亚平</span>
+                    <span class="member-badge">于鸿秋</span>
+                </div>
+            </div>
+
+            <!-- 前端部部员 -->
+            <div class="member-card">
+                <h5>前端部部员</h5>
+                <span class="member-position">部员</span>
+                <div class="d-flex flex-wrap">
+                    <span class="member-badge">李志云</span>
+                    <span class="member-badge">李迦南</span>
+                    <span class="member-badge">高珠琳</span>
+                    <span class="member-badge">赵英明</span>
+                    <span class="member-badge">耿昊</span>
+                    <span class="member-badge">李振赫</span>
+                    <span class="member-badge">张佳敏</span>
+                    <span class="member-badge">宫兆龙</span>
+                </div>
+            </div>
+
+            <!-- 测试部部员 -->
+            <div class="member-card">
+                <h5>测试部部员</h5>
+                <span class="member-position">部员</span>
+                <div class="d-flex flex-wrap">
+                    <span class="member-badge">周政辉</span>
+                    <span class="member-badge">王苏钰</span>
+                    <span class="member-badge">马帅</span>
+                    <span class="member-badge">张思琪</span>
+                    <span class="member-badge">刘学文</span>
+                    <span class="member-badge">于斓曼</span>
+                </div>
+            </div>
+
+            <!-- 外联部部员 -->
+            <div class="member-card">
+                <h5>外联部部员</h5>
+                <span class="member-position">部员</span>
+                <div class="d-flex flex-wrap">
+                    <span class="member-badge">徐丽华</span>
+                    <span class="member-badge">穆佳琪</span>
+                    <span class="member-badge">陈山龙</span>
+                    <span class="member-badge">谭丽娜</span>
+                    <span class="member-badge">宋鸿宇</span>
+                    <span class="member-badge">赵锐</span>
+                    <span class="member-badge">周泓旭</span>
+                    <span class="member-badge">鄂鸿禄</span>
+                    <span class="member-badge">芦起同</span>
+                    <span class="member-badge">韩驰</span>
+                    <span class="member-badge">杨成相</span>
+                    <span class="member-badge">许浩</span>
+                    <span class="member-badge">沈福轩</span>
+                    <span class="member-badge">牛春花</span>
+                    <span class="member-badge">张格格</span>
+                    <span class="member-badge">张辉龙</span>
+                    <span class="member-badge">王艺凡</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 2024届成员 -->
+    <section id="members-2022" class="hologram-panel mt-5 animate__animated animate__fadeIn">
+        <h2 class="main-title">2024届社团成员</h2>
+        <div class="member-list">
+            <!-- 团长 -->
+            <div class="member-card">
+                <h5>赵锐</h5>
+                <span class="member-position">团长</span>
+                <div class="member-info"><strong>年级班级：</strong>2022级科技三班</div>
+                <div class="member-info"><strong>擅长技术：</strong>计算机领域大部分技术</div>
+                <div class="member-info"><strong>荣誉证书：</strong>互联网＋，联通软研杯，蓝桥杯，人工智能，传智杯，挑战杯等</div>
+                <div class="member-info"><strong>工作城市：</strong>黑河</div>
+                <div class="member-info"><strong>工作单位：</strong>软件项目开发社团</div>
+            </div>
+
+            <!-- 副团长 -->
+            <div class="member-card">
+                <h5>副团长团队</h5>
+                <span class="member-position">副团长</span>
+                <div class="member-info"><strong>成员：</strong></div>
+                <div class="d-flex flex-wrap">
+                    <span class="member-badge">周泓旭</span>
+                    <span class="member-badge">鄂鸿禄</span>
+                    <span class="member-badge">芦起同</span>
+                    <span class="member-badge">韩驰</span>
+                </div>
+                <div class="member-info"><strong>荣誉证书：</strong>"建行杯"铜奖、"大学生创新创业大赛"一等奖、"十八届软件创新赛"省三、"互联网+"省三等</div>
+            </div>
+
+            <!-- 部长 -->
+            <div class="member-card">
+                <h5>部长团队</h5>
+                <span class="member-position">部长</span>
+                <div class="member-info"><strong>成员：</strong></div>
+                <div class="d-flex flex-wrap">
+                    <span class="member-badge">杨成相</span>
+                    <span class="member-badge">许浩</span>
+                    <span class="member-badge">沈福轩</span>
+                </div>
+                <div class="member-info"><strong>擅长技术：</strong>Python, C++算法, Java SE, 数据库等</div>
+                <div class="member-info"><strong>荣誉证书：</strong>蓝桥杯省二、省三，软件安全赛区域赛三等奖，复合智能体区域赛三等奖等</div>
+            </div>
+
+            <!-- 副部长 -->
+            <div class="member-card">
+                <h5>副部长团队</h5>
+                <span class="member-position">副部长</span>
+                <div class="member-info"><strong>成员：</strong></div>
+                <div class="d-flex flex-wrap">
+                    <span class="member-badge">牛春花</span>
+                    <span class="member-badge">赵锐</span>
+                    <span class="member-badge">张格格</span>
+                    <span class="member-badge">张辉龙</span>
+                    <span class="member-badge">王艺凡</span>
+                </div>
+                <div class="member-info"><strong>擅长技术：</strong>Java, 测试, 全栈, 前端等</div>
+                <div class="member-info"><strong>荣誉证书：</strong>蓝桥省三，传智校三，传智杯初赛二等奖等</div>
+            </div>
+
+            <!-- 部员 -->
+            <div class="member-card">
+                <h5>部员团队</h5>
+                <span class="member-position">部员</span>
+                <div class="member-info"><strong>成员：</strong></div>
+                <div class="d-flex flex-wrap">
+                    <span class="member-badge">李启正</span>
+                    <span class="member-badge">周建新</span>
+                    <span class="member-badge">俞海祥</span>
+                    <span class="member-badge">夏佳坤</span>
+                    <span class="member-badge">米璐</span>
+                    <span class="member-badge">李思蒙</span>
+                    <span class="member-badge">蔡贵洋</span>
+                    <span class="member-badge">张博</span>
+                    <span class="member-badge">勾瑞瑶</span>
+                    <span class="member-badge">万湫娜</span>
+                    <span class="member-badge">秦浩然</span>
+                    <span class="member-badge">李佳鑫</span>
+                    <span class="member-badge">孙思蕊</span>
+                    <span class="member-badge">王欣雨</span>
+                    <span class="member-badge">杨金玲</span>
+                    <span class="member-badge">安国</span>
+                    <span class="member-badge">王威</span>
+                    <span class="member-badge">赵乐</span>
+                    <span class="member-badge">牛文殊</span>
+                    <span class="member-badge">林思含</span>
+                    <span class="member-badge">丁丹萍</span>
+                    <span class="member-badge">牟芳菲</span>
+                    <span class="member-badge">姚欣欣</span>
+                    <span class="member-badge">路舰</span>
+                    <span class="member-badge">赵俊昊</span>
+                    <span class="member-badge">张悦</span>
+                    <span class="member-badge">付燚鑫</span>
+                    <span class="member-badge">刘博文</span>
+                    <span class="member-badge">曹文丽</span>
+                    <span class="member-badge">常悦</span>
+                    <span class="member-badge">霍超杰</span>
+                    <span class="member-badge">刘晓雨</span>
+                    <span class="member-badge">孙文硕</span>
+                    <span class="member-badge">郭佳盟</span>
+                    <span class="member-badge">刘小川</span>
+                    <span class="member-badge">张可心</span>
+                    <span class="member-badge">陈子易</span>
+                    <span class="member-badge">周中潇</span>
+                    <span class="member-badge">郭佳航</span>
+                    <span class="member-badge">宋海阳</span>
+                    <span class="member-badge">雷宇航</span>
+                    <span class="member-badge">刘志豪</span>
+                    <span class="member-badge">王昊</span>
+                    <span class="member-badge">杨露</span>
+                    <span class="member-badge">丛越</span>
+                    <span class="member-badge">邹欣桐</span>
+                    <span class="member-badge">王重一</span>
+                    <span class="member-badge">周鑫彤</span>
+                    <span class="member-badge">国皓然</span>
+                    <span class="member-badge">刘琦</span>
+                    <span class="member-badge">吴基贤</span>
+                    <span class="member-badge">杨佳颖</span>
+                    <span class="member-badge">张以林</span>
+                    <span class="member-badge">王洋</span>
+                    <span class="member-badge">刘嘉宁</span>
+                    <span class="member-badge">赵静怡</span>
+                    <span class="member-badge">黄梦雅</span>
+                    <span class="member-badge">符家碧</span>
+                    <span class="member-badge">刘喆</span>
+                    <span class="member-badge">蔡元菻</span>
+                    <span class="member-badge">王旭</span>
+                    <span class="member-badge">吴小宝</span>
+                    <span class="member-badge">董政文</span>
+                    <span class="member-badge">樊小禾</span>
+                    <span class="member-badge">李昊昊</span>
+                    <span class="member-badge">钟睿</span>
+                    <span class="member-badge">郑智远</span>
+                    <span class="member-badge">黄渤森</span>
+                    <span class="member-badge">徐硕</span>
+                    <span class="member-badge">王泽旭</span>
+                    <span class="member-badge">陈瑞丰</span>
+                    <span class="member-badge">马长瑞</span>
+                    <span class="member-badge">刘晓雨</span>
+                    <span class="member-badge">马鹏博</span>
+                </div>
+                <div class="member-info"><strong>擅长技术：</strong>C语言程序设计, Python, 前端, Java等</div>
+                <div class="member-info"><strong>荣誉证书：</strong>人工智能大赛二、三等奖，传智杯初赛一、二等奖等</div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<!-- 页脚 -->
+<footer class="text-white py-5">
+    <div class="container text-center">
+        <p class="mb-1">黑河学院软件项目开发社团</p>
+        <p class="mb-0">指导老师：杨文君、李伦彬 | 成立时间：2021年</p>
+        <p class="mt-3">© 2025 黑河学院计算机与信息工程学院</p>
+    </div>
+</footer>
+
+<!-- 模式切换按钮 -->
+<div class="theme-toggle animate__animated animate__fadeInRight" id="themeToggle">
+    <i class="fas fa-sun"></i>
+</div>
+
+<script src="./js/bootstrap.bundle.min.js"></script>
+<script src="./js/all.min.js"></script>
+<script>
+    // 模式切换功能
+    const themeToggle = document.getElementById('themeToggle');
+
+    // 设置初始主题为暗色模式
+    document.documentElement.setAttribute('data-theme', 'dark');
+    localStorage.setItem('theme', 'dark');
+    updateToggleIcon();
+
+    themeToggle.addEventListener('click', function() {
+        let theme = document.documentElement.getAttribute('data-theme');
+        if (theme === 'light') {
+            document.documentElement.setAttribute('data-theme', 'dark');
+            localStorage.setItem('theme', 'dark');
+        } else {
+            document.documentElement.setAttribute('data-theme', 'light');
+            localStorage.setItem('theme', 'light');
+        }
+        updateToggleIcon();
+    });
+
+    function updateToggleIcon() {
+        const theme = document.documentElement.getAttribute('data-theme');
+        const icon = themeToggle.querySelector('i');
+        if (theme === 'light') {
+            icon.classList.remove('fa-sun');
+            icon.classList.add('fa-moon');
+        } else {
+            icon.classList.remove('fa-moon');
+            icon.classList.add('fa-sun');
+        }
+    }
+
+    // 二进制数字雨效果
+    document.addEventListener('DOMContentLoaded', function() {
+        const canvas = document.getElementById('matrixRain');
+        const ctx = canvas.getContext('2d');
+
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const fontSize = 18;
+        const columns = canvas.width / fontSize;
+
+        const rainDrops = [];
+
+        for (let x = 0; x < columns; x++) {
+            rainDrops[x] = Math.random() * -100;
+        }
+
+        const draw = () => {
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.06)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            ctx.font = `bold ${fontSize}px monospace`;
+
+            for (let i = 0; i < rainDrops.length; i++) {
+                const text = Math.random() > 0.5 ? '0' : '1';
+                const opacity = Math.random() * 0.7 + 0.3;
+                ctx.fillStyle = `rgba(0, 240, 255, ${opacity})`;
+                ctx.fillText(text, i * fontSize, rainDrops[i] * fontSize);
+
+                if (rainDrops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                    rainDrops[i] = 0;
+                }
+                rainDrops[i]++;
+            }
+        };
+
+        setInterval(draw, 50);
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+
+        // 悬浮粒子效果
+        const particlesCanvas = document.getElementById('particles');
+        const particlesCtx = particlesCanvas.getContext('2d');
+
+        particlesCanvas.width = window.innerWidth;
+        particlesCanvas.height = window.innerHeight;
+
+        const particles = [];
+        const particleCount = window.innerWidth / 5;
+
+        for (let i = 0; i < particleCount; i++) {
+            particles.push({
+                x: Math.random() * particlesCanvas.width,
+                y: Math.random() * particlesCanvas.height,
+                size: Math.random() * 3 + 1,
+                speedX: Math.random() * 1 - 0.5,
+                speedY: Math.random() * 1 - 0.5,
+                color: `rgba(0, 240, 255, ${Math.random() * 0.5 + 0.1})`
+            });
+        }
+
+        function drawParticles() {
+            particlesCtx.clearRect(0, 0, particlesCanvas.width, particlesCanvas.height);
+
+            for (let i = 0; i < particles.length; i++) {
+                const p = particles[i];
+
+                particlesCtx.beginPath();
+                particlesCtx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                particlesCtx.fillStyle = p.color;
+                particlesCtx.fill();
+
+                p.x += p.speedX;
+                p.y += p.speedY;
+
+                if (p.x < 0 || p.x > particlesCanvas.width) p.speedX *= -1;
+                if (p.y < 0 || p.y > particlesCanvas.height) p.speedY *= -1;
+            }
+
+            requestAnimationFrame(drawParticles);
+        }
+
+        drawParticles();
+
+        window.addEventListener('resize', () => {
+            particlesCanvas.width = window.innerWidth;
+            particlesCanvas.height = window.innerHeight;
+        });
+
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+
+                // 更新二级导航栏活动状态
+                document.querySelectorAll('.sub-navbar .nav-link').forEach(link => {
+                    link.classList.remove('active');
+                });
+                this.classList.add('active');
+            });
+        });
+    });
+</script>
+</body>
+</html>

@@ -2,7 +2,7 @@ package com.example.rk.mapper;
 
 
 import com.example.rk.pojo.DailyQuestion;
-import com.example.rk.util.HashMapTypeHandler;
+import com.example.handler.HashMapTypeHandler;
 import org.apache.ibatis.annotations.*;
 import java.util.List;
 

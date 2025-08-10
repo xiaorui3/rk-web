@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>题目上传系统 | 黑河学院软件项目开发社团</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #2a5ca8;
+            --secondary-color: #6c757d;
+            --bg-color: #0a0a12;
+            --text-color: #e0e0e0;
+            --card-bg: #1a1a2a;
+            --header-bg: linear-gradient(135deg, #0a192f 0%, #0f0c29 100%);
+            --hero-overlay: rgba(0, 0, 0, 0.8);
+            --border-glow: 0 0 15px rgba(0, 240, 255, 0.7);
+            --text-glow: 0 0 12px rgba(0, 240, 255, 0.9);
+            --sci-fi-accent: #00f0ff;
+            --grid-color: rgba(0, 240, 255, 0.1);
+            --hologram-color: rgba(0, 240, 255, 0.25);
+        }
+
+        [data-theme="light"] {
+            --bg-color: #f8f9fa;
+            --text-color: #212529;
+            --card-bg: #ffffff;
+            --header-bg: linear-gradient(135deg, #2a5ca8 0%, #1a3a6a 100%);
+            --hero-overlay: rgba(0, 0, 0, 0.5);
+            --border-glow: none;
+            --text-glow: none;
+            --sci-fi-accent: #00f0ff;
+            --grid-color: rgba(0, 240, 255, 0.05);
+            --hologram-color: rgba(0, 240, 255, 0.15);
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            transition: all 0.5s ease;
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background:
+                    linear-gradient(90deg, var(--grid-color) 1px, transparent 1px),
+                    linear-gradient(var(--grid-color) 1px, transparent 1px);
+            background-size: 30px 30px;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        #matrixRain {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.25;
+            pointer-events: none;
+        }
+
+        .hologram-effect {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hologram-effect::before {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                    to bottom right,
+                    transparent,
+                    transparent,
+                    var(--hologram-color),
+                    transparent,
+                    transparent
+            );
+            transform: rotate(30deg);
+            animation: hologram 6s linear infinite;
+            pointer-events: none;
+        }
+
+        @keyframes hologram {
+            0% { transform: rotate(30deg) translate(-30%, -30%); }
+            100% { transform: rotate(30deg) translate(30%, 30%); }
+        }
+
+        .sci-fi-border {
+            position: relative;
+            border: 1px solid var(--sci-fi-accent);
+            box-shadow: var(--border-glow);
+        }
+
+        .sci-fi-border::before {
+            content: "";
+            position: absolute;
+            top: -5px;
+            left: -5px;
+            right: -5px;
+            bottom: -5px;
+            border: 2px solid transparent;
+            border-image: linear-gradient(45deg, var(--sci-fi-accent), transparent);
+            border-image-slice: 1;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .sci-fi-text {
+            text-shadow: var(--text-glow);
+            color: var(--sci-fi-accent);
+        }
+
+        .hero-section {
+            background: url('https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80') no-repeat center/cover;
+            height: 40vh;
+            position: relative;
+            margin-bottom: 3rem;
+            overflow: hidden;
+        }
+
+        .hero-section::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg,
+            rgba(0, 240, 255, 0.1) 1px,
+            transparent 1px),
+            linear-gradient(rgba(0, 240, 255, 0.1) 1px,
+                    transparent 1px);
+            background-size: 20px 20px;
+            pointer-events: none;
+        }
+
+        .hero-overlay {
+            background: var(--hero-overlay);
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .main-title {
+            font-family: 'Orbitron', 'Microsoft YaHei', sans-serif;
+            font-size: 2.5rem;
+            text-shadow: 0 0 15px var(--sci-fi-accent), 2px 2px 4px rgba(0, 0, 0, 0.5);
+            color: white;
+            letter-spacing: 3px;
+            position: relative;
+            animation: pulse 2s infinite alternate;
+        }
+
+        @keyframes pulse {
+            from { text-shadow: 0 0 10px var(--sci-fi-accent), 2px 2px 4px rgba(0, 0, 0, 0.5); }
+            to { text-shadow: 0 0 20px var(--sci-fi-accent), 0 0 30px var(--sci-fi-accent), 2px 2px 4px rgba(0, 0, 0, 0.5); }
+        }
+
+        .main-title::after {
+            content: "";
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50%;
+            height: 3px;
+            background: var(--sci-fi-accent);
+            box-shadow: 0 0 15px var(--sci-fi-accent);
+        }
+
+        .hologram-panel {
+            background: rgba(10, 20, 40, 0.7);
+            border-radius: 15px;
+            border: 1px solid var(--sci-fi-accent);
+            box-shadow: 0 0 30px rgba(0, 240, 255, 0.3), var(--border-glow);
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(5px);
+            padding: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        label {
+            color: var(--sci-fi-accent);
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        input, textarea, select {
+            width: 100%;
+            padding: 0.75rem;
+            background-color: rgba(26, 26, 42, 0.8);
+            border: 1px solid rgba(0, 240, 255, 0.5);
+            border-radius: 8px;
+            color: var(--text-color);
+            transition: all 0.3s ease;
+        }
+
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: var(--sci-fi-accent);
+            box-shadow: 0 0 10px rgba(0, 240, 255, 0.5);
+        }
+
+        .option-group {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            position: relative;
+        }
+
+        .option-group input {
+            flex: 1;
+        }
+
+        .btn-submit {
+            background: linear-gradient(45deg, rgba(0, 240, 255, 0.2), rgba(0, 240, 255, 0.4));
+            border: 1px solid var(--sci-fi-accent);
+            color: white;
+            padding: 0.75rem 2rem;
+            border-radius: 8px;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: var(--border-glow);
+            font-size: 1.1rem;
+        }
+
+        .btn-submit:hover {
+            background: linear-gradient(45deg, rgba(0, 240, 255, 0.3), rgba(0, 240, 255, 0.5));
+            transform: translateY(-3px);
+            box-shadow: 0 0 20px rgba(0, 240, 255, 0.7);
+        }
+
+        .form-section {
+            height: 0;
+            opacity: 0;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            margin-top: 0;
+            padding-top: 0;
+            border-top: 1px dashed transparent;
+        }
+
+        .form-section.active {
+            height: auto;
+            opacity: 1;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px dashed rgba(0, 240, 255, 0.3);
+        }
+
+        .response-message {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            border-radius: 8px;
+            display: none;
+            font-size: 1.1rem;
+            text-align: center;
+        }
+
+        .success {
+            background-color: rgba(0, 255, 127, 0.2);
+            border: 1px solid #00ff7f;
+            color: #00ff7f;
+        }
+
+        .error {
+            background-color: rgba(255, 0, 0, 0.2);
+            border: 1px solid #ff0000;
+            color: #ff0000;
+        }
+
+        .back-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(10, 20, 40, 0.7);
+            border: 1px solid var(--sci-fi-accent);
+            color: var(--sci-fi-accent);
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .back-button:hover {
+            color: white;
+            box-shadow: var(--border-glow);
+        }
+
+        #choicesContainer {
+            margin-bottom: 1.5rem;
+        }
+
+        .error-message {
+            color: #ff6b6b;
+            font-size: 0.9rem;
+            margin-top: 0.3rem;
+            display: none;
+            position: absolute;
+            bottom: -20px;
+            left: 0;
+        }
+
+        .has-error input, .has-error textarea, .has-error select {
+            border-color: #ff6b6b !important;
+            box-shadow: 0 0 5px rgba(255, 107, 107, 0.5) !important;
+        }
+
+        .has-error .error-message {
+            display: block;
+        }
+
+        .debug-info {
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+            font-family: monospace;
+            font-size: 14px;
+            color: #00f0ff;
+            display: none;
+        }
+
+        .debug-header {
+            cursor: pointer;
+            padding: 10px;
+            background-color: rgba(0, 240, 255, 0.1);
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+
+        .debug-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .debug-content.active {
+            max-height: 300px;
+        }
+    </style>
+</head>
+<body>
+<a href="index_2025.html" class="back-button">
+    <i class="fas fa-arrow-left"></i> 返回主页
+</a>
+
+<div class="hero-section">
+    <div class="hero-overlay">
+        <h1 class="main-title animate__animated animate__fadeInDown">题目上传系统</h1>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-10">
+            <div class="hologram-panel">
+                <h2 class="sci-fi-text text-center mb-4">添加新题目</h2>
+
+                <form id="questionForm">
+                    <div class="form-group">
+                        <label for="questionType">题目类型</label>
+                        <select id="questionType" name="questionType" required>
+                            <option value="">请选择题目类型</option>
+                            <option value="1">选择题</option>
+                            <option value="2">填空题</option>
+                            <option value="3">问答题</option>
+                        </select>
+                        <div class="error-message">请选择题目类型</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="questionContent">题干内容</label>
+                        <textarea id="questionContent" name="questionContent" rows="3" required></textarea>
+                        <div class="error-message">请输入题干内容</div>
+                    </div>
+
+                    <!-- 选择题选项 -->
+                    <div id="choiceSection" class="form-section">
+                        <h4 class="sci-fi-text mb-3">选择题设置</h4>
+
+                        <div class="form-group">
+                            <label for="optionCount">选项数量 (2-10个)</label>
+                            <input type="number" id="optionCount" name="optionCount" min="2" max="10" value="4" required>
+                            <small class="text-muted">请输入选项数量，将自动生成对应数量的选项框</small>
+                            <div class="error-message">请输入有效的选项数量（2-10）</div>
+                        </div>
+
+                        <div id="choicesContainer">
+                            <!-- 选项框将通过JS动态生成 -->
+                        </div>
+
+                        <div class="form-group">
+                            <label for="correctAnswerChoice">正确答案 (例如: A, B, C)</label>
+                            <input type="text" id="correctAnswerChoice" name="correctAnswerChoice" required>
+                            <small class="text-muted">多选题请用逗号分隔，如：A,B</small>
+                            <div class="error-message">请输入正确答案</div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="referenceAnswerChoice">参考答案</label>
+                            <textarea id="referenceAnswerChoice" name="referenceAnswerChoice" rows="2"></textarea>
+                        </div>
+                    </div>
+
+                    <!-- 填空题选项 -->
+                    <div id="fillSection" class="form-section">
+                        <h4 class="sci-fi-text mb-3">填空题设置</h4>
+                        <div id="blankOptions">
+                            <div class="option-group form-group">
+                                <input type="text" class="blank-placeholder" name="blankPlaceholder[]" placeholder="占位符文本 (例如: ______)" required>
+                                <input type="text" class="blank-answer" name="blankAnswer[]" placeholder="对应答案" required>
+                                <div class="error-message">请填写完整填空内容</div>
+                            </div>
+                        </div>
+                        <button type="button" id="addBlank" class="btn-submit mt-2 mb-3">添加更多空</button>
+                    </div>
+
+                    <!-- 问答题选项 -->
+                    <div id="essaySection" class="form-section">
+                        <h4 class="sci-fi-text mb-3">问答题设置</h4>
+                        <div class="form-group">
+                            <label for="referenceAnswerEssay">参考答案</label>
+                            <textarea id="referenceAnswerEssay" name="referenceAnswerEssay" rows="5" required></textarea>
+                            <div class="error-message">请输入参考答案</div>
+                        </div>
+                    </div>
+
+                    <div class="text-center">
+                        <button type="submit" class="btn-submit">提交题目</button>
+                    </div>
+
+                    <div id="responseMessage" class="response-message"></div>
+                </form>
+
+                <!-- 调试信息面板 -->
+                <div class="debug-info">
+                    <div class="debug-header" onclick="toggleDebug()">
+                        <i class="fas fa-bug"></i> 调试信息（点击展开/收起）
+                    </div>
+                    <div class="debug-content" id="debugContent">
+                        <div class="mb-2"><strong>表单状态：</strong> <span id="debugFormStatus">未提交</span></div>
+                        <div class="mb-2"><strong>验证状态：</strong> <span id="debugValidation">未验证</span></div>
+                        <div class="mb-2"><strong>错误信息：</strong> <span id="debugErrors">无</span></div>
+                        <div class="mb-2"><strong>准备提交的数据：</strong></div>
+                        <pre id="debugFormData"></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // 生成选项字母 (A, B, C, ...)
+    function getOptionLetter(index) {
+        return String.fromCharCode(65 + index);
+    }
+
+    // 生成选择题选项框（带name属性）
+    function generateChoiceOptions(count) {
+        const container = document.getElementById('choicesContainer');
+        container.innerHTML = '';
+
+        for (let i = 0; i < count; i++) {
+            const letter = getOptionLetter(i);
+            const optionGroup = document.createElement('div');
+            optionGroup.className = 'form-group';
+            optionGroup.innerHTML = `
+                <label>选项${letter}</label>
+                <input type="text" id="option${letter}" name="option${letter}" placeholder="选项${letter}内容" required>
+                <div class="error-message">请输入选项${letter}内容</div>
+            `;
+            container.appendChild(optionGroup);
+        }
+    }
+
+    // 显示对应题型的表单部分
+    document.getElementById('questionType').addEventListener('change', function() {
+        const type = this.value;
+        document.getElementById('choiceSection').classList.remove('active');
+        document.getElementById('fillSection').classList.remove('active');
+        document.getElementById('essaySection').classList.remove('active');
+
+        if (type === '1') {
+            document.getElementById('choiceSection').classList.add('active');
+            const defaultCount = parseInt(document.getElementById('optionCount').value);
+            generateChoiceOptions(defaultCount);
+        } else if (type === '2') {
+            document.getElementById('fillSection').classList.add('active');
+        } else if (type === '3') {
+            document.getElementById('essaySection').classList.add('active');
+        }
+    });
+
+    // 监听选项数量变化
+    document.getElementById('optionCount').addEventListener('input', function() {
+        const count = parseInt(this.value);
+        if (count >= 2 && count <= 10) {
+            generateChoiceOptions(count);
+            this.parentElement.classList.remove('has-error');
+        } else {
+            this.parentElement.classList.add('has-error');
+        }
+    });
+
+    // 添加更多填空题空
+    document.getElementById('addBlank').addEventListener('click', function() {
+        const container = document.getElementById('blankOptions');
+        const newBlank = document.createElement('div');
+        newBlank.className = 'option-group form-group';
+        newBlank.innerHTML = `
+            <input type="text" class="blank-placeholder" name="blankPlaceholder[]" placeholder="占位符文本" required>
+            <input type="text" class="blank-answer" name="blankAnswer[]" placeholder="对应答案" required>
+            <div class="error-message">请填写完整填空内容</div>
+        `;
+        container.appendChild(newBlank);
+    });
+
+    // 自定义表单验证函数
+    function validateForm() {
+        let isValid = true;
+        const errors = [];
+        const questionType = document.getElementById('questionType').value;
+
+        // 清除所有错误状态
+        document.querySelectorAll('.has-error').forEach(el => {
+            el.classList.remove('has-error');
+        });
+
+        // 验证题目类型
+        if (!questionType) {
+            document.getElementById('questionType').parentElement.classList.add('has-error');
+            isValid = false;
+            errors.push('请选择题目类型');
+        }
+
+        // 验证题干内容
+        const questionContent = document.getElementById('questionContent');
+        if (!questionContent.value.trim()) {
+            questionContent.parentElement.classList.add('has-error');
+            isValid = false;
+            errors.push('请输入题干内容');
+        }
+
+        // 根据题型验证对应字段
+        if (questionType === '1') {
+            // 验证选项数量
+            const optionCount = parseInt(document.getElementById('optionCount').value);
+            if (isNaN(optionCount)) {
+                document.getElementById('optionCount').parentElement.classList.add('has-error');
+                isValid = false;
+                errors.push('请输入有效的选项数量');
+            } else if (optionCount < 2 || optionCount > 10) {
+                document.getElementById('optionCount').parentElement.classList.add('has-error');
+                isValid = false;
+                errors.push('选项数量必须在2-10之间');
+            } else {
+                // 验证所有选项
+                for (let i = 0; i < optionCount; i++) {
+                    const letter = getOptionLetter(i);
+                    const option = document.getElementById(`option${letter}`);
+                    if (!option) continue;
+                    if (!option.value.trim()) {
+                        option.parentElement.classList.add('has-error');
+                        isValid = false;
+                        errors.push(`请填写选项${letter}的内容`);
+                    }
+                }
+            }
+
+            // 验证正确答案
+            const correctAnswer = document.getElementById('correctAnswerChoice');
+            if (!correctAnswer.value.trim()) {
+                correctAnswer.parentElement.classList.add('has-error');
+                isValid = false;
+                errors.push('请填写选择题的正确答案');
+            }
+        }
+        else if (questionType === '2') {
+            // 验证填空题
+            const placeholders = document.getElementsByClassName('blank-placeholder');
+            const answers = document.getElementsByClassName('blank-answer');
+
+            if (placeholders.length === 0) {
+                isValid = false;
+                errors.push('至少需要添加一个填空');
+            }
+
+            for (let i = 0; i < placeholders.length; i++) {
+                const placeholder = placeholders[i].value.trim();
+                const answer = answers[i].value.trim();
+
+                if (!placeholder || !answer) {
+                    const group = placeholders[i].closest('.form-group');
+                    if (group) {
+                        group.classList.add('has-error');
+                    }
+                    isValid = false;
+                    errors.push('请完整填写所有填空内容');
+                }
+            }
+        }
+        else if (questionType === '3') {
+            // 验证问答题
+            const referenceAnswer = document.getElementById('referenceAnswerEssay');
+            if (!referenceAnswer.value.trim()) {
+                referenceAnswer.parentElement.classList.add('has-error');
+                isValid = false;
+                errors.push('请填写问答题的参考答案');
+            }
+        }
+
+        // 更新调试信息
+        updateDebugInfo('验证状态: ' + (isValid ? '通过' : '失败'), errors.join('; '));
+
+        // 如果有错误，滚动到第一个错误
+        if (!isValid) {
+            const firstErrorField = document.querySelector('.has-error input, .has-error textarea, .has-error select');
+            if (firstErrorField) {
+                firstErrorField.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                setTimeout(() => {
+                    firstErrorField.focus();
+                }, 300);
+            }
+        }
+
+        return isValid;
+    }
+
+    // 表单提交处理
+    document.getElementById('questionForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        updateDebugInfo('表单状态', '提交中...');
+
+        // 使用自定义验证
+        if (!validateForm()) {
+            updateDebugInfo('表单状态', '提交失败：表单验证未通过');
+            return;
+        }
+
+        const formData = prepareFormData();
+        updateDebugInfo('表单状态', '准备提交数据');
+        updateDebugFormData(formData);
+
+        // 模拟提交到服务器
+        setTimeout(() => {
+            const messageElement = document.getElementById('responseMessage');
+            messageElement.textContent = "题目提交成功！ID: Q" + Math.floor(Math.random() * 10000);
+            messageElement.className = 'response-message success';
+            messageElement.style.display = 'block';
+
+            updateDebugInfo('表单状态', '提交成功，服务器返回成功响应');
+
+            // 3秒后重置表单
+            setTimeout(() => {
+                document.getElementById('questionForm').reset();
+                document.getElementById('choiceSection').classList.remove('active');
+                document.getElementById('fillSection').classList.remove('active');
+                document.getElementById('essaySection').classList.remove('active');
+                document.getElementById('choicesContainer').innerHTML = '';
+                messageElement.style.display = 'none';
+                updateDebugInfo('表单状态', '表单已重置');
+            }, 3000);
+        }, 1000);
+    });
+
+    // 准备表单数据
+    function prepareFormData() {
+        const questionType = parseInt(document.getElementById('questionType').value);
+        const questionContent = document.getElementById('questionContent').value;
+        const formData = {
+            questionType: questionType,
+            questionContent: questionContent,
+            options: {},
+            correctAnswers: [],
+            referenceAnswer: ''
+        };
+
+        if (questionType === 1) {
+            const optionCount = parseInt(document.getElementById('optionCount').value);
+
+            for (let i = 0; i < optionCount; i++) {
+                const letter = getOptionLetter(i);
+                const optionValue = document.getElementById(`option${letter}`).value;
+                if (optionValue) {
+                    formData.options[letter] = optionValue;
+                }
+            }
+
+            const correctAnswers = document.getElementById('correctAnswerChoice').value
+                .split(',').map(ans => ans.trim());
+            formData.correctAnswers = correctAnswers;
+
+            formData.referenceAnswer = document.getElementById('referenceAnswerChoice').value;
+        }
+        else if (questionType === 2) {
+            const placeholders = document.getElementsByClassName('blank-placeholder');
+            const answers = document.getElementsByClassName('blank-answer');
+
+            for (let i = 0; i < placeholders.length; i++) {
+                formData.options[i] = placeholders[i].value;
+                formData.correctAnswers.push(answers[i].value);
+            }
+        }
+        else if (questionType === 3) {
+            formData.referenceAnswer = document.getElementById('referenceAnswerEssay').value;
+        }
+
+        return formData;
+    }
+
+    // 调试信息功能
+    function updateDebugInfo(status, errors) {
+        document.getElementById('debugFormStatus').textContent = status;
+        document.getElementById('debugValidation').textContent = status.includes('成功') ? '通过' : '未通过';
+        document.getElementById('debugErrors').textContent = errors || '无';
+        document.querySelector('.debug-info').style.display = 'block';
+    }
+
+    function updateDebugFormData(data) {
+        document.getElementById('debugFormData').textContent = JSON.stringify(data, null, 2);
+    }
+
+    function toggleDebug() {
+        const content = document.getElementById('debugContent');
+        content.classList.toggle('active');
+    }
+
+    // 二进制雨效果模拟
+    function createMatrixRain() {
+        const canvas = document.createElement('canvas');
+        canvas.id = 'matrixRain';
+        document.body.appendChild(canvas);
+        const ctx = canvas.getContext('2d');
+
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const chars = '01アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヰヱヲン';
+        const columns = Math.floor(canvas.width / 20);
+        const drops = [];
+
+        for (let i = 0; i < columns; i++) {
+            drops[i] = Math.random() * -100;
+        }
+
+        function draw() {
+            ctx.fillStyle = 'rgba(10, 10, 18, 0.05)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            ctx.fillStyle = '#00f0ff';
+            ctx.font = '15px monospace';
+
+            for (let i = 0; i < drops.length; i++) {
+                const text = chars[Math.floor(Math.random() * chars.length)];
+                ctx.fillText(text, i * 20, drops[i] * 20);
+
+                if (drops[i] * 20 > canvas.height && Math.random() > 0.975) {
+                    drops[i] = 0;
+                }
+
+                drops[i]++;
+            }
+        }
+
+        setInterval(draw, 35);
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+    }
+
+    // 页面加载完成后初始化
+    window.onload = function() {
+        createMatrixRain();
+
+        // 初始化调试面板
+        updateDebugInfo('表单状态', '页面已加载完成');
+    };
+</script>
+</body>
+</html>

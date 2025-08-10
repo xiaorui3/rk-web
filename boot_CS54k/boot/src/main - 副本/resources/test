@@ -1,0 +1,22 @@
+<!-- 导航栏 -->
+<nav class="navbar navbar-expand-lg navbar-dark py-3">
+    <div class="container">
+        <a class="navbar-brand" href="index.html">
+            <img src="logo.png" alt="Logo" width="30" height="30" class="me-2">
+            黑河学院中俄大模型项目研究中心
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">index.html
+                <li class="nav-item"><a class="nav-link" href="index.html">首页</a></li>
+                <li class="nav-item"><a class="nav-link active" href="competition.html">软开比赛集结</a></li>
+                <li class="nav-item"><a class="nav-link" href="works.html">各项比赛作品展示</a></li>
+                <li class="nav-item"><a class="nav-link" href="submit.html">作品提交</a></li>
+                <li class="nav-item"><a class="nav-link" href="contact.html">联系我们</a></li>
+                <li class="nav-item"><a class="nav-link" href="rk.html">软开社团简介</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>

@@ -1,0 +1,946 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>人员签到签退系统 - 黑河学院软件项目开发社团</title>
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/css2?family=Orbitron:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/animate.min.css">
+    <style>
+        :root {
+            --primary-color: #2a5ca8;
+            --secondary-color: #6c757d;
+            --bg-color: #0a0a12;
+            --text-color: #e0e0e0;
+            --card-bg: #1a1a2a;
+            --header-bg: linear-gradient(135deg, #0a192f 0%, #0f0c29 100%);
+            --hero-overlay: rgba(0, 0, 0, 0.8);
+            --border-glow: 0 0 15px rgba(0, 240, 255, 0.7);
+            --text-glow: 0 0 12px rgba(0, 240, 255, 0.9);
+            --sci-fi-accent: #00f0ff;
+            --grid-color: rgba(0, 240, 255, 0.1);
+            --hologram-color: rgba(0, 240, 255, 0.25);
+        }
+
+        /* 浅色模式变量 */
+        [data-theme="light"] {
+            --bg-color: #f8f9fa;
+            --text-color: #212529;
+            --card-bg: #ffffff;
+            --header-bg: linear-gradient(135deg, #2a5ca8 0%, #1a3a6a 100%);
+            --hero-overlay: rgba(0, 0, 0, 0.5);
+            --border-glow: none;
+            --text-glow: none;
+            --sci-fi-accent: #00f0ff;
+            --grid-color: rgba(0, 240, 255, 0.05);
+            --hologram-color: rgba(0, 240, 255, 0.15);
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            transition: all 0.5s ease;
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* 科幻网格背景 */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background:
+                    linear-gradient(90deg, var(--grid-color) 1px, transparent 1px),
+                    linear-gradient(var(--grid-color) 1px, transparent 1px);
+            background-size: 30px 30px;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        /* 二进制数字雨效果容器 */
+        #matrixRain {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.25;
+            pointer-events: none;
+        }
+
+        /* 悬浮粒子效果 */
+        #particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* 全息投影效果 */
+        .hologram-effect {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hologram-effect::before {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                    to bottom right,
+                    transparent,
+                    transparent,
+                    var(--hologram-color),
+                    transparent,
+                    transparent
+            );
+            transform: rotate(30deg);
+            animation: hologram 6s linear infinite;
+            pointer-events: none;
+        }
+
+        @keyframes hologram {
+            0% { transform: rotate(30deg) translate(-30%, -30%); }
+            100% { transform: rotate(30deg) translate(30%, 30%); }
+        }
+
+        /* 科幻风格元素 */
+        .sci-fi-border {
+            position: relative;
+            border: 1px solid var(--sci-fi-accent);
+            box-shadow: var(--border-glow);
+        }
+
+        .sci-fi-border::before {
+            content: "";
+            position: absolute;
+            top: -5px;
+            left: -5px;
+            right: -5px;
+            bottom: -5px;
+            border: 2px solid transparent;
+            border-image: linear-gradient(45deg, var(--sci-fi-accent), transparent);
+            border-image-slice: 1;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .sci-fi-text {
+            text-shadow: var(--text-glow);
+            color: var(--sci-fi-accent);
+        }
+
+        /* 科幻数据面板 */
+        .data-panel {
+            height: 120px;
+            background: rgba(0, 10, 20, 0.5);
+            border: 1px solid var(--sci-fi-accent);
+            border-radius: 8px;
+            margin-top: 1rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .data-panel::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background:
+                    linear-gradient(90deg, rgba(0, 240, 255, 0.1) 1px, transparent 1px),
+                    linear-gradient(rgba(0, 240, 255, 0.1) 1px, transparent 1px);
+            background-size: 20px 20px;
+            opacity: 0.5;
+        }
+
+        .data-line {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--sci-fi-accent);
+            box-shadow: 0 0 10px var(--sci-fi-accent);
+            animation: dataFlow 3s infinite linear;
+        }
+
+        @keyframes dataFlow {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        /* 悬浮科技图标 */
+        .tech-icon {
+            position: absolute;
+            font-size: 1.5rem;
+            color: var(--sci-fi-accent);
+            opacity: 0.6;
+            z-index: -1;
+            animation: float 6s infinite ease-in-out;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
+        }
+
+        /* 模式切换按钮 */
+        .theme-toggle {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 1000;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: var(--card-bg);
+            border: 1px solid var(--sci-fi-accent);
+            box-shadow: 0 0 20px rgba(0, 240, 255, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .theme-toggle:hover {
+            transform: scale(1.1) rotate(30deg);
+            box-shadow: 0 0 30px var(--sci-fi-accent);
+        }
+
+        .theme-toggle i {
+            font-size: 1.5rem;
+            color: var(--sci-fi-accent);
+        }
+
+        /* 导航栏样式 */
+        .navbar {
+            background: var(--header-bg) !important;
+            border-bottom: 1px solid var(--sci-fi-accent);
+            box-shadow: 0 0 30px rgba(0, 240, 255, 0.3);
+            padding: 0.5rem 1rem;
+        }
+
+        .navbar-brand {
+            font-family: 'Orbitron', sans-serif;
+            letter-spacing: 1px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .navbar-brand img {
+            filter: drop-shadow(0 0 5px var(--sci-fi-accent));
+        }
+
+        .nav-link {
+            position: relative;
+            padding: 0.5rem 1.2rem !important;
+            margin: 0 0.3rem !important;
+            font-family: 'Orbitron', sans-serif;
+            letter-spacing: 1px;
+            color: white !important;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+        }
+
+        .nav-link::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 2px;
+            background: var(--sci-fi-accent);
+            transition: width 0.3s ease;
+            box-shadow: 0 0 10px var(--sci-fi-accent);
+        }
+
+        .nav-link:hover::after {
+            width: 80%;
+        }
+
+        /* 页脚样式 */
+        footer {
+            background: rgba(10, 20, 40, 0.7) !important;
+            border-top: 1px solid var(--sci-fi-accent);
+            position: relative;
+            margin-top: 5rem;
+            padding: 2rem 0 !important;
+            backdrop-filter: blur(5px);
+        }
+
+        footer::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--sci-fi-accent), transparent);
+        }
+
+        footer p {
+            font-family: 'Orbitron', sans-serif;
+            letter-spacing: 1px;
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        /* 响应式调整 */
+        @media (max-width: 768px) {
+            .nav-link {
+                padding: 0.5rem !important;
+                margin: 0 !important;
+                font-size: 0.8rem;
+            }
+        }
+
+        /* 签到系统特有样式 */
+        .attendance-container {
+            max-width: 1200px;
+            margin: 3rem auto;
+            padding: 2rem;
+            background: rgba(20, 30, 50, 0.7);
+            border: 1px solid var(--sci-fi-accent);
+            border-radius: 15px;
+            box-shadow: 0 0 30px rgba(0, 240, 255, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .attendance-container::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                    135deg,
+                    transparent,
+                    rgba(0, 240, 255, 0.05),
+                    transparent
+            );
+            pointer-events: none;
+        }
+
+        .attendance-title {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--sci-fi-accent);
+            text-align: center;
+            margin-bottom: 2rem;
+            position: relative;
+            text-shadow: var(--text-glow);
+        }
+
+        .attendance-title::after {
+            content: "";
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 2px;
+            background: var(--sci-fi-accent);
+            box-shadow: 0 0 10px var(--sci-fi-accent);
+        }
+
+        .user-card {
+            background: var(--card-bg);
+            border: 1px solid rgba(0, 240, 255, 0.3);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .user-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 240, 255, 0.3);
+            border-color: var(--sci-fi-accent);
+        }
+
+        .user-card.selected {
+            background: rgba(0, 240, 255, 0.1);
+            border: 1px solid var(--sci-fi-accent);
+            box-shadow: 0 0 20px rgba(0, 240, 255, 0.5);
+        }
+
+        .user-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                    135deg,
+                    transparent,
+                    rgba(0, 240, 255, 0.05),
+                    transparent
+            );
+            pointer-events: none;
+        }
+
+        .user-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--sci-fi-accent);
+            box-shadow: 0 0 15px rgba(0, 240, 255, 0.5);
+            margin-right: 1.5rem;
+        }
+
+        .user-info h5 {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--sci-fi-accent);
+            margin-bottom: 0.5rem;
+        }
+
+        .user-info small {
+            color: rgba(224, 224, 224, 0.7);
+        }
+
+        .attendance-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .btn-attendance {
+            font-family: 'Orbitron', sans-serif;
+            letter-spacing: 1px;
+            padding: 0.75rem 2rem;
+            border: 1px solid var(--sci-fi-accent);
+            border-radius: 30px;
+            background: transparent;
+            color: var(--sci-fi-accent);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            text-transform: uppercase;
+        }
+
+        .btn-attendance:hover {
+            background: rgba(0, 240, 255, 0.1);
+            box-shadow: 0 0 20px rgba(0, 240, 255, 0.3);
+            transform: translateY(-3px);
+        }
+
+        .btn-attendance:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .btn-checkin {
+            border-color: #00ff88;
+            color: #00ff88;
+        }
+
+        .btn-checkin:hover {
+            background: rgba(0, 255, 136, 0.1);
+            box-shadow: 0 0 20px rgba(0, 255, 136, 0.3);
+        }
+
+        .btn-checkout {
+            border-color: #ff5555;
+            color: #ff5555;
+        }
+
+        .btn-checkout:hover {
+            background: rgba(255, 85, 85, 0.1);
+            box-shadow: 0 0 20px rgba(255, 85, 85, 0.3);
+        }
+
+        .status-indicator {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+
+        .status-checked-in {
+            background-color: #00ff88;
+            box-shadow: 0 0 10px #00ff88;
+        }
+
+        .status-checked-out {
+            background-color: #ff5555;
+            box-shadow: 0 0 10px #ff5555;
+        }
+
+        .status-unknown {
+            background-color: #aaaaaa;
+            box-shadow: 0 0 10px #aaaaaa;
+        }
+
+        .search-box {
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        .search-box input {
+            background: rgba(10, 20, 40, 0.7);
+            border: 1px solid var(--sci-fi-accent);
+            color: var(--text-color);
+            padding: 0.75rem 1.5rem;
+            border-radius: 30px;
+            width: 100%;
+            font-family: 'Orbitron', sans-serif;
+            letter-spacing: 1px;
+        }
+
+        .search-box input:focus {
+            outline: none;
+            box-shadow: 0 0 15px rgba(0, 240, 255, 0.5);
+        }
+
+        .search-box::after {
+            content: "\f002";
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--sci-fi-accent);
+        }
+    </style>
+</head>
+<body>
+<!-- 二进制数字雨效果 -->
+<canvas id="matrixRain"></canvas>
+
+<!-- 悬浮粒子效果 -->
+<canvas id="particles"></canvas>
+
+<!-- 悬浮科技图标 -->
+<div class="tech-icon" style="top: 20%; left: 10%;"><i class="fas fa-atom"></i></div>
+<div class="tech-icon" style="top: 70%; left: 85%;"><i class="fas fa-microchip"></i></div>
+<div class="tech-icon" style="top: 40%; left: 90%;"><i class="fas fa-robot"></i></div>
+<div class="tech-icon" style="top: 80%; left: 15%;"><i class="fas fa-rocket"></i></div>
+
+<!-- 导航栏 -->
+<nav class="navbar navbar-expand-lg navbar-dark py-3">
+    <div class="container">
+        <a class="navbar-brand" href="../index.html">
+            <img src="../logo.png" alt="Logo" width="30" height="30" class="me-2">
+            黑河学院中俄大模型项目研究中心
+            <img src="../黑河学院软件项目开发社团.png" alt="黑河学院软件项目开发社团" width="70" height="40" class="me-2">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item"><a class="nav-link" href="../index.html" id="nav-index">软开社团</a></li>
+                <li class="nav-item"><a class="nav-link" href="../competition.html" id="nav-competition">软开比赛集结</a></li>
+                <li class="nav-item"><a class="nav-link" href="../works.html" id="nav-works">各项比赛作品展示</a></li>
+                <li class="nav-item"><a class="nav-link" href="../history.html" id="nav-history">软开历史</a></li>
+                <li class="nav-item"><a class="nav-link" href="../contact.html" id="nav-contact">联系我们</a></li>
+                <li class="nav-item"><a class="nav-link" href="http://hhxyrk.icu/" id="nav-contact-lt">软开论坛(Bata)</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- 主内容区 -->
+<main class="container">
+    <div class="attendance-container">
+        <h1 class="attendance-title animate__animated animate__fadeInDown">探知楼B419人员签到签退系统</h1>
+
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="搜索成员姓名或ID...">
+        </div>
+
+        <div class="row" id="userList">
+            <!-- 用户列表将通过JavaScript动态加载 -->
+            <div class="col-12 text-center py-5">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">加载中...</span>
+                </div>
+                <p class="mt-3">正在加载成员列表...</p>
+            </div>
+        </div>
+
+        <div class="attendance-buttons">
+            <button id="checkInBtn" class="btn-attendance btn-checkin" disabled>
+                <i class="fas fa-sign-in-alt me-2"></i>签到
+            </button>
+            <button id="checkOutBtn" class="btn-attendance btn-checkout" disabled>
+                <i class="fas fa-sign-out-alt me-2"></i>签退
+            </button>
+        </div>
+    </div>
+</main>
+
+<!-- 页脚 -->
+<footer class="text-white py-5">
+    <div class="container text-center">
+        <p class="mb-1">黑河学院软件项目开发社团</p>
+        <p class="mb-0">指导老师：杨文君、李伦彬 | 成立时间：2021年</p>
+        <p class="mt-3">© 2025 黑河学院计算机与信息工程学院</p>
+    </div>
+</footer>
+
+<!-- 模式切换按钮 -->
+<div class="theme-toggle animate__animated animate__fadeInRight" id="themeToggle">
+    <i class="fas fa-sun"></i>
+</div>
+
+<!-- 使用更可靠的CDN源 -->
+<script src="../js/bootstrap.bundle.min.js"></script>
+<script src="../js/jquery-3.6.0.min.js"></script>
+
+<script>
+    // 模式切换功能
+    const themeToggle = document.getElementById('themeToggle');
+
+    // 设置初始主题为暗色模式
+    document.documentElement.setAttribute('data-theme', 'dark');
+    localStorage.setItem('theme', 'dark');
+    updateToggleIcon();
+
+    themeToggle.addEventListener('click', function() {
+        let theme = document.documentElement.getAttribute('data-theme');
+        if (theme === 'light') {
+            document.documentElement.setAttribute('data-theme', 'dark');
+            localStorage.setItem('theme', 'dark');
+        } else {
+            document.documentElement.setAttribute('data-theme', 'light');
+            localStorage.setItem('theme', 'light');
+        }
+        updateToggleIcon();
+    });
+
+    function updateToggleIcon() {
+        const theme = document.documentElement.getAttribute('data-theme');
+        const icon = themeToggle.querySelector('i');
+        if (theme === 'light') {
+            icon.classList.remove('fa-sun');
+            icon.classList.add('fa-moon');
+        } else {
+            icon.classList.remove('fa-moon');
+            icon.classList.add('fa-sun');
+        }
+    }
+
+    // 二进制数字雨效果
+    document.addEventListener('DOMContentLoaded', function() {
+        const canvas = document.getElementById('matrixRain');
+        const ctx = canvas.getContext('2d');
+
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        // 只使用0和1
+        const binary = '01';
+
+        const fontSize = 18;
+        const columns = canvas.width / fontSize;
+
+        const rainDrops = [];
+
+        for (let x = 0; x < columns; x++) {
+            rainDrops[x] = Math.random() * -100;
+        }
+
+        const draw = () => {
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.06)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            ctx.font = `bold ${fontSize}px monospace`;
+
+            for (let i = 0; i < rainDrops.length; i++) {
+                const text = Math.random() > 0.5 ? '0' : '1';
+                const opacity = Math.random() * 0.7 + 0.3;
+                ctx.fillStyle = `rgba(0, 240, 255, ${opacity})`;
+                ctx.fillText(text, i * fontSize, rainDrops[i] * fontSize);
+
+                if (rainDrops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                    rainDrops[i] = 0;
+                }
+                rainDrops[i]++;
+            }
+        };
+
+        setInterval(draw, 50);
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+
+        // 悬浮粒子效果
+        const particlesCanvas = document.getElementById('particles');
+        const particlesCtx = particlesCanvas.getContext('2d');
+
+        particlesCanvas.width = window.innerWidth;
+        particlesCanvas.height = window.innerHeight;
+
+        const particles = [];
+        const particleCount = window.innerWidth / 5;
+
+        for (let i = 0; i < particleCount; i++) {
+            particles.push({
+                x: Math.random() * particlesCanvas.width,
+                y: Math.random() * particlesCanvas.height,
+                size: Math.random() * 3 + 1,
+                speedX: Math.random() * 1 - 0.5,
+                speedY: Math.random() * 1 - 0.5,
+                color: `rgba(0, 240, 255, ${Math.random() * 0.5 + 0.1})`
+            });
+        }
+
+        function drawParticles() {
+            particlesCtx.clearRect(0, 0, particlesCanvas.width, particlesCanvas.height);
+
+            for (let i = 0; i < particles.length; i++) {
+                const p = particles[i];
+
+                particlesCtx.beginPath();
+                particlesCtx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                particlesCtx.fillStyle = p.color;
+                particlesCtx.fill();
+
+                p.x += p.speedX;
+                p.y += p.speedY;
+
+                if (p.x < 0 || p.x > particlesCanvas.width) p.speedX *= -1;
+                if (p.y < 0 || p.y > particlesCanvas.height) p.speedY *= -1;
+            }
+
+            requestAnimationFrame(drawParticles);
+        }
+
+        drawParticles();
+
+        window.addEventListener('resize', () => {
+            particlesCanvas.width = window.innerWidth;
+            particlesCanvas.height = window.innerHeight;
+        });
+    });
+
+    // 签到系统功能
+    $(document).ready(function() {
+        // 选中的用户ID数组
+        let selectedUserIds = [];
+
+        // 加载成员列表
+        function loadMembers(searchTerm = '') {
+            let url = '/api/members';
+            if (searchTerm) {
+                url = `/api/members/search?keyword=${encodeURIComponent(searchTerm)}`;
+            }
+
+            $.ajax({
+                url: url,
+                method: 'GET',
+                beforeSend: function() {
+                    $('#userList').html(`
+                        <div class="col-12 text-center py-5">
+                            <div class="spinner-border text-primary" role="status">
+                                <span class="visually-hidden">加载中...</span>
+                            </div>
+                            <p class="mt-3">正在加载成员列表...</p>
+                        </div>
+                    `);
+                },
+                success: function(data) {
+                    renderUserList(data);
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error loading members:', error);
+                    showAlert('加载成员列表失败，请检查后端服务是否正常运行', 'danger');
+                    // 临时使用模拟数据
+                    useMockData();
+                }
+            });
+        }
+
+        // 临时模拟数据函数
+        //function useMockData() {
+        //    const mockData = [
+        //        { id: 1, name: '赵锐', position: '社长', avatarUrl: 'https://randomuser.me/api/portraits/men/1.jpg', status: 'CHECKED_OUT' },
+        //        { id: 2, name: '韩驰', position: '副社长', avatarUrl: 'https://randomuser.me/api/portraits/men/2.jpg', status: 'CHECKED_OUT' },
+        //        { id: 3, name: '周泓旭', position: '副社长', avatarUrl: 'https://randomuser.me/api/portraits/men/3.jpg', status: 'CHECKED_OUT' },
+        //        { id: 4, name: '鄂鸿禄', position: '副社长', avatarUrl: 'https://randomuser.me/api/portraits/men/4.jpg', status: 'CHECKED_OUT' },
+        //        { id: 5, name: '芦起同', position: '副社长', avatarUrl: 'https://randomuser.me/api/portraits/men/5.jpg', status: 'CHECKED_OUT' },
+        //        { id: 6, name: '杨成相', position: '人工智能部部长', avatarUrl: 'https://randomuser.me/api/portraits/men/6.jpg', status: 'CHECKED_OUT' },
+        //        { id: 7, name: '沈福轩', position: '全栈工程师部长', avatarUrl: 'https://randomuser.me/api/portraits/men/7.jpg', status: 'CHECKED_OUT' }
+        //    ];
+        //    renderUserList(mockData);
+        //    showAlert('后端服务未连接，正在使用模拟数据', 'warning');
+        //}
+
+        // 渲染用户列表函数
+        function renderUserList(users) {
+            let html = '';
+            users.forEach(user => {
+                // 渲染用户状态时使用正确的枚举值
+                const statusClass = user.status === 'CHECKED_IN' ? 'status-checked-in' :
+                    user.status === 'CHECKED_OUT' ? 'status-checked-out' : 'status-unknown';
+                const statusText = user.status === 'CHECKED_IN' ? '已签到' :
+                    user.status === 'CHECKED_OUT' ? '已签退' : '状态未知';
+
+                html += `
+                    <div class="col-md-6 col-lg-4">
+                        <div class="user-card" data-id="${user.id}">
+                            <div class="d-flex align-items-center">
+                                <img src="${user.avatarUrl || 'https://via.placeholder.com/80'}" class="user-avatar" alt="${user.name}">
+                                <div class="user-info">
+                                    <h5>${user.name} <span class="status-indicator ${statusClass}"></span></h5>
+                                    <p class="mb-1">${user.position}</p>
+                                    <small>ID: ${user.id} | ${statusText}</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+            $('#userList').html(html || '<div class="col-12 text-center py-5"><p>没有找到成员数据</p></div>');
+        }
+
+        // 更新按钮状态函数
+        function updateButtonStatus() {
+            const hasSelected = selectedUserIds.length > 0;
+            $('#checkInBtn').prop('disabled', !hasSelected);
+            $('#checkOutBtn').prop('disabled', !hasSelected);
+        }
+
+        // 显示提示消息
+        function showAlert(message, type) {
+            // 移除旧的提示
+            $('.alert-dismissible').remove();
+
+            const alertHtml = `
+                <div class="alert alert-${type} alert-dismissible fade show position-fixed bottom-0 end-0 m-3" role="alert" style="z-index: 1001">
+                    ${message}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            `;
+            $('body').append(alertHtml);
+
+            // 使用Bootstrap的alert方法
+            const alertElement = new bootstrap.Alert($('.alert')[0]);
+
+            // 5秒后自动消失
+            setTimeout(() => {
+                alertElement.close();
+            }, 5000);
+        }
+
+        // 用户卡片点击事件
+        $(document).on('click', '.user-card', function() {
+            const userId = parseInt($(this).data('id'));
+            const index = selectedUserIds.indexOf(userId);
+
+            if (index === -1) {
+                // 添加选中
+                selectedUserIds.push(userId);
+                $(this).addClass('selected');
+            } else {
+                // 取消选中
+                selectedUserIds.splice(index, 1);
+                $(this).removeClass('selected');
+            }
+
+            // 更新按钮状态
+            updateButtonStatus();
+        });
+
+        // 签到按钮点击事件
+        $('#checkInBtn').click(function() {
+            if (selectedUserIds.length > 0) {
+                $.ajax({
+                    data: JSON.stringify({
+                        memberId: selectedMemberId,
+                        status: status === 'checkIn' ? 'checked-in' : 'checked-out'
+                    }),
+                    data: JSON.stringify({
+                        status: status === 'checkin' ? 'checked-in' : 'checked-out'
+                    }),
+                    url: '/api/checkin',
+                    method: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify(selectedUserIds),
+                    success: function() {
+                        loadMembers($('#searchInput').val());
+                        selectedUserIds = [];
+                        $('.user-card').removeClass('selected');
+                        updateButtonStatus();
+                        showAlert('签到成功！', 'success');
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Error checking in:', error);
+                        showAlert('签到失败: ' + (xhr.responseJSON?.message || error), 'danger');
+                    }
+                });
+            }
+        });
+
+        // 签退按钮点击事件
+        $('#checkOutBtn').click(function() {
+            if (selectedUserIds.length > 0) {
+                $.ajax({
+                    data: JSON.stringify({
+                        memberId: selectedMemberId,
+                        status: status === 'checkIn' ? 'checked-in' : 'checked-out'
+                    }),
+                    data: JSON.stringify({
+                        status: status === 'checkin' ? 'checked-in' : 'checked-out'
+                    }),
+                    url: '/api/checkout',
+                    method: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify(selectedUserIds),
+                    success: function() {
+                        loadMembers($('#searchInput').val());
+                        selectedUserIds = [];
+                        $('.user-card').removeClass('selected');
+                        updateButtonStatus();
+                        showAlert('签退成功！', 'success');
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Error checking out:', error);
+                        showAlert('签退失败: ' + (xhr.responseJSON?.message || error), 'danger');
+                    }
+                });
+            }
+        });
+
+        // 搜索功能
+        $('#searchInput').on('keyup', function() {
+            loadMembers($(this).val());
+        });
+
+        // 初始化加载成员
+        loadMembers();
+    });
+</script>
+</body>
+</html>

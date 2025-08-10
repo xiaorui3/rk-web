@@ -1,0 +1,41 @@
+<!-- navbar.html -->
+<nav class="navbar navbar-expand-lg navbar-dark py-3">
+    <div class="container">
+        <a class="navbar-brand" href="index.html">
+            <img src="logo.png" alt="Logo" width="30" height="30" class="me-2">
+            黑河学院中俄大模型项目研究中心
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item"><a class="nav-link" href="index.html" id="nav-index">软开社团</a></li>
+                <li class="nav-item"><a class="nav-link" href="competition.html" id="nav-competition">软开比赛集结</a></li>
+                <li class="nav-item"><a class="nav-link" href="works.html" id="nav-works">各项比赛作品展示</a></li>
+                <li class="nav-item"><a class="nav-link" href="contact.html" id="nav-contact">联系我们</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<script>
+    // 自动设置当前页面的导航项为active状态
+    document.addEventListener('DOMContentLoaded', function() {
+        const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+        const navItems = {
+            'index.html': 'nav-index',
+            'competition.html': 'nav-competition',
+            'works.html': 'nav-works',
+            'contact.html': 'nav-contact',
+            'rk.html': 'nav-rk'
+        };
+
+        if (navItems[currentPage]) {
+            const activeNav = document.getElementById(navItems[currentPage]);
+            if (activeNav) {
+                activeNav.classList.add('active');
+            }
+        }
+    });
+</script>
