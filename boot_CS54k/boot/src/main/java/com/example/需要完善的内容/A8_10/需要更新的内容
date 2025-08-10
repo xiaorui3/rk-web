@@ -1,0 +1,35 @@
+使用环境变量进行配置一些信息
+
+想法一： 在config层 创建对应 application.yml 配置节点 的 类
+
+@Component
+@ConfigurationProperties(prefix = "email-config") // 对应配置文件中的email-config节点
+@Data
+public class EmailConfigProperties {
+    private String host;
+    private String username;
+    private String password;
+    private int port;
+    private String senderName;
+}
+使用：
+    @Autowired
+    private EmailConfigProperties emailConfig; // 注入自定义配
+想法二：使用 @Value（单个属性）
+    @Value("${email-config.username}")
+    private String fromEmail;
+
+    @Value("${email-config.sender-name}")
+    private String senderName;
+
+
+
+
+
+
+
+需要更新的内容2：
+    {我觉得他们每天给大一培训，咱这边可以在网站上做一个题库}
+
+
+

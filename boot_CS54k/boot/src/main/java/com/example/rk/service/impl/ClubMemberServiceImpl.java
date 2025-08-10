@@ -1,14 +1,14 @@
 // src/main/java/com/example/boot/service/impl/ClubMemberServiceImpl.java
 package com.example.rk.service.impl;
 
+import com.example.rk.controller.SuperMailSendUserController;
 import com.example.rk.mapper.ClubMemberMapper;
-import com.example.rk.pojo.ClubMember;
-import com.example.rk.pojo.JoinRequest;
-import com.example.rk.pojo.ApiResponse;
-import com.example.rk.pojo.MailUser;
+import com.example.rk.pojo.*;
 import com.example.rk.service.ClubMemberService;
+import com.example.rk.service.SuperMailSendUserService;
 import com.example.rk.util.SendMailUtils;
 import jakarta.mail.MessagingException;
+import org.checkerframework.checker.units.qual.A;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Service;
@@ -38,6 +38,9 @@ public class ClubMemberServiceImpl implements ClubMemberService {
     @Autowired
     private ThreadPoolTaskExecutor emailTaskExecutor;
 
+
+    @Autowired
+    private SuperMailSendUserController superMailSendUserController;
 
     @Autowired
     public ClubMemberServiceImpl(ClubMemberMapper clubMemberMapper) {
@@ -89,8 +92,13 @@ public class ClubMemberServiceImpl implements ClubMemberService {
         return ApiResponse.success("申请提交成功 审核结果将在三日后发邮件通知").addData("memberId", member.getId());
     }
 
+
+
     @Override
-    @Transactional
+    @Transactional// sql事务回滚
+    /**
+     * 目前只用了这一个方法
+     */
     public ApiResponse handleMail(JoinRequest request) throws MessagingException {
         /// 新用户发送
 
@@ -106,12 +114,15 @@ public class ClubMemberServiceImpl implements ClubMemberService {
         subject="新社员入社提醒--软件项目开发社团";
         fromAddress = "=?UTF-8?B?" + java.util.Base64.getEncoder().encodeToString("软件项目开发社团".getBytes(StandardCharsets.UTF_8)) + "?= <z13039811650@163.com>";
         //ArrayList<String> arr=new ArrayList<>();
-        HashMap<String,String> map=new HashMap<>();
-        map.put("3505469466@qq.com","赵锐");
-        map.put("ruimeilademaye@163.com","韩驰");
-        map.put("2148906016@qq.com","马鹏博");
-        map.put("lxy521521456@163.com","刘晓雨");
-        map.put("w87027619332@163.com","郑志远");
+        //HashMap<String,String> map=new HashMap<>();
+        HashMap<String, String> map = superMailSendUserController.getListTFMap();
+        System.out.println(map);
+        //System.out.println(10/0);
+        //map.put("3505469466@qq.com","赵锐");
+        //map.put("ruimeilademaye@163.com","韩驰");
+        //map.put("2148906016@qq.com","马鹏博");
+        //map.put("lxy521521456@163.com","刘晓雨");
+        //map.put("w87027619332@163.com","郑志远");
 
         //arr.add("3505469466@qq.com");
         //arr.add("ruimeilademaye@163.com");

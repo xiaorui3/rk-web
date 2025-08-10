@@ -10,6 +10,9 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
+/**
+有数据库表
+ */
 public class ClubMember {
     private Long id;
     private String name;
